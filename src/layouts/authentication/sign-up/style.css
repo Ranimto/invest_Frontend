@@ -1,0 +1,17 @@
+h4{
+    color: aliceblue;
+}
+.pass {
+    color: rgba(217, 39, 39, 0.677);
+}
+h6{
+    color: rgba(149, 148, 148, 0.741);
+}
+
+.txt{
+font-size: 14px;
+font-weight: 400;
+}
+.pagination{
+    padding-left: 40%;
+}

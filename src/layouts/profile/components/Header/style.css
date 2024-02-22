@@ -1,0 +1,16 @@
+.profile_img{
+    border-radius: 50%;
+    height: 5%;
+    width: 32%;
+    box-shadow: 3px 1px 11px 2px rgb(100, 98, 98);
+}
+
+h5{
+    font-size: 20px;
+    font-weight: 600;
+}
+.text{
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(90, 89, 89, 0.916);
+}
