@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 /** 
   All of the routes for the Material Dashboard 2 React are added here,
@@ -40,15 +27,11 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
 import RTL from "layouts/rtl";
-import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-
-// @mui icons
 import Icon from "@mui/material/Icon";
-import Form from "layouts/authentication/Form/form";
-import MultiStepForm from "layouts/authentication/MultiStepForm/MultiStepForm";
+
 
 const routes = [
   {
@@ -85,14 +68,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
     name: "Profile",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
@@ -116,17 +91,7 @@ const routes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
-  {
-    type: "collapse",
-    route: "/form",
-    component: <Form/>
-  },
-  {name: "MultiForm",
-  key: "MultiForm",
-    type: "collapse",
-    route: "/multiForm",
-    component: <MultiStepForm/>
-  },
+ 
   
 ];
 

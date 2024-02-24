@@ -7,6 +7,7 @@ import ThirdStep from './ThirdStep'
 import {Step, Stepper, StepLabel} from '@material-ui/core'
 import {multiStepContext} from './stepContext'
 import FourthStep from './FourthStep'
+import Footer from '../components/Footer'
 
 const MultiStepForm =()=> {
    
@@ -45,11 +46,13 @@ const MultiStepForm =()=> {
                <StepLabel></StepLabel>
            </Step>
         </Stepper>
+        
         </div>
        
         {showStep(currentStep)}
         
         </div>
+        
     )
 }
 
