@@ -1,118 +1,121 @@
-/* eslint-disable react/prop-types */
-/**
-* T
-*/
-
-// Material Dashboard 2 React components
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import MDBox from "components/MDBox";
 import MDBadge from "components/MDBadge";
 
+export default function Data() {
+  const [investments, setInvestments] = useState([]);
+  const [investment, setInvestment] = useState({
+    name:"",
+    activity:"",
+    address:"",
+    description:"",
+    nbOfInvestors:"",
+    liquidityRatio:"",
+    interestCoverageRatio: "",
+    salesGrowthRatio:"",
+    profitabilityRatio: "",
+    rib:""
+  });
+  const [error, setError] = useState(null);
 
-export default function data() {
-  const Author = ({ name, email}) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
-        <h5 className="name">{name}</h5>
-        <p>{email}</p>   
-      </MDBox>
-    </MDBox>
-  );
+  useEffect(() => {
+    const fetchInvestments = async () => {
+      try {
+        const url = 'http://localhost:8023/company/getAll';
+        const response = await axios.get(url);
+        console.log("Response from server:", response.data, response);
+        setInvestments(response.data);
+        setError(null);
+      } catch (error) {
+        if (error.response) {
+          setError(error.response.data.message);
+        } else {
+          setError("Une erreur s'est produite lors de la récupération des investissements.");
+        }
+      }
+    };
+    fetchInvestments();
+  }, []);
 
-  const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <h6>{title}</h6>
-      <p>{description}</p>
-    </MDBox>
-  );
+ 
 
-  return {
-    columns: [
-      { Header: "author", accessor: "author", width: "45%", align: "left" },
-      { Header: "function", accessor: "function", align: "left" },
-      { Header: "status", accessor: "status", align: "center" },
-      { Header: "employed", accessor: "employed", align: "center" },
-      { Header: "action", accessor: "action", align: "center" },
-    ],
+  const columns = [
+    { Header: "name", accessor: "name", width: "45%", align: "left" },
+    { Header: "activity", accessor: "activity", align: "left" },
+    { Header: "address", accessor: "address", align: "center" },
+    { Header: "nbOfInvestors", accessor: "nbOfInvestors", align: "center" },
+    { Header: "debtRatio", accessor: "debtRatio", align: "center" },
+    { Header: "liquidityRatio", accessor: "liquidityRatio", align: "center" },
+    { Header: "interestCoverageRatio", accessor: "interestCoverageRatio", align: "center" },
+    { Header: "salesGrowthRatio", accessor: "salesGrowthRatio", align: "center" },
+    { Header: "profitabilityRatio", accessor: "profitabilityRatio", align: "center" },
+    { Header: "rib", accessor: "rib", align: "center" },
+  ];
 
-    rows: [
-      {
-        author: <Author name="John Michael" email="john@creative-tim.com" />,
-        function: <Job title="Manager" description="Organization" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <h3>
-            23/04/18
-          </h3>
-        ),
-        action: (
-          <h3>
-            Edit
-          </h3>
-        ),
-      },
+  const rows = investments.map((item) => ({
 
-      {
-        author: <Author name="Alexa Liras" email="alexa@creative-tim.com" />,
-        function: <Job title="Programator" description="Developer" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="offline" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <h3>
-            11/01/19
-          </h3>
-        ),
-        action: (
-          <h3>
-            Edit
-          </h3>
-        ),
-      },
-      {
-        author: <Author  name="Laurent Perrier" email="laurent@creative-tim.com" />,
-        function: <Job title="Executive" description="Projects" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <h3>
-            19/09/17
-          </h3>
-        ),
-        action: (
-          <h3>
-            Edit
-          </h3>
-        ),
-      },
-      {
-        author: <Author  name="Michael Levi" email="michael@creative-tim.com" />,
-        function: <Job title="Programator" description="Developer" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="online" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <h3>
-            24/12/08
-          </h3>
-        ),
-        action: (
-          <h3>
-            Edit
-          </h3>
-        ),
-      },
-      
-    ],
-  };
+    name: (
+      <h3>
+        {item.name}
+      </h3>
+    ),
+   activity: (
+      <h3>
+       {item.activity}
+      </h3>
+    ),
+
+    description: (
+      <h3>
+       {item.description} TND
+      </h3>
+    ),
+    address: (
+      <h3>
+        {item.address}
+      </h3>
+    ),
+    nbOfInvestors: (
+      <h3>
+       {item.nbOfInvestors}
+      </h3>
+    ),
+
+    debtRatio: (
+      <h3>
+       {item.debtRatio}
+      </h3>
+    ),
+
+    liquidityRatio: (
+      <h3>
+       {item.liquidityRatio}
+      </h3>
+    ),
+
+    interestCoverageRatio: (
+      <h3>
+       {item.interestCoverageRatio}
+      </h3>
+    ),
+    salesGrowthRatio: (
+      <h3>
+       {item.salesGrowthRatio}
+      </h3>
+    ),
+    profitabilityRatio: (
+      <h3>
+       {item.profitabilityRatio}
+      </h3>
+    ),
+
+    rib: (
+      <h3>
+       {item.rib}
+      </h3>
+    ),
+  }));
+
+  return { columns, rows };
 }

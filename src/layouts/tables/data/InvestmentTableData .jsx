@@ -48,30 +48,30 @@ export default function Data() {
   const rows = investments.map((item) => ({
 
     companyId: (
-      <MDBox width="8rem" textAlign="left">
+      <h3>
         {item.companyId}
-      </MDBox>
+      </h3>
     ),
     type: (
-      <MDBox width="8rem" textAlign="left">
+      <h3>
        {item.type}
-       </MDBox>
+      </h3>
     ),
 
     amount: (
-      <MDBox width="8rem" textAlign="left">
+      <h3>
        {item.amount} TND
-       </MDBox>
+      </h3>
     ),
     startDate: (
-      <MDBox width="8rem" textAlign="left">
+      <h3>
         {item.startDate}
-        </MDBox>
+      </h3>
     ),
     duration: (
-      <MDBox width="8rem" textAlign="left">
+      <h3>
        {item.duration}
-      </MDBox>
+      </h3>
     ),
 
     status: (

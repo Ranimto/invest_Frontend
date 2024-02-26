@@ -2,12 +2,13 @@
 
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Form } from "react-router-dom";
 import App from "App";
-import StepContext from './layouts/authentication/MultiStepForm/stepContext';
 
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
+
+
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -16,12 +17,7 @@ root.render(
   
   <BrowserRouter>
     <MaterialUIControllerProvider>
-     <StepContext>
-       <React.StrictMode>
-       <App />
-       </React.StrictMode>
-    
-     </StepContext>  
+        <App />        
     </MaterialUIControllerProvider>
   </BrowserRouter>
 );

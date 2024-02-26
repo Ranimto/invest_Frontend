@@ -31,6 +31,9 @@ import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
+import Form from "layouts/Form";
+
+
 
 
 const routes = [
@@ -91,6 +94,14 @@ const routes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
+  {
+    route: "form",
+    component: <Form/>,
+  },
+
+ 
+
+
  
   
 ];

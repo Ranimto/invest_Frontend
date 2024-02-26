@@ -9,9 +9,8 @@ import DataTable from "examples/Tables/DataTable";
 import data from "layouts/dashboard/components/Projects/data";
 
 function Projects() {
-  const { columns, rows } = data();
+  const { columns, rows } = data(1);
   const [menu, setMenu] = useState(null);
-
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
@@ -41,7 +40,7 @@ function Projects() {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
         <MDBox>
           <h6 className="title">
-            Projects
+            Investments
           </h6>
           <MDBox display="flex" alignItems="center" lineHeight={0}>
             <Icon
@@ -67,13 +66,15 @@ function Projects() {
       </MDBox>
       <MDBox>
         <DataTable
-          table={{ columns, rows }}
+          table={{columns, rows }}
           showTotalEntries={false}
           isSorted={false}
           noEndBorder
           entriesPerPage={false}
         />
       </MDBox>
+ 
+
     </Card>
   );
 }

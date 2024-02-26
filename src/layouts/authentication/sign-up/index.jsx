@@ -8,6 +8,7 @@ import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import axios from 'axios'
 import './style.css'
 import { useState } from "react";
+import MDButton from "components/MDButton";
 
 function Cover() {
 
@@ -17,7 +18,6 @@ function Cover() {
         email :"",
         password :"",
 		    phone :"",
-        role: "",
 		    enabled: false,
 		    verificationCode :""
 	});
@@ -109,14 +109,6 @@ function Cover() {
               />
             </MDBox>
 
-            <MDBox mb={2}>
-              <MDInput type="text" label="role" variant="standard" fullWidth 
-                    name="role"
-                    onChange={handleChange}
-                    value={data.role}
-              />
-            </MDBox>
-
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <h6>
@@ -125,9 +117,9 @@ function Cover() {
 
             <MDBox mt={4} mb={1}>
             {error && <div className="error_msg">{error}</div>}
-						<button type="submit" className="green_btn">
-							Sign Up
-						</button>
+              <MDButton variant="gradient" color="info" fullWidth type="submit">
+                sign up
+              </MDButton>
             </MDBox>
 
             <MDBox mt={3} mb={1} textAlign="center">
