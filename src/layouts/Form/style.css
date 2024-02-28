@@ -39,14 +39,21 @@
     justify-content: center;
 }
  .message{
-  color: white;
-  margin-top: 10%;
+  color: rgba(255, 255, 255, 0.91);
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
   font-size: 18px;
   font-style: italic;
   font-family: 'Courier New', Courier, monospace;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
 }
 
 .stepper{
   padding-top: 14%;
+}
+Card{
+  background-color: red;
 }

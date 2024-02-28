@@ -4,7 +4,7 @@ import Checkbox from "@mui/material/Checkbox";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+import bgImage from "assets/images/trading.jpg";
 import axios from 'axios'
 import './style.css'
 import { useState } from "react";
@@ -44,6 +44,7 @@ function Cover() {
 			console.log(res.message);
 		} catch (error) {
 			if (error.response) {
+
 				alert("Email already in use. Please choose a different email address");
 			} else {
 				setError(error.response.data.message);

@@ -36,8 +36,7 @@ function Basic() {
 			const { data: res } = await axios.post(url, data);
    
 			localStorage.setItem("token", res.data);
-			window.location = "/";
-            navigate("/multiForm");
+      navigate("/form");
 			alert('User is authenticated')
 		} catch (error) {
 			if (

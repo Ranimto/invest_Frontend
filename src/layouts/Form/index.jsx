@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import StepOneForm from './StepOneForm';
 import bgImage from "assets/images/R8Xg21.webp";
+import validationImage from "assets/images/3d-checklist-icon-png.webp";
 import StepTwoForm from './StepTwoForm';
 import StepThreeForm from './StepThreeForm';
 import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import axios from 'axios';
+import MDBox from 'components/MDBox';
+import { width } from '@mui/system';
 
 function Form() {
     const [step, setStep] = useState(1);
@@ -46,9 +49,7 @@ function Form() {
     const handleDone = async (values) => {
         setShowThankYou(true);
         await updateFormData(values);
-        handleSubmit(values); // Modifier cette ligne pour passer les valeurs mises à jour
-        
-        // Ajout d'un callback pour afficher un message après l'appel à handleDone
+        handleSubmit(values);
         alert('Formulaire soumis avec succès');
     };
 
@@ -89,7 +90,7 @@ function Form() {
             {step === 2 && <StepTwoForm onNextStep={handleNextStep} updateFormData={updateFormData}/>}
             {step === 3 && <StepThreeForm onNextStep={handleNextStep} updateFormData={updateFormData}/>}
             {step === 4 && <StepFourForm onNextStep={handleNextStep} updateFormData={updateFormData} />}
-
+            
             <div style={{ marginTop: '20px' }}>
                 {step > 4 && !showThankYou && (
                     <div className="validation">
@@ -99,8 +100,8 @@ function Form() {
                     </div>
                 )}
                 {showThankYou && (
-                  <Card className='card' style={{backgroundColor:'transparent', width:'120%' ,height:'150px', marginRight:'80%' ,display:'flex' }}>
-                    <CheckCircleIcon style={{ color: 'rgba(212, 178, 207, 0.755)', fontSize: 40 , marginLeft:'50% ',top:'40%'}} />
+                  <Card className='card' style={{backgroundColor:'transparent', width:'120%' }}>
+                    <img src={validationImage}style={{ width:'35%', marginLeft:'30%'}}/>
                     <p className='message'>Thank you for submitting the form!</p>
                   </Card>
                 )}
