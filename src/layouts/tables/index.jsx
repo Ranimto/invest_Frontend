@@ -6,12 +6,12 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import CompanyTableData from "layouts/tables/data/CompanyTableData ";
 import './style.css'
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
+  const { columns, rows } = CompanyTableData();
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (

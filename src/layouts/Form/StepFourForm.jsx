@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { Button, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import './style.css';
 
-function StepFourForm({ onNextStep }) {
+function StepFourForm({ onNextStep ,updateFormData}) {
     const [data, setData] = useState([
         {
             question: "16. How would you react to a significant market downturn or recession?",
@@ -45,7 +45,7 @@ function StepFourForm({ onNextStep }) {
                 initialValues={initialValues}
                 onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
-                    // Appeler la fonction onNextStep pour passer à l'étape suivante
+                    updateFormData(values);
                     onNextStep();
                 }}
             >
@@ -83,7 +83,8 @@ function StepFourForm({ onNextStep }) {
 }
 
 StepFourForm.propTypes = {
-    onNextStep: PropTypes.func.isRequired, // Validation de type pour la prop onNextStep
+    onNextStep: PropTypes.func.isRequired, 
+    updateFormData: PropTypes.func.isRequired, 
 };
 
 export default StepFourForm;

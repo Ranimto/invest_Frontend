@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { Button, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import './style.css';
 
-function StepTwoForm({ onNextStep }) {
+function StepTwoForm({ onNextStep, updateFormData }) {
   const [data,setData] = useState([
 
     {
@@ -48,7 +48,7 @@ function StepTwoForm({ onNextStep }) {
                 initialValues={initialValues}
                 onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
-                    // Appeler la fonction onNextStep pour passer à l'étape suivante
+                    updateFormData(values);
                     onNextStep();
                 }}
             >
@@ -86,7 +86,8 @@ function StepTwoForm({ onNextStep }) {
 }
 
 StepTwoForm.propTypes = {
-    onNextStep: PropTypes.func.isRequired, // Validation de type pour la prop onNextStep
+    onNextStep: PropTypes.func.isRequired,
+    updateFormData: PropTypes.func.isRequired,
 };
 
 export default StepTwoForm;

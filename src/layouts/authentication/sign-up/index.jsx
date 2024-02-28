@@ -44,7 +44,6 @@ function Cover() {
 			console.log(res.message);
 		} catch (error) {
 			if (error.response) {
-				// Code 409 indique un conflit (e-mail déjà utilisé)
 				alert("Email already in use. Please choose a different email address");
 			} else {
 				setError(error.response.data.message);

@@ -6,15 +6,16 @@ import MenuItem from "@mui/material/MenuItem";
 import MDBox from "components/MDBox";
 import './style.css';
 import DataTable from "examples/Tables/DataTable";
-import data from "layouts/dashboard/components/Projects/data";
+import data from "layouts/dashboard/components/Investment/data";
 
-function Projects() {
+function Investment() {
   const { columns, rows } = data(1);
   const [menu, setMenu] = useState(null);
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
 
   const renderMenu = (
+    
     <Menu
       id="simple-menu"
       anchorEl={menu}
@@ -52,9 +53,7 @@ function Projects() {
             >
               done
             </Icon>
-            <h3 className="caption">
-              &nbsp;<strong>30 done</strong> this month
-            </h3>
+            <h3 className="caption"> {rows.length} investments</h3>
           </MDBox>
         </MDBox>
         <MDBox color="text" px={2}>
@@ -79,4 +78,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Investment;

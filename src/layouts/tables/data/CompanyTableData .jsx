@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import MDBox from "components/MDBox";
-import MDBadge from "components/MDBadge";
+
 
 export default function Data() {
-  const [investments, setInvestments] = useState([]);
-  const [investment, setInvestment] = useState({
+  const [companies, setCompanies] = useState([]);
+  const [Company, setCompany] = useState({
     name:"",
     activity:"",
     address:"",
@@ -20,12 +19,12 @@ export default function Data() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchInvestments = async () => {
+    const fetchCompanies= async () => {
       try {
-        const url = 'http://localhost:8023/company/getAll';
+        const url = 'http://localhost:8023/company/getCompaniesByInvestorId/1';
         const response = await axios.get(url);
         console.log("Response from server:", response.data, response);
-        setInvestments(response.data);
+        setCompanies(response.data);
         setError(null);
       } catch (error) {
         if (error.response) {
@@ -35,7 +34,7 @@ export default function Data() {
         }
       }
     };
-    fetchInvestments();
+    fetchCompanies();
   }, []);
 
  
@@ -53,10 +52,10 @@ export default function Data() {
     { Header: "rib", accessor: "rib", align: "center" },
   ];
 
-  const rows = investments.map((item) => ({
+  const rows = companies.map((item) => ({
 
     name: (
-      <h3>
+      <h3 className="CompanyName">
         {item.name}
       </h3>
     ),

@@ -5,8 +5,9 @@ import MDBadge from "components/MDBadge";
 
 export default function Data() {
   const [investments, setInvestments] = useState([]);
+  const [companyNames, setCompanyNames] = useState({});
   const [investment, setInvestment] = useState({
-    companyId:"",
+    companyName:"",
     type:"",
     amount :"",
     startDate :"",
@@ -14,30 +15,32 @@ export default function Data() {
     status: ""
   });
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchInvestments = async () => {
-      try {
-        const url = `http://localhost:8023/investment/getInvest/1`;
-        const response = await axios.get(url);
-        console.log("Response from server:", response.data, response);
-        setInvestments(response.data);
-        setError(null);
-      } catch (error) {
-        if (error.response) {
-          setError(error.response.data.message);
-        } else {
-          setError("Une erreur s'est produite lors de la récupération des investissements.");
-        }
+  const fetchInvestments = async () => {
+    try {
+      const url = `http://localhost:8023/investment/getInvest/1`;
+      const response = await axios.get(url);
+      console.log("Response from server:", response.data, response);
+      setInvestments(response.data);
+      
+      setError(null);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError("Error is presented when extracting investments.");
       }
-    };
-    fetchInvestments();
-  }, []);
+    }
+  };
+
+  useEffect(() => { 
+    fetchInvestments()
+    }, []);
+
 
  
 
   const columns = [
-    { Header: "companyId", accessor: "companyId", width: "45%", align: "left" },
+    { Header: "companyName", accessor: "companyId", width: "45%", align: "left" },
     { Header: "type", accessor: "type", align: "left" },
     { Header: "amount", accessor: "amount", align: "center" },
     { Header: "startDate", accessor: "startDate", align: "center" },
@@ -48,30 +51,30 @@ export default function Data() {
   const rows = investments.map((item) => ({
 
     companyId: (
-      <h3>
-        {item.companyId}
-      </h3>
+      <MDBox width="8rem" textAlign="left">
+        {item.companyName}
+      </MDBox>
     ),
     type: (
-      <h3>
+      <MDBox width="8rem" textAlign="left">
        {item.type}
-      </h3>
+       </MDBox>
     ),
 
     amount: (
-      <h3>
+      <MDBox width="8rem" textAlign="left">
        {item.amount} TND
-      </h3>
+       </MDBox>
     ),
     startDate: (
-      <h3>
+      <MDBox width="8rem" textAlign="left">
         {item.startDate}
-      </h3>
+        </MDBox>
     ),
     duration: (
-      <h3>
+      <MDBox width="8rem" textAlign="left">
        {item.duration}
-      </h3>
+      </MDBox>
     ),
 
     status: (

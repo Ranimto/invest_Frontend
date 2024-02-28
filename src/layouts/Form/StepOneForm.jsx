@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { Button, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import './style.css';
 
-function StepOneForm({ onNextStep }) {
+function StepOneForm({ onNextStep , updateFormData}) {
     const [data] = useState([
         {
             question: "1. What is your employment status?",
@@ -46,7 +46,7 @@ function StepOneForm({ onNextStep }) {
                 initialValues={initialValues}
                 onSubmit={(values) => {
                     alert(JSON.stringify(values, null, 2));
-                    // Appeler la fonction onNextStep pour passer à l'étape suivante
+                    updateFormData(values);
                     onNextStep();
                 }}
             >
@@ -84,7 +84,8 @@ function StepOneForm({ onNextStep }) {
 }
 
 StepOneForm.propTypes = {
-    onNextStep: PropTypes.func.isRequired, // Validation de type pour la prop onNextStep
+    onNextStep: PropTypes.func.isRequired,
+    updateFormData: PropTypes.func.isRequired,
 };
 
 export default StepOneForm;

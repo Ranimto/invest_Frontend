@@ -7,10 +7,31 @@ import StepThreeForm from './StepThreeForm';
 import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import axios from 'axios';
 
 function Form() {
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({  
+    employmentStatus: "",
+    age: "",
+    investmentGoal: "",
+    pastInvestmentExperience: "",
+    financialMarketKnowledge: "",
+    investmentProductKnowledge: "",
+    investmentSelectionCriteria: "",
+    avoidSpecificInvestments: "",
+    annualIncomeRange: "",
+    debts: "",
+    investmentTimeframe: "",
+    investmentStyle: "",
+    targetRateOfReturn: "",
+    preferredIndustries: "",
+    liquidityPriority: "",
+    reactionToMarketDownturn: "",
+    comfortWithFluctuations: "",
+    financialRiskComfortLevel: "",
+    sourceOfFunds: "",
+});
     const [showThankYou, setShowThankYou] = useState(false);
 
     const handleNextStep = () => {
@@ -21,17 +42,29 @@ function Form() {
         setStep(step - 1);
     };
 
-    const handleSubmit = (data) => {
-        // Merge data from each step into formData
-        setFormData({ ...formData, ...data });
-
-        // Example: Submit data to backend
-        console.log('Form submitted:', formData);
+     
+    const handleDone = async (values) => {
+        setShowThankYou(true);
+        await updateFormData(values);
+        handleSubmit(values); // Modifier cette ligne pour passer les valeurs mises à jour
+        
+        // Ajout d'un callback pour afficher un message après l'appel à handleDone
+        alert('Formulaire soumis avec succès');
     };
 
-    const handleDone = () => {
-        // Handle the "Done" button click event
-        setShowThankYou(true);
+    const updateFormData = (values) => {
+        setFormData({ ...formData, ...values });
+        console.log('hello',formData);
+    };
+
+    const handleSubmit = async (values) => {
+        try {
+            const url = "http://localhost:8023/profileData/addProfileData";
+            const response = await axios.post(url, values);
+            console.log('Profile data added:', response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -52,16 +85,16 @@ function Form() {
                 </Step>
             </Stepper>
             </div>
-            {step === 1 && <StepOneForm onNextStep={handleNextStep} />}
-            {step === 2 && <StepTwoForm onNextStep={handleNextStep} />}
-            {step === 3 && <StepThreeForm onNextStep={handleNextStep} />}
-            {step === 4 && <StepFourForm onNextStep={handleNextStep} />}
+            {step === 1 && <StepOneForm onNextStep={handleNextStep} updateFormData={updateFormData} />}
+            {step === 2 && <StepTwoForm onNextStep={handleNextStep} updateFormData={updateFormData}/>}
+            {step === 3 && <StepThreeForm onNextStep={handleNextStep} updateFormData={updateFormData}/>}
+            {step === 4 && <StepFourForm onNextStep={handleNextStep} updateFormData={updateFormData} />}
 
             <div style={{ marginTop: '20px' }}>
                 {step > 4 && !showThankYou && (
                     <div className="validation">
                         <div className="btn">
-                            <Button type='submit' color='primary' variant='contained' style={{ backgroundColor: 'blue', color: 'white' }} onClick={handleDone}>Done</Button>
+                            <Button type='submit' color='primary' variant='contained' style={{ backgroundColor: 'blue', color: 'white' }} onClick={() => { handleDone(formData); }}>Done</Button>
                         </div>
                     </div>
                 )}
