@@ -1,0 +1,120 @@
+ /* section 1 */
+.container {
+    position: relative;
+    background-image: url('assets/images/bitcoin1.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 46rem;
+    z-index: 0;
+    display: flex;
+    align-items: center; 
+}
+
+.home {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    padding-top: 15%;
+    padding-left: 2%;  
+}
+
+.MuiButton-contained {
+    position: absolute !important;
+    color: white !important;
+    background-color: rgba(239, 147, 10, 0.897) !important;
+    width: 25%  !important; 
+    margin-left: 30%  !important;
+    bottom: -19% !important;
+
+}
+
+.MuiButton-contained:hover {
+    background-color: rgb(97, 12, 62) !important; 
+}
+
+h4{
+    font-weight: 400;
+    color: rgb(180, 176, 176);
+}
+ /* section 2 */
+
+.grid{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap:1%   
+}
+.card {
+   position: absolute;
+    width: 28%;
+    background-color: #ebe6ed !important; 
+    border: 1px solid #ccc; 
+    text-align: center; 
+    height: 8rem;
+}
+
+ /* section 3 */
+ 
+ .service_section {
+    
+    position: relative;
+    display: flex; 
+    flex-direction: column;  
+    align-items: center;  
+    padding-top: 5%;  
+ }
+
+.section-heading{
+    position: absolute; 
+}
+.section-heading h6{
+    margin-left:40% ;
+    font-size: 15px;
+    color: rgba(61, 57, 57, 0.922);  
+    font-weight: 500;
+}
+.section-heading h4{
+    padding-top: 21px;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 30px;   
+}
+.section-heading h4 em{
+    color: rgba(55, 6, 83, 0.812);
+    font-weight:600;
+    font-style: normal;
+}
+
+.service_items {
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+    gap: 10px;
+}
+.item_card{
+    background-color: rgba(232, 223, 223, 0.653) !important; 
+    border: 1px solid #ccc; 
+    height: 200px;
+    width: 35rem;
+    text-align: center; 
+}
+.items{
+    position: relative;
+    height: 100px;
+    width: 45rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+}
+
+.serviceList{
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+    width: 50%;     
+}
+.item{
+    background-color: rgba(223, 188, 238, 0.577) !important;
+}

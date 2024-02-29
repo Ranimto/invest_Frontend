@@ -7,10 +7,7 @@ import StepTwoForm from './StepTwoForm';
 import StepThreeForm from './StepThreeForm';
 import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import axios from 'axios';
-import MDBox from 'components/MDBox';
-import { width } from '@mui/system';
 
 function Form() {
     const [step, setStep] = useState(1);
