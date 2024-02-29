@@ -54,35 +54,26 @@ import tableContainer from "assets/theme/components/table/tableContainer";
 import tableHead from "assets/theme/components/table/tableHead";
 import tableCell from "assets/theme/components/table/tableCell";
 import linearProgress from "assets/theme/components/linearProgress";
-import breadcrumbs from "assets/theme/components/breadcrumbs";
 import slider from "assets/theme/components/slider";
-import avatar from "assets/theme/components/avatar";
 import tooltip from "assets/theme/components/tooltip";
 import appBar from "assets/theme/components/appBar";
 import tabs from "assets/theme/components/tabs";
 import tab from "assets/theme/components/tabs/tab";
-import stepper from "assets/theme/components/stepper";
-import step from "assets/theme/components/stepper/step";
-import stepConnector from "assets/theme/components/stepper/stepConnector";
-import stepLabel from "assets/theme/components/stepper/stepLabel";
-import stepIcon from "assets/theme/components/stepper/stepIcon";
 import select from "assets/theme/components/form/select";
 import formControlLabel from "assets/theme/components/form/formControlLabel";
 import formLabel from "assets/theme/components/form/formLabel";
 import checkbox from "assets/theme/components/form/checkbox";
-import radio from "assets/theme/components/form/radio";
 import autocomplete from "assets/theme/components/form/autocomplete";
 import container from "assets/theme/components/container";
 import popover from "assets/theme/components/popover";
 import buttonBase from "assets/theme/components/buttonBase";
 import icon from "assets/theme/components/icon";
 import svgIcon from "assets/theme/components/svgIcon";
-import link from "assets/theme/components/link";
-import dialog from "assets/theme/components/dialog";
-import dialogTitle from "assets/theme/components/dialog/dialogTitle";
-import dialogContent from "assets/theme/components/dialog/dialogContent";
-import dialogContentText from "assets/theme/components/dialog/dialogContentText";
-import dialogActions from "assets/theme/components/dialog/dialogActions";
+import step from "assets/theme/components/stepper/step";
+import stepConnector from "assets/theme/components/stepper/stepConnector";
+import stepLabel from "assets/theme/components/stepper/stepLabel";
+import stepIcon from "assets/theme/components/stepper/stepIcon";
+
 
 export default createTheme({
   direction: "rtl",
@@ -127,14 +118,11 @@ export default createTheme({
     MuiTableHead: { ...tableHead },
     MuiTableCell: { ...tableCell },
     MuiLinearProgress: { ...linearProgress },
-    MuiBreadcrumbs: { ...breadcrumbs },
     MuiSlider: { ...slider },
-    MuiAvatar: { ...avatar },
     MuiTooltip: { ...tooltip },
     MuiAppBar: { ...appBar },
     MuiTabs: { ...tabs },
     MuiTab: { ...tab },
-    MuiStepper: { ...stepper },
     MuiStep: { ...step },
     MuiStepConnector: { ...stepConnector },
     MuiStepLabel: { ...stepLabel },
@@ -143,17 +131,12 @@ export default createTheme({
     MuiFormControlLabel: { ...formControlLabel },
     MuiFormLabel: { ...formLabel },
     MuiCheckbox: { ...checkbox },
-    MuiRadio: { ...radio },
     MuiAutocomplete: { ...autocomplete },
     MuiPopover: { ...popover },
     MuiButtonBase: { ...buttonBase },
     MuiIcon: { ...icon },
     MuiSvgIcon: { ...svgIcon },
-    MuiLink: { ...link },
-    MuiDialog: { ...dialog },
-    MuiDialogTitle: { ...dialogTitle },
-    MuiDialogContent: { ...dialogContent },
-    MuiDialogContentText: { ...dialogContentText },
-    MuiDialogActions: { ...dialogActions },
+
+  
   },
 });

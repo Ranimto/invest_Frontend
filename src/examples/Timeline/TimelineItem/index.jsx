@@ -13,20 +13,11 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
-
-// @mui material components
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Timeline context
 import { useTimeline } from "examples/Timeline/context";
-
-// Custom styles for the TimelineItem
 import timelineItem from "examples/Timeline/TimelineItem/styles";
 
 function TimelineItem({ color, icon, title, dateTime, description, lastItem }) {
@@ -72,14 +63,12 @@ function TimelineItem({ color, icon, title, dateTime, description, lastItem }) {
   );
 }
 
-// Setting default values for the props of TimelineItem
 TimelineItem.defaultProps = {
   color: "info",
   lastItem: false,
   description: "",
 };
 
-// Typechecking props for the TimelineItem
 TimelineItem.propTypes = {
   color: PropTypes.oneOf([
     "primary",

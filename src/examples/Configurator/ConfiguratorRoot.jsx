@@ -13,7 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// @mui material components
 import Drawer from "@mui/material/Drawer";
 import { styled } from "@mui/material/styles";
 
@@ -25,7 +24,6 @@ export default styled(Drawer)(({ theme, ownerState }) => {
   const { lg } = boxShadows;
   const { pxToRem } = functions;
 
-  // drawer styles when openConfigurator={true}
   const drawerOpenStyles = () => ({
     width: configuratorWidth,
     left: "initial",
@@ -35,8 +33,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       duration: transitions.duration.short,
     }),
   });
-
-  // drawer styles when openConfigurator={false}
+  
   const drawerCloseStyles = () => ({
     left: "initial",
     right: pxToRem(-350),

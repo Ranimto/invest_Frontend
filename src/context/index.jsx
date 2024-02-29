@@ -47,7 +47,7 @@ function reducer(state, action) {
 // Material Dashboard 2 React context provider
 function MaterialUIControllerProvider({ children }) {
   const initialState = {
-    miniSidenav: false,
+
     transparentSidenav: false,
     whiteSidenav: false,
     sidenavColor: "info",
@@ -66,7 +66,7 @@ function MaterialUIControllerProvider({ children }) {
   return <MaterialUI.Provider value={value}>{children}</MaterialUI.Provider>;
 }
 
-// Material Dashboard 2 React custom hook for using context
+// Material UI custom hook for using context
 function useMaterialUIController() {
   const context = useContext(MaterialUI);
 

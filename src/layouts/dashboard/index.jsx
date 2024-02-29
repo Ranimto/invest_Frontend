@@ -33,7 +33,6 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
 import Investment from "layouts/dashboard/components/Investment";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -48,7 +47,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="weekend"
-                title="Bookings"
+                title="Investments"
                 count={281}
                 percentage={{
                   color: "success",
@@ -62,7 +61,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="leaderboard"
-                title="Today's Users"
+                title="Comapnies"
                 count="2,300"
                 percentage={{
                   color: "success",
@@ -77,7 +76,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
+                title="stock"
                 count="34k"
                 percentage={{
                   color: "success",
@@ -92,7 +91,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
+                title="Bond"
                 count="+91"
                 percentage={{
                   color: "success",
@@ -109,9 +108,9 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
+                  title="compagnies views"
+                  description="Best Company Performance"
+                  date="company sent 2 days ago"
                   chart={reportsBarChartData}
                 />
               </MDBox>
