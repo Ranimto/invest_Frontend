@@ -18,17 +18,16 @@
     padding-left: 2%;  
 }
 
-.MuiButton-contained {
+.btnHome {
     position: absolute !important;
     color: white !important;
     background-color: rgba(239, 147, 10, 0.897) !important;
     width: 25%  !important; 
     margin-left: 30%  !important;
     bottom: -19% !important;
-
 }
 
-.MuiButton-contained:hover {
+.btnHome:hover {
     background-color: rgb(97, 12, 62) !important; 
 }
 
@@ -44,24 +43,35 @@ h4{
     justify-content: center;
     gap:1%   
 }
-.card {
+.cardClass {
    position: absolute;
     width: 28%;
-    background-color: #ebe6ed !important; 
-    border: 1px solid #ccc; 
+    background-color: #eee8daf4 !important; 
+    border: 1px solid rgb(252, 244, 230); 
     text-align: center; 
-    height: 8rem;
+    height: 6rem;
+    box-shadow: 1px 2px 4px 2px rgb(184, 182, 180) !important;
+    ;
+}
+.cardClass h4{
+    color: rgb(65, 8, 65);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 10%;
+
 }
 
  /* section 3 */
  
  .service_section {
-    
-    position: relative;
-    display: flex; 
-    flex-direction: column;  
-    align-items: center;  
-    padding-top: 5%;  
+
+    position: relative !important ;
+    display: flex !important ; 
+    flex-direction: column !important ;  
+    align-items: center !important ;    
+    padding-top: 5% !important ;  
+     
  }
 
 .section-heading{
@@ -92,13 +102,37 @@ h4{
     padding-top: 10%;
     gap: 10px;
 }
-.item_card{
-    background-color: rgba(232, 223, 223, 0.653) !important; 
+.itemCard{
+    background-color: rgba(242, 231, 244, 0.688) !important;
+    background-repeat: no-repeat;
     border: 1px solid #ccc; 
-    height: 200px;
-    width: 35rem;
+    height: 25rem;
+    width: 41rem;
     text-align: center; 
+    box-shadow: 1px 2px 4px 2px rgb(184, 182, 180) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.itemCard .content{
+    padding: 10%;
+
+}
+
+.itemCard p{
+padding-top: 5%;
+color:  rgba(0, 0, 0, 0.67);
+font-size: 12px;
+font-weight: 400;
+}
+.itemCard p em{
+    color: #590c59c5;
+    font-weight: 600;
+    font-size: 18px;
+    font-style: normal;
+}
+
 .items{
     position: relative;
     height: 100px;
@@ -115,6 +149,107 @@ h4{
     gap: 20px;
     width: 50%;     
 }
-.item{
-    background-color: rgba(223, 188, 238, 0.577) !important;
+.serviceList .item{
+    background-image: url('assets/images/item.jpg');
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+    height: 2.5rem;
+}
+.item p{
+    position:absolute;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    top: -25%;
+}
+
+/* section Teams*/ 
+
+.teams_items {
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+    gap: 5%;
+    
+}
+.team_card{
+    background-color: rgba(255, 255, 255, 0.852) !important; 
+    border: 1px solid rgb(188, 183, 183); 
+    height:22rem;
+    width: 20rem;
+    text-align: center; 
+    box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.96);
+}
+img{
+    width: 100%;
+    height: 85%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+}
+.team_card h6{
+    padding-top: 5%;
+    color: rgba(56, 53, 53, 0.768);
+    font-size: 15px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serifs;   
+}
+.team_card em{
+   color: rgba(0, 0, 0, 0.888);
+
+}
+/* section testimonials */
+.reviews_section {
+    position: relative !important ;
+    display: flex !important ; 
+    flex-direction: column !important ;  
+    align-items: center !important ;    
+    padding-top: 5% !important ;  
+ }
+
+
+.reviews_items {
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+    gap: 5%;
+    
+}
+.reviews_card{
+    background-image: url('assets/images/item.jpg')!important; 
+    border: 1px solid rgb(188, 183, 183); 
+    height:4rem;
+    width: 22rem;
+    text-align: center; 
+    box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.96);   
+}
+.reviews_card p{
+color:  rgb(255, 255, 255);
+font-size: 13px;
+font-weight: 600;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+/* clients section*/
+ 
+.clients_section {
+
+    position: relative !important ;
+    display: flex !important ; 
+    flex-direction: column !important ;  
+    align-items: center !important ;    
+    padding-top: 5% !important ;      
+ }
+ .clients_items{
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
+    gap: 5%;  
+ }
+.client_card{
+    background-color: rgba(245, 238, 232, 0.779) !important; 
+    border: 1px solid rgb(188, 183, 183); 
+    height:8rem;
+    width: 20rem;
+    text-align: center; 
+    box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.984);
 }
