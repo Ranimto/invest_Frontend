@@ -74,7 +74,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
+                color="warning"
                 icon="store"
                 title="stock"
                 count="34k"
@@ -107,7 +107,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsBarChart
-                  color="info"
+                  color="success"
                   title="compagnies views"
                   description="Best Company Performance"
                   date="company sent 2 days ago"
@@ -118,7 +118,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="success"
+                  color="primary"
                   title="daily sales"
                   description={
                     <>
@@ -133,7 +133,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
                 <ReportsLineChart
-                  color="dark"
+                  color="warning"
                   title="completed tasks"
                   description="Last Campaign Performance"
                   date="just updated"

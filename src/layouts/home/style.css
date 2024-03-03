@@ -1,87 +1,118 @@
- /* section 1 */
 .container {
     position: relative;
-    background-image: url('assets/images/bitcoin1.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
-    height: 46rem;
-    z-index: 0;
-    display: flex;
-    align-items: center; 
-}
-
-.home {
+    height: 48rem;
+   
+  }
+  
+  .background-image {
     position: absolute;
-    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .text-container {
+    position: absolute;
+    top: 60%;
+    left: 28%;
+    transform: translate(-50%, -50%);
     color: white;
-    padding-top: 15%;
-    padding-left: 2%;  
-}
-
-.btnHome {
-    position: absolute !important;
+   
+  }
+  
+  .btnHome {
     color: white !important;
     background-color: rgba(239, 147, 10, 0.897) !important;
-    width: 25%  !important; 
-    margin-left: 30%  !important;
-    bottom: -19% !important;
-}
+    padding: 10px !important;
+    margin-left: 40% !important;
+    margin-top: 5% !important;
+    width: 25%;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btnHome:hover {
+    background-color: rgb(97, 12, 62);
+  }
 
-.btnHome:hover {
-    background-color: rgb(97, 12, 62) !important; 
-}
 
-h4{
+h4 {
     font-weight: 400;
     color: rgb(180, 176, 176);
 }
- /* section 2 */
 
-.grid{
-    position: relative;
+
+/* Section 2 */
+.grid {
     display: flex;
     justify-content: center;
-    gap:1%   
+    gap: 1%;
+   
 }
+
 .cardClass {
-   position: absolute;
+    position: relative;
     width: 28%;
-    background-color: #eee8daf4 !important; 
-    border: 1px solid rgb(252, 244, 230); 
+    background-color: #e4c38a66 !important;
     text-align: center; 
     height: 6rem;
-    box-shadow: 1px 2px 4px 2px rgb(184, 182, 180) !important;
-    ;
+    box-shadow: 1px 2px 4px 2px rgb(166, 165, 163)!important;
+    margin-top: -3%;
 }
-.cardClass h4{
+
+.cardClass h4 {
     color: rgb(65, 8, 65);
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 15px;
     font-weight: 600;
     padding-top: 10%;
-
+    
+   
 }
 
- /* section 3 */
+
+/* service section*/ 
+
+ .service_section{
+    position: relative !important ;
+    padding-top: 5%;
+}
  
- .service_section {
+.services_components{
+    padding-top: 9%;
+}
+ .reviews_section ,.teams_section, .clients_section{
 
     position: relative !important ;
     display: flex !important ; 
     flex-direction: column !important ;  
     align-items: center !important ;    
-    padding-top: 5% !important ;  
-     
- }
+    padding-top: 4% !important ;  
+    width: 100% !important ; 
+}
+
+.service-heading{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
 
 .section-heading{
     position: absolute; 
+    padding-bottom: 5%;
+    
 }
 .section-heading h6{
     margin-left:40% ;
     font-size: 15px;
     color: rgba(61, 57, 57, 0.922);  
     font-weight: 500;
+    margin-bottom: 5px;
 }
 .section-heading h4{
     padding-top: 21px;
@@ -96,67 +127,65 @@ h4{
     font-style: normal;
 }
 
-.service_items {
+
+.services_items {
     display: flex;
     justify-content: center;
     padding-top: 10%;
+    margin-left: 20% !important;
+    width: 130% !important;
     gap: 10px;
 }
-.itemCard{
+
+.texttCard{
+    background-image: url('assets/images/item.jpg');
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+    height: 2.5rem;
+    width: 40%;
+
+}
+
+.serviceCard1{
     background-color: rgba(242, 231, 244, 0.688) !important;
     background-repeat: no-repeat;
     border: 1px solid #ccc; 
-    height: 25rem;
-    width: 41rem;
     text-align: center; 
     box-shadow: 1px 2px 4px 2px rgb(184, 182, 180) !important;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left:2%;
+    margin-right:6%;
+    width: 90%;
 }
 
-.itemCard .content{
-    padding: 10%;
-
+.serviceCard1 .content{
+    padding: 3%;
 }
 
-.itemCard p{
-padding-top: 5%;
-color:  rgba(0, 0, 0, 0.67);
+.content p{
+padding-top: 4%;
+color:  rgba(0, 0, 0, 0.877);
 font-size: 12px;
 font-weight: 400;
 }
-.itemCard p em{
+.content p em{
     color: #590c59c5;
     font-weight: 600;
     font-size: 18px;
     font-style: normal;
 }
 
-.items{
-    position: relative;
-    height: 100px;
-    width: 45rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;  
-}
-
-.serviceList{
-    position: absolute;
-    flex-direction: column;
-    display: flex;
-    gap: 20px;
-    width: 50%;     
-}
-.serviceList .item{
+.services_items .texttCard{
     background-image: url('assets/images/item.jpg');
     display: flex;
     justify-content: center ;
     align-items: center;
     height: 2.5rem;
 }
-.item p{
+.texttCard p{
     position:absolute;
     color: white;
     font-size: 14px;
@@ -164,20 +193,22 @@ font-weight: 400;
     top: -25%;
 }
 
+
 /* section Teams*/ 
 
 .teams_items {
+    padding-top: 5%;
     display: flex;
     justify-content: center;
     padding-top: 10%;
-    gap: 5%;
-    
+    gap: 5%;  
+
 }
 .team_card{
     background-color: rgba(255, 255, 255, 0.852) !important; 
     border: 1px solid rgb(188, 183, 183); 
     height:22rem;
-    width: 20rem;
+    width: 20rem ;
     text-align: center; 
     box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.96);
 }
@@ -185,8 +216,7 @@ img{
     width: 100%;
     height: 85%;
     border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    
+    border-top-right-radius: 10px;    
 }
 .team_card h6{
     padding-top: 5%;
@@ -198,15 +228,9 @@ img{
    color: rgba(0, 0, 0, 0.888);
 
 }
-/* section testimonials */
-.reviews_section {
-    position: relative !important ;
-    display: flex !important ; 
-    flex-direction: column !important ;  
-    align-items: center !important ;    
-    padding-top: 5% !important ;  
- }
 
+
+/* benefits section  */
 
 .reviews_items {
     display: flex;
@@ -223,22 +247,17 @@ img{
     text-align: center; 
     box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.96);   
 }
+
 .reviews_card p{
 color:  rgb(255, 255, 255);
 font-size: 13px;
 font-weight: 600;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+
 /* clients section*/
  
-.clients_section {
-
-    position: relative !important ;
-    display: flex !important ; 
-    flex-direction: column !important ;  
-    align-items: center !important ;    
-    padding-top: 5% !important ;      
- }
  .clients_items{
     display: flex;
     justify-content: center;
@@ -253,3 +272,65 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center; 
     box-shadow: 1px 4px 1px 2px rgba(68, 66, 66, 0.984);
 }
+
+
+@media (max-width: 870px) {
+    .teams_items, .reviews_items{
+      margin-top: 12%;
+    }
+    .clients_items{
+        margin-top: 10%;   
+    }
+    .section-heading h4{
+       font-size:22px ;  
+    }
+    .team_card  {
+        width: calc(50% - 20px); 
+      }
+      .container .text-container h1 {
+        font-size: 1.4rem !important ;
+      }
+      .container .text-container h4 {
+        font-size: 0.9rem  !important ;
+      }
+      .container .text-container .btnHome {
+        width: 40%;
+        margin-left:20% !important;
+      }
+  }
+
+  @media (max-width: 900px) {
+      .reviews_card {
+        width: 50%;
+        height:100px; 
+        display: flex;
+        justify-content: center;
+      }
+      .teams_section, .clients_section {    
+        padding-top: 5% !important ;    
+        }
+        .itemCard{
+            width: 50%;
+        }
+
+  }
+
+  @media (max-width: 1300px) {
+
+    .container .text-container{
+     margin-left: 6%;
+    }
+    .container .text-container h1 {
+      font-size: 1.7rem;
+    }
+    .container .text-container h4 {
+      font-size: 1.1rem;
+    }
+    
+  }
+
+
+ 
+  
+
+  

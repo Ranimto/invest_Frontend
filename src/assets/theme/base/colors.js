@@ -1,23 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-/**
- * The base colors for the Material Dashboard 2 React.
- * You can add new color using this file.
- * You can customized the colors for the entire Material Dashboard 2 React using thie file.
- */
 
 const colors = {
   background: {
@@ -40,7 +21,7 @@ const colors = {
 
   black: {
     light: "#000000",
-    main: "#000000",
+    main: "grey",
     focus: "#000000",
   },
 
@@ -78,11 +59,11 @@ const colors = {
     main: "#f0f2f5",
     focus: "#f0f2f5",
   },
-
   dark: {
-    main: "#344767",
+    main: "rgb(30, 7, 49)",
     focus: "#2c3c58",
   },
+  
 
   grey: {
     100: "#f8f9fa",
@@ -98,28 +79,31 @@ const colors = {
 
   gradients: {
     primary: {
-      main: "#EC407A",
-      state: "#D81B60",
+      main: "#c877dbf1",
+      state: "#5a1469f1",
+      
+      
     },
 
     secondary: {
       main: "#747b8a",
       state: "#495361",
+     
     },
 
     info: {
-      main: "#49a3f1",
-      state: "#1A73E8",
+      main: "rgba(51, 109, 218, 0.812)",
+      state: "rgb(78, 51, 137)",
     },
 
     success: {
-      main: "#66BB6A",
-      state: "#43A047",
+      main: "rgba(4, 94, 4, 0.801)",
+      state: "green",
     },
 
     warning: {
       main: "#FFA726",
-      state: "#FB8C00",
+      state: "#e96a15",
     },
 
     error: {
@@ -131,12 +115,14 @@ const colors = {
       main: "#EBEFF4",
       state: "#CED4DA",
     },
+    
 
     dark: {
-      main: "#42424a",
-      state: "#191919",
+      main: "rgb(8, 2, 21)",
+      state: "rgb(8, 2, 35)",
     },
   },
+  
 
   socialMediaColors: {
     facebook: {
@@ -240,7 +226,13 @@ const colors = {
       background: "#8097bf",
       text: "#1e2e4a",
     },
+
+    green: {
+      main: "green",
+      focus: "green",
+    },
   },
+ 
 
   coloredShadows: {
     primary: "#e91e62",
@@ -251,6 +243,7 @@ const colors = {
     error: "#f44336",
     light: "#adb5bd",
     dark: "#404040",
+    green: "green",
   },
 
   inputBorderColor: "#d2d6da",
