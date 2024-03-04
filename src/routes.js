@@ -8,6 +8,8 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import Form from "layouts/Form";
 import Home from "layouts/home";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import BankAccounts from "layouts/bankAccounts";
 
 
 
@@ -67,6 +69,14 @@ const routes = [
     route: "home",
     component: <Home/>,
   },
+  
+  {  type: "collapse",
+     name: "BankAccounts",
+     key: "BankAccounts",
+     icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,
+     route: "bankAccounts",
+    component: <BankAccounts/>,
+},
 
 
  

@@ -1,0 +1,49 @@
+.gridButton{
+    position: relative;
+    display: flex !important;
+    gap: 2%;
+
+
+}
+.deleteButtonn {
+    background-color: rgb(225, 29, 29) !important;
+    color: rgba(247, 242, 242, 0.973) !important;
+    padding-left: 0.2rem;  
+    cursor: pointer;
+}
+
+.editButtonn {
+    color: white !important;
+    background-color: rgba(239, 147, 10, 0.897) !important;
+    padding-left: 0.2rem;  
+    cursor: pointer;
+}
+
+.updateButtonn {
+    background-color: rgb(46, 143, 188) !important;
+    color: rgba(247, 242, 242, 0.973) !important;
+    padding-left: 0.2rem;  
+    cursor: pointer;
+}
+.roundedAdd{
+    position: absolute;
+    background-color: rgb(0, 4, 24) !important;
+    color: white !important;
+    margin-left: 83% !important;
+}
+.add{
+    background-color: rgb(22, 1, 41) !important;
+    color: white !important;
+    width: 10%;
+}
+.cancel{
+    background-color: rgb(195, 7, 7) !important;
+    color: white !important;
+    width: 10%;
+}
+.gridbtn{
+    display: flex !important;
+    gap: 1%  ;
+    justify-content: center;
+    color: rgba(45, 43, 43, 0.911);
+}

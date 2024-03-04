@@ -40,7 +40,7 @@ export default function Data() {
  
 
   const columns = [
-    { Header: "companyName", accessor: "companyId", width: "45%", align: "left" },
+    { Header: "companyName", accessor: "companyId", width: "20%", align: "left" },
     { Header: "type", accessor: "type", align: "left" },
     { Header: "amount", accessor: "amount", align: "center" },
     { Header: "startDate", accessor: "startDate", align: "center" },
@@ -62,17 +62,17 @@ export default function Data() {
     ),
 
     amount: (
-      <MDBox width="8rem" textAlign="left">
+      <MDBox width="8rem" textAlign="center">
        {item.amount} TND
        </MDBox>
     ),
     startDate: (
-      <MDBox width="8rem" textAlign="left">
+      <MDBox width="10rem" textAlign="center">
         {item.startDate}
         </MDBox>
     ),
     duration: (
-      <MDBox width="8rem" textAlign="left">
+      <MDBox width="8rem" textAlign="center">
        {item.duration}
       </MDBox>
     ),

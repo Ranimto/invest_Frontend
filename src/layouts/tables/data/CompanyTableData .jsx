@@ -30,7 +30,7 @@ export default function Data() {
         if (error.response) {
           setError(error.response.data.message);
         } else {
-          setError("Une erreur s'est produite lors de la récupération des investissements.");
+          setError("An error occurred during companies recovery.");
         }
       }
     };
