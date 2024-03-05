@@ -98,10 +98,10 @@ function Header({ children }) {
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <h5>
-                Richard Davis
+              Profil details
               </h5>
-              <p className="text">
-                CEO / Co-Founder
+              <p className="text" style={{marginLeft:'-13%'}}>
+                Personal Informations
               </p>
             </MDBox>
           </Grid>

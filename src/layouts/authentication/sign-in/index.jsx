@@ -14,6 +14,8 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import './style.css';
 import { Icon } from "@mui/material";
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../authRedux/Features/auth/auth';//Login action
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -23,6 +25,7 @@ function Basic() {
 	const [data, setData] = useState({ email: "", password: ""});
 	const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 	const handleChange = ({ currentTarget: input }) => {
 	setData({ ...data, [input.name]: input.value });
@@ -31,11 +34,11 @@ function Basic() {
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-      console.log("hh");
 			const url = "http://localhost:8023/auth/authenticate";
 			const { data: res } = await axios.post(url, data);
    
 			localStorage.setItem("token", res.data);
+      dispatch(login({ token: res.data, email: data.email })); //redux
       navigate("/form");
 			alert('User is authenticated')
 		} catch (error) {

@@ -1,0 +1,15 @@
+td {
+  color: rgba(42, 42, 44, 0.863);
+  font-size: small;
+  font-weight: 400;
+  font-size: 15px; 
+  line-height: 1!important;
+}
+
+ td em {
+  color: rgba(0, 1, 13, 0.551);
+  font-size: 15px;
+  font-style: normal; 
+  font-weight: 700;
+ 
+  }

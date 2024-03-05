@@ -8,6 +8,7 @@ import StepThreeForm from './StepThreeForm';
 import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Form() {
     const [step, setStep] = useState(1);
@@ -33,6 +34,7 @@ function Form() {
     sourceOfFunds: "",
 });
     const [showThankYou, setShowThankYou] = useState(false);
+    const navigate = useNavigate();
 
     const handleNextStep = () => {
         setStep(step + 1);
@@ -48,6 +50,7 @@ function Form() {
         await updateFormData(values);
         handleSubmit(values);
         alert('Formulaire soumis avec succès');
+        navigate("/dashboard");
     };
 
     const updateFormData = (values) => {

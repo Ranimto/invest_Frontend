@@ -48,6 +48,14 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
+  
+  {  type: "collapse",
+  name: "BankAccounts",
+  key: "BankAccounts",
+  icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,
+  route: "bankAccounts",
+ component: <BankAccounts/>,
+},
   {
     type: "collapse",
     name: "logout",
@@ -70,13 +78,7 @@ const routes = [
     component: <Home/>,
   },
   
-  {  type: "collapse",
-     name: "BankAccounts",
-     key: "BankAccounts",
-     icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,
-     route: "bankAccounts",
-    component: <BankAccounts/>,
-},
+ 
 
 
  

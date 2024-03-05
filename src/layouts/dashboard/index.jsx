@@ -31,7 +31,7 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Investment from "layouts/dashboard/components/Investment";
 import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Dashboard() {
@@ -66,6 +66,7 @@ function Dashboard() {
         });
         setShowForm(false);
         setInvestments([...investments, response.data]);
+        
     } catch (error) {
         console.log(error);
     }
@@ -88,6 +89,7 @@ function Dashboard() {
     setInvestment({...investment,[name]: value});
   };
 
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -99,7 +101,7 @@ function Dashboard() {
                 color="dark"
                 icon="weekend"
                 title="Investments"
-                count={281}
+                count='128'
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -202,6 +204,8 @@ function Dashboard() {
             {!showForm ? ( 
         <Button variant="contained" className='roundedAdd' onClick={handleAddInvestmentClick} style={{ margin:'1%', width:'18%'}}><AddRoundedIcon/>Add new Investment</Button>
       ) : (
+
+        
         <form onSubmit={handleSubmit} >
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={4}>

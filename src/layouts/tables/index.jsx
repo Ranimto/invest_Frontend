@@ -6,13 +6,13 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import allCompanyTableData from "layouts/tables/data/AllCompaniesTableData";
 import CompanyTableData from "layouts/tables/data/CompanyTableData ";
 import './style.css'
 
 function Tables() {
   const { columns, rows } = CompanyTableData();
-  const { columns: pColumns, rows: pRows } = projectsTableData();
+  const { columns: pColumns, rows: pRows } = allCompanyTableData();
 
   return (
     <DashboardLayout>
@@ -32,7 +32,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <h5 style={{color :'white'}} >
-                  Companies table
+                  Companies 
                 </h5>
                 
               </MDBox>
@@ -62,7 +62,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <h5 style={{color :'white'}} >
-                  Actions table
+                 Other companies 
                 </h5>
               </MDBox>
 

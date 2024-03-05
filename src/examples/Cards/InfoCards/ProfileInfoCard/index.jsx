@@ -10,17 +10,17 @@ import MDTypography from "components/MDTypography";
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 
-function ProfileInfoCard({ title, description, info, social, action, shadow }) {
+function ProfileInfoCard({ title, description, social, action, shadow }) {
   const labels = [];
   const values = [];
   const { socialMediaColors } = colors;
   const { size } = typography;
 
-
+  
   // Render the card info items
   const renderItems = labels.map((label, key) => (
     <MDBox key={label} display="flex" py={1} pr={2}>
-      <h3 > {label}: &nbsp;</h3>
+      <h3 >{label}: &nbsp;</h3>
       <h3>&nbsp;{values[key]} </h3>
     </MDBox>
   ));
@@ -60,6 +60,8 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
           <MDTypography variant="button" color="text" fontWeight="light">
             {description}
           </MDTypography>
+          <MDTypography variant="button" color="text" fontWeight="light">
+          </MDTypography>
         </MDBox>
         <MDBox opacity={0.3}>
           <Divider />
@@ -87,7 +89,6 @@ ProfileInfoCard.defaultProps = {
 ProfileInfoCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  info: PropTypes.objectOf(PropTypes.string).isRequired,
   social: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.shape({
   route: PropTypes.string.isRequired,

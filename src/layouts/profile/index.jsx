@@ -10,8 +10,39 @@ import Footer from "examples/Footer";
 import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
+import { useSelector } from 'react-redux'; //redux
+import { useEffect, useState } from "react";
+import axios from 'axios';
+import { Button, Card, CardContent, Typography } from "@mui/material";
+import './profil.css';
+
 
 function Overview() {
+  const email = useSelector((state) => state.auth.value.email);
+  const [user,setUser]=useState({ 
+  id:"",  
+  firstname:"",
+  lastname:"",
+  email :"",
+  phone :"",
+  city:"",
+  nationality:"",
+  postcode:"",
+  profession:"",
+  dateOfBirth:""
+})
+
+    const fetchUserByEmail= async (email) => {
+        const url = `http://localhost:8023/user/findByEmail/${email}`;
+        const response = await axios.get(url);
+        console.log("Response from server:", response.data, response);
+        setUser(response.data);
+    };
+
+     useEffect(() => {
+      fetchUserByEmail(email);
+    }, [email]);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -23,42 +54,55 @@ function Overview() {
               <PlatformSettings />
             </Grid>
             <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
-              <Divider orientation="vertical" sx={{ ml: -2, mr: 1 }} />
-
-              <ProfileInfoCard
-                title="profile information"
-                description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
-                info={{
-                  fullName: "Alec M. Thompson",
-                  mobile: "(44) 123 1234 123",
-                  email: "alecthompson@mail.com",
-                  location: "USA",
-                }}
-                social={[
-                  {
-                    link: "https://www.facebook.com/CreativeTim/",
-                    icon: <FacebookIcon />,
-                    color: "facebook",
-                  },
-                  {
-                    link: "https://twitter.com/creativetim",
-                    icon: <TwitterIcon />,
-                    color: "twitter",
-                  },
-                  {
-                    link: "https://www.instagram.com/creativetimofficial/",
-                    icon: <InstagramIcon />,
-                    color: "instagram",
-                  },
-                ]}
-                action={{ route: "", tooltip: "Edit Profile" }}
-                shadow={false}
-              />
-              <Divider orientation="vertical" sx={{ mx: 0 }} />
-            </Grid>
+              <Divider orientation="vertical" sx={{ ml: 4, mr: 2 }} />
+              
+    <Grid container >
+    <table>
+      <tbody>
+        <tr>
+          <td><em>FirstName</em></td>
+          <td className="value">{user.firstname}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><em>LastName</em></td>
+          <td >{user.lastname}</td>
+        </tr>
+        <tr>
+          <td><em>Profession</em></td>
+          <td>{user.profession}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><em>Number</em></td>
+          <td >{user.phone}</td>
+        </tr>
+        <tr >
+          <td><em>City</em></td>
+          <td>{user.city}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><em>Nationality</em></td>
+          <td>{user.nationality}</td>
+        </tr>
+        <tr>
+          <td><em>Postcode</em></td>
+          <td >{user.postcode}</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><em>Email</em></td>
+          <td >{user.email}</td>
+        </tr>
+       
+      </tbody>
+    </table>  
+</Grid>
+  
+  
+       
+  </Grid>
             
-          </Grid>
-        </MDBox>
+          
+  </Grid>
+  </MDBox>
         
       </Header>
       <Footer />
