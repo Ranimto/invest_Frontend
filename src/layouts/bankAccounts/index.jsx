@@ -6,7 +6,7 @@ import MDBox from 'components/MDBox';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import DataTable from 'examples/Tables/DataTable';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import'./style.css';
+import'./accountStyle.css';
 import axios from 'axios';
 
 const BankAccounts = () => {

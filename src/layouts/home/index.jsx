@@ -10,8 +10,14 @@ import team2 from 'assets/images/team-1.jpg'
 import team3 from 'assets/images/team-3.jpg'
 import React from 'react'
 import './style.css'
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+ const signupNavigate =()=>{
+  navigate("/authentication/sign-in");
+ }
   return (
     <PageLayout >
         <DefaultNavbar/>
@@ -29,7 +35,7 @@ const Home = () => {
         <h1>Welcome to the future of investing</h1>
         <h4> Discover the edge of tomorrow&apos;s investments today with our powered </h4>
         <h4>strategies and let the Artificial Intelligence drive your financial success. </h4>
-        <Button variant="contained" className='btnHome' >Start now</Button>
+        <Button variant="contained" className='btnHome' onClick={signupNavigate} >Start now</Button>
       </div>
     </Grid>
   </Grid>

@@ -4,7 +4,7 @@ import { Button, Grid, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import './style.css';
+import './accountStyle.css';
 
 export default function Data() {
   const [accounts, setAccounts] = useState([]);
