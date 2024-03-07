@@ -120,9 +120,9 @@ export default function Data() {
     ),
     actions: (
       <Grid className="gridButton" variant="contained">
-        <Button variant="contained" className='editButtonn'  title='edit' onClick={() => handleEdit(item)}><EditIcon/></Button>
-        <Button variant="contained" className='updateButtonn' style={{ padding: '5px 10px'}} title='update' onClick={handleUpdate}><UpdateIcon/></Button>
-        <Button variant="contained" className='deleteButtonn' title='delete' onClick={() => handleDelete(item.id)}><DeleteIcon/></Button>
+        <Button variant="contained" className='actionButtonn'  title='edit' onClick={() => handleEdit(item)}><EditIcon/></Button>
+        <Button variant="contained" className='actionButtonn' title='update' style={{backgroundColor:'rgba(239, 147, 10, 0.897)'}}  onClick={handleUpdate}><UpdateIcon/></Button>
+        <Button variant="contained" className='actionButtonn' title='delete'  style={{backgroundColor:'rgb(225, 29, 29)'}}onClick={() => handleDelete(item.id)}><DeleteIcon/></Button>
       </Grid>
     )
   }));

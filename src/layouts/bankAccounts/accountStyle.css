@@ -5,25 +5,11 @@
 
 
 }
-.deleteButtonn {
-    background-color: rgb(225, 29, 29) !important;
-    color: rgba(247, 242, 242, 0.973) !important;
-    padding-left: 0.2rem;  
+.actionButtonn {
+    color: white !important; 
     cursor: pointer;
-}
-
-.editButtonn {
-    color: white !important;
-    background-color: rgba(239, 147, 10, 0.897) !important;
-    padding-left: 0.2rem;  
-    cursor: pointer;
-}
-
-.updateButtonn {
-    background-color: rgb(46, 143, 188) !important;
-    color: rgba(247, 242, 242, 0.973) !important;
-    padding-left: 0.2rem;  
-    cursor: pointer;
+    min-width: 10px !important;
+    width: 10px !important;
 }
 .roundedAdd{
     position: absolute;

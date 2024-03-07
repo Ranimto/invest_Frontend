@@ -213,29 +213,6 @@ const Home = () => {
     </MDBox>
 
 
-
-
-
-    <MDBox className='service_section' mb={3}>
-        <Grid container className='grid' spacing={3}>
-
-
-          <Grid item xs={12} md={6}>
-          <Card>heyy</Card>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-           <Card>hey</Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-
-      
-  
-
-
-
-    
     </PageLayout>
 
   )

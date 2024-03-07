@@ -48,6 +48,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
+ 
+
   useEffect(() => {
    
     function handleMiniSidenav() {

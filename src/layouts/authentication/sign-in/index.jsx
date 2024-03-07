@@ -65,10 +65,9 @@ function Basic() {
           mt={-3}
           p={2}
           mb={1}
-          textAlign="center"
-          
+          textAlign="center"      
         >
-          <h4>
+          <h4 style={{color:'white', paddingTop:'-10%'}}>
             Sign in
           </h4>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>

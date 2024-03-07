@@ -13,3 +13,12 @@ td {
   font-weight: 700;
  
   }
+.attr1{
+ display: flex;
+ gap:20px;
+}
+.closeAccount{
+  color: white !important;
+  background-color: rgba(3, 2, 36, 0.886) !important;
+  margin-top: -20% !important;
+}

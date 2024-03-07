@@ -2,14 +2,15 @@
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
+
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import Footer from "layouts/authentication/components/Footer";
+import DefaultNavbaRegister from "examples/Navbars/DefaultNavbaRegister";
 
 function CoverLayout({ coverHeight, image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar
+     <DefaultNavbaRegister
         transparent
         light
       />

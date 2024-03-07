@@ -11,15 +11,15 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 77%;
     background-size: cover;
     background-position: center;
   }
   
   .text-container {
     position: absolute;
-    top: 60%;
-    left: 28%;
+    top: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);
     color: white;
    
@@ -51,18 +51,17 @@ h4 {
 .grid {
     display: flex;
     justify-content: center;
-    gap: 1%;
-   
+    gap: 1%; 
 }
 
 .cardClass {
     position: relative;
     width: 28%;
-    background-color: #e4c38a66 !important;
+   background-image: url('assets/images/purple4.jpg');
     text-align: center; 
     height: 6rem;
-    box-shadow: 1px 2px 4px 2px rgb(166, 165, 163)!important;
-    margin-top: -3%;
+    box-shadow: 1px 2px 4px 2px rgba(146, 145, 143, 0.91)!important;
+    margin-top: -13%;
 }
 
 .cardClass h4 {
@@ -75,7 +74,6 @@ h4 {
    
 }
 
-
 /* service section*/ 
 
  .service_section{
@@ -84,7 +82,7 @@ h4 {
 }
  
 .services_components{
-    padding-top: 9%;
+    padding-top: 4%;
 }
  .reviews_section ,.teams_section, .clients_section{
 
@@ -100,6 +98,7 @@ h4 {
     position: absolute;
     display: flex;
     justify-content: center;
+    margin-top: -8% !important ; 
 }
 
 .section-heading{
@@ -255,7 +254,6 @@ font-weight: 600;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-
 /* clients section*/
  
  .clients_items{
@@ -297,7 +295,10 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         width: 40%;
         margin-left:20% !important;
       }
-  }
+      .cardClass{
+          margin-top: -28%;
+      }
+      }
 
   @media (max-width: 900px) {
       .reviews_card {
@@ -326,7 +327,7 @@ font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     .container .text-container h4 {
       font-size: 1.1rem;
     }
-    
+        
   }
 
 

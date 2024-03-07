@@ -24,7 +24,7 @@ const GenericStepForm = ({ questions, onNextStep, updateFormData }) => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
-          alert(JSON.stringify(values, null, 2));
+    
           updateFormData(values);
           onNextStep();
         }}

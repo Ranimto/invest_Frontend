@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import Grid from "@mui/material/Grid";
 import MDBox from "components/MDBox";
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import Footer from "layouts/authentication/components/Footer";
+import DefaultNavbaRegister from "examples/Navbars/DefaultNavbaRegister";
 
 function BasicLayout({ image, children }) {
   return (
     <PageLayout>
-      <DefaultNavbar/>
+      <DefaultNavbaRegister/>
       <MDBox
         position="absolute"
         width="100%"
