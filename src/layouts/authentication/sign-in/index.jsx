@@ -36,11 +36,11 @@ function Basic() {
 		try {
 			const url = "http://localhost:8023/auth/authenticate";
 			const { data: res } = await axios.post(url, data);
-   
-			localStorage.setItem("token", res.data);
-      dispatch(login({ token: res.data, email: data.email })); //redux
-      navigate("/form");
-			alert('User is authenticated')
+			localStorage.setItem("token", res.token);
+      dispatch(login({ token: res.token, email: data.email })); //redux
+      alert('User is authenticated')
+      navigate("/dashboard");
+		
 		} catch (error) {
 			if (
 				error.response &&

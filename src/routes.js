@@ -48,8 +48,8 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
-  
-  {  type: "collapse",
+
+  { type: "collapse",
   name: "BankAccounts",
   key: "BankAccounts",
   icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,

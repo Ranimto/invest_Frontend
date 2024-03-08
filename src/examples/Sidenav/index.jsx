@@ -1,43 +1,26 @@
 import { useEffect } from "react";
-
-// react-router-dom components
-import { useLocation, NavLink } from "react-router-dom";
-
-// prop-types is a library for typechecking of props.
+import { useLocation, NavLink, useNavigation, Navigate, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-
-// @mui material components
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-
-// Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-
-// Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
+import {useMaterialUIController,setMiniSidenav,setTransparentSidenav,setWhiteSidenav,} from "context";
+import { useDispatch } from 'react-redux';
+import { logout } from "authRedux/Features/auth/auth";
 
-// Material Dashboard 2 React context
-import {
-  useMaterialUIController,
-  setMiniSidenav,
-  setTransparentSidenav,
-  setWhiteSidenav,
-} from "context";
+
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
-
   let textColor = "white";
 
   if (transparentSidenav || (whiteSidenav && !darkMode)) {
@@ -47,8 +30,17 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
+  const dispatchRedux = useDispatch();
+  const navigate=useNavigate();
+  
 
- 
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatchRedux(logout());
+    navigate('/authentication/sign-in')
+   };
+
+  
 
   useEffect(() => {
    
@@ -62,28 +54,36 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
 
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
+ if (type === "collapse") {
+  if (name === "logout") {
+    returnValue = (
+      <div key={key} onClick={handleLogout}>
+        <SidenavCollapse name={name} icon={icon} active={key === collapseName}/>
+      </div>
+    );
+  } else {
+    returnValue = href ? (
+      <Link
+        href={href}
+        key={key}
+        target="_blank"
+        rel="noreferrer"
+        sx={{ textDecoration: "none" }}
+      >
+        <SidenavCollapse
+          name={name}
+          icon={icon}
+          active={key === collapseName}
+          noCollapse={noCollapse}
+        />
+      </Link>
+    ) : (
+      <NavLink key={key} to={route}>
+        <SidenavCollapse name={name} icon={icon} active={key === collapseName}/>
+      </NavLink>
+    );
+  }
 
-    if (type === "collapse") {
-      returnValue = href ? (
-        <Link
-          href={href}
-          key={key}
-          target="_blank"
-          rel="noreferrer"
-          sx={{ textDecoration: "none" }}
-        >
-          <SidenavCollapse
-            name={name}
-            icon={icon}
-            active={key === collapseName}
-            noCollapse={noCollapse}
-          />
-        </Link>
-      ) : (
-        <NavLink key={key} to={route}>
-          <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-        </NavLink>
-      );
     } else if (type === "title") {
       returnValue = (
         <MDTypography
@@ -112,9 +112,20 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         />
       );
     }
+// If the current route is Sign Up and the name is not "home",
+  // disable the link to other routes except the home route
+    if (location.pathname === "/authentication/sign-in" && name !== "home") {
+      returnValue = (
+        <div key={key} onClick={(e) => e.preventDefault()}>
+          {returnValue}
+        </div>
+      );
+    }
 
-    return returnValue;
+    return returnValue; 
   });
+
+
 
   return (
     <SidenavRoot

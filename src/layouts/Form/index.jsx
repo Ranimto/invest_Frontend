@@ -50,7 +50,7 @@ function Form() {
         await updateFormData(values);
         handleSubmit(values);
         alert('Formulaire soumis avec succès');
-        navigate("/dashboard");
+        navigate("/authentication/sign-in");
     };
 
     const updateFormData = (values) => {
