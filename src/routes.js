@@ -10,6 +10,7 @@ import Form from "layouts/Form";
 import Home from "layouts/home";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BankAccounts from "layouts/bankAccounts";
+import Stock from "layouts/Stock";
 
 
 
@@ -77,6 +78,11 @@ const routes = [
     route: "home",
     component: <Home/>,
   },
+  { key: "stock",
+  route: "stock",
+  component: <Stock/>,
+},
+
   
  
 

@@ -37,7 +37,7 @@ function Basic() {
 			const url = "http://localhost:8023/auth/authenticate";
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("token", res.token);
-      dispatch(login({ token: res.token, email: data.email })); //redux
+      dispatch(login({isAuthenticated:true, token: res.token, email: data.email })); //redux
       alert('User is authenticated')
       navigate("/dashboard");
 		

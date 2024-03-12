@@ -11,8 +11,9 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 import {useMaterialUIController,setMiniSidenav,setTransparentSidenav,setWhiteSidenav,} from "context";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from "authRedux/Features/auth/auth";
+import { token } from "stylis";
 
 
 
@@ -32,6 +33,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
   const dispatchRedux = useDispatch();
   const navigate=useNavigate();
+  const token = useSelector((state) => state.auth.value.token);
   
 
   const handleLogout = () => {
@@ -39,9 +41,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     dispatchRedux(logout());
     navigate('/authentication/sign-in')
    };
-
-  
-
   useEffect(() => {
    
     function handleMiniSidenav() {
@@ -51,6 +50,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
     handleMiniSidenav();
   }, [dispatch, location]);
+
+  //To check again
+/*   useEffect(() => {
+    if (token==null) {
+      navigate('/authentication/sign-in');
+    }
+  }, [token, location.pathname, navigate]); */
+
 
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
