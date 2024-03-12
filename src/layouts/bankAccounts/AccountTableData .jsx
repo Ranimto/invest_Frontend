@@ -5,12 +5,36 @@ import UpdateIcon from '@mui/icons-material/Update';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import './accountStyle.css';
+import { useSelector } from 'react-redux';
 
 export default function Data() {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editedAccount, setEditedAccount] = useState(null);
   const [error, setError] = useState(null);
+  const [user,setUser]=useState({ 
+    id:"",  
+    firstname:"",
+    lastname:"",
+    email :"",
+    phone :"",
+    city:"",
+    nationality:"",
+    postcode:"",
+    profession:"",
+  })
+  const email = useSelector((state) => state.auth.value.email);
+
+  const fetchUserByEmail= async (email) => {
+    const url = `http://localhost:8023/user/findByEmail/${email}`;
+    const response = await axios.get(url);
+    console.log("Response from server:", response.data, response);
+    setUser(response.data);
+};
+
+ useEffect(() => {
+  fetchUserByEmail(email);
+}, [email]);
 
   const handleDelete = async (id) => {
     setLoading(true);
@@ -58,10 +82,10 @@ export default function Data() {
   };
 
   useEffect(() => {
-    const fetchAccounts = async () => {
+    const fetchAccounts = async (id) => {
       try {
         setLoading(true);
-        const url = 'http://localhost:8023/BankAccount/getAll';
+        const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${id}`;
         const response = await axios.get(url);
         setAccounts(response.data);
         setLoading(false);
@@ -74,8 +98,8 @@ export default function Data() {
         setLoading(false);
       }
     };
-    fetchAccounts();
-  }, []);
+    fetchAccounts(user.id);
+  }, [user.id]);
 
   const columns = [
     { Header: "idAccount", accessor: "idAccount", width: "20%", align: "left" },

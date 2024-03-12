@@ -10,6 +10,7 @@ import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
 
+
 const dataset = [
   { low: -12, high: -4, precip: 79, date: 'Jan' },
   { low: -11, high: -3, precip: 66, date: 'Feb' },
@@ -26,9 +27,9 @@ const dataset = [
 ];
 
 const series = [
-  { type: 'line', dataKey: 'low', color: '#577399' },
-  { type: 'line', dataKey: 'high', color: '#fe5f55' },
-  { type: 'bar', dataKey: 'precip', color: '#bfdbf7', yAxisKey: 'rightAxis' },
+  { type: 'line', dataKey: 'low', color: 'rgb(127, 9, 9)' },
+  { type: 'line', dataKey: 'high', color: 'blueviolet' },
+  { type: 'bar', dataKey: 'precip', color: 'transparent', stroke: '#8a2be2', strokeWidth: 2, yAxisKey: 'rightAxis' }, // Couleur transparente avec contour violet
 ];
 
 export default function ReverseExampleNoSnap() {
@@ -37,29 +38,23 @@ export default function ReverseExampleNoSnap() {
   const [reverseRight, setReverseRight] = React.useState(false);
 
   return (
-    <Stack sx={{ width: '100%' }}>
+    <Stack sx={{ width: '100%'}}>
       <Stack direction="row">
         <FormControlLabel
           checked={reverseX}
-          control={
-            <Checkbox onChange={(event) => setReverseX(event.target.checked)} />
-          }
+          control={<Checkbox onChange={(event) => setReverseX(event.target.checked)} />}
           label="reverse x-axis"
           labelPlacement="end"
         />
         <FormControlLabel
           checked={reverseLeft}
-          control={
-            <Checkbox onChange={(event) => setReverseLeft(event.target.checked)} />
-          }
+          control={<Checkbox onChange={(event) => setReverseLeft(event.target.checked)} />}
           label="reverse left axis"
           labelPlacement="end"
         />
         <FormControlLabel
           checked={reverseRight}
-          control={
-            <Checkbox onChange={(event) => setReverseRight(event.target.checked)} />
-          }
+          control={<Checkbox onChange={(event) => setReverseRight(event.target.checked)} />}
           label="reverse right axis"
           labelPlacement="end"
         />
@@ -82,17 +77,13 @@ export default function ReverseExampleNoSnap() {
           dataset={dataset}
           height={400}
         >
-          <BarPlot />
+          <BarPlot  />
           <LinePlot />
           <MarkPlot />
 
-          <ChartsXAxis />
+          <ChartsXAxis  />
           <ChartsYAxis axisId="leftAxis" label="Hight" />
-          <ChartsYAxis
-            axisId="rightAxis"
-            position="right"
-            label="Low"
-          />
+          <ChartsYAxis axisId="rightAxis" position="right" label="Low" />
         </ResponsiveChartContainer>
       </Box>
     </Stack>

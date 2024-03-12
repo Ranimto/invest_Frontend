@@ -15,6 +15,7 @@ function Investment() {
   const closeMenu = () => setMenu(null);
 
 
+
   const renderMenu = (
     
     <Menu

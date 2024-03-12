@@ -87,13 +87,14 @@ const BankAccounts = () => {
             <Grid item xs={6}>
               <TextField name="currency" label="currency" variant="outlined" fullWidth  value={account.currency} onChange={handleInputChange} />
             </Grid> 
-            <Grid item xs={12}>
-        <InputLabel id="active-label" style={{ padding: '5px' ,color:'rgba(45, 43, 43, 0.911)',fontWeight:'500'}}>This new Bank Account is currently active ? </InputLabel>
-      <Select labelId="active-label" variant="outlined" fullWidth style={{ padding: '6px' }} value={account.active ? "true" : "false"} onChange={handleSelectChange}>
-        <MenuItem value={true}>true</MenuItem>
-        <MenuItem value={false}>false</MenuItem>
-      </Select>
-    </Grid>
+
+          <Grid item xs={12}>
+            <InputLabel id="active-label" style={{ padding: '5px' ,color:'rgba(45, 43, 43, 0.911)',fontWeight:'500'}}>This new Bank Account is currently active ? </InputLabel>
+            <Select labelId="active-label" variant="outlined" fullWidth style={{ padding: '6px' }} value={account.active ? "true" : "false"} onChange={handleSelectChange}>
+            <MenuItem value={true}>true</MenuItem>
+            <MenuItem value={false}>false</MenuItem>
+           </Select>
+          </Grid>
          
 
             <Grid item className='gridbtn' xs={12}>

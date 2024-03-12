@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 
 
 export default function Data() {
@@ -17,11 +19,35 @@ export default function Data() {
     rib:""
   });
   const [error, setError] = useState(null);
+  const [user,setUser]=useState({ 
+    id:"",  
+    firstname:"",
+    lastname:"",
+    email :"",
+    phone :"",
+    city:"",
+    nationality:"",
+    postcode:"",
+    profession:"",
+  })
+  const email = useSelector((state) => state.auth.value.email);
+
+  const fetchUserByEmail= async (email) => {
+    const url = `http://localhost:8023/user/findByEmail/${email}`;
+    const response = await axios.get(url);
+    console.log("Response from server:", response.data, response);
+    setUser(response.data);
+};
+
+ useEffect(() => {
+  fetchUserByEmail(email);
+}, [email]);
+
 
   useEffect(() => {
-    const fetchCompanies= async () => {
+    const fetchCompanies= async (id) => {
       try {
-        const url = 'http://localhost:8023/company/getAllCompaniesExceptByInvestorId/1';
+        const url = `http://localhost:8023/company/getAllCompaniesExceptByInvestorId/${id}`;
         const response = await axios.get(url);
         console.log("Response from server:", response.data, response);
         setCompanies(response.data);
@@ -34,8 +60,8 @@ export default function Data() {
         }
       }
     };
-    fetchCompanies();
-  }, []);
+    fetchCompanies(user.id);
+  }, [user.id]);
 
  
 

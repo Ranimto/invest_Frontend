@@ -1,13 +1,13 @@
-td {
-  color: rgba(42, 42, 44, 0.863);
-  font-size: small;
-  font-weight: 400;
-  font-size: 15px; 
+.tdClass {
+  color: rgba(42, 42, 44, 0.863) !important;
+  font-size: small!important;;
+  font-weight: 400 !important;;
+  font-size: 15px !important;; 
   line-height: 1!important;
 }
 
  td em {
-  color: rgba(0, 1, 13, 0.551);
+  color: rgba(0, 1, 13, 0.551)!important;
   font-size: 15px;
   font-style: normal; 
   font-weight: 700;

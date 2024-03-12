@@ -33,7 +33,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const closeSidenav = () => setMiniSidenav(dispatch, true);
   const dispatchRedux = useDispatch();
   const navigate=useNavigate();
-  const token = useSelector((state) => state.auth.value.token);
+  const isAuthenticated = useSelector((state) => state.auth.value.isAuthenticated);
   
 
   const handleLogout = () => {
@@ -41,6 +41,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     dispatchRedux(logout());
     navigate('/authentication/sign-in')
    };
+
   useEffect(() => {
    
     function handleMiniSidenav() {
@@ -85,7 +86,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         />
       </Link>
     ) : (
-      <NavLink key={key} to={route}>
+      <NavLink key={key} to={route} disabled={location.pathname !== "/dashboard" && name !== "home"}>
         <SidenavCollapse name={name} icon={icon} active={key === collapseName}/>
       </NavLink>
     );
@@ -121,13 +122,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
 // If the current route is Sign Up and the name is not "home",
   // disable the link to other routes except the home route
-    if (location.pathname === "/authentication/sign-in" && name !== "home") {
-      returnValue = (
-        <div key={key} onClick={(e) => e.preventDefault()}>
-          {returnValue}
-        </div>
-      );
-    }
+  if (!isAuthenticated && location.pathname == "authetication/sign-in") {
+    returnValue = (
+      <div key={key} onClick={(e) => e.preventDefault()}>
+        {returnValue}
+      </div>
+    );
+  }
 
     return returnValue; 
   });

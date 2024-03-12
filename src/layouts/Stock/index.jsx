@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import PageLayout from 'examples/LayoutContainers/PageLayout';
 import DefaultNavbar from 'examples/Navbars/DefaultNavbar';
 import './stock.css';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { Button, Card, CardContent, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import losses from 'assets/images/losses.webp'
 import earnings from 'assets/images/earnings.png'
 import axios from 'axios';
@@ -23,16 +23,21 @@ const Stock = () => {
     { company: 'IDABM', buy: 415.15, sell: 482.5, change: -0.52 },
     { company: 'ADAAPL', buy: 554, sell: 595, change: 1.35 },
     { company: 'RDDFY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'IBDM', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'ADAPL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'RAFY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'IBSM', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'AADFAPL', buy: 554, sell: 595, change: 1.35 },
+    { company: 'AAAADAPL', buy: 554, sell: 595, change: 1.35 },
+ 
+  
+   
  
   ])
   const [stockData, setStockData] = useState([]);
   const [selectedSymbol, setSelectedSymbol] = useState('');
-
+  const [showForm, setShowForm] = useState(false);
+  const [formData,setFormData]=useState({
+    companyName:'',
+    number:'',
+    amount:'',
+    currency:'',
+  })
 
   useEffect(() => {
     const fetchData = async (symbol) => {
@@ -68,9 +73,28 @@ const Stock = () => {
 
   const handleCompanyClick = (symbol) => {
     setSelectedSymbol(symbol);
-    console.log(symbol)
+    setShowForm(true);
   };
  
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormData({
+      ...formData,
+      currecny: value === formData.currency 
+    });
+  };
+
+  const handleCancelClick = () => {
+    setShowForm(false); 
+  };
 
 /*   const handleCellChange = (index, key, newValue) => {
     setData(prevData => {
@@ -101,12 +125,12 @@ const Stock = () => {
   return (
     <PageLayout>
     
-      <Grid container spacing={2} className="containerGridd" >
+    <Grid container spacing={2} className="containerGridd" >
 
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={showForm ? 3 : 4}>
           <Card className="gridCardd">
             <CardContent>
-              <table>
+              <table className='tableClass'>
                 <thead>
                   <tr>
                     <th>Company</th>
@@ -119,7 +143,7 @@ const Stock = () => {
                   {data.map((item, index) => (
                     <tr key={index}>
                   
-                        <td
+                      <td
                         onClick={() => handleCompanyClick(item.company)}
                         className={selectedSymbol === item.company ? 'selected' : ''}
                       > {item.company}</td>
@@ -141,15 +165,15 @@ const Stock = () => {
           </Card>
       </Grid>
 
-      <Grid item xs={12} sm={8}>
-        <Grid container spacing={3}>
+      <Grid item xs={12} sm={showForm ? 6 : 8}>
+
+       <Grid container spacing={1}>
          
         <Grid item xs={12}>
         <Card className="gridCardd">
         <CardContent className='navbar'>
-          {data
-            .filter(item => item.company === selectedSymbol) 
-            .map((item, index) => (
+
+          {data.filter(item => item.company === selectedSymbol) .map((item, index) => (
               <Grid container spacing={3} key={index}>
                 <Grid item xs={12} sm={2}>
                   <div className="title">Company</div>
@@ -173,19 +197,54 @@ const Stock = () => {
                 </Grid>
               </Grid>
             ))}
+            
         </CardContent>
       </Card>
-      </Grid>
-          <Grid item xs={12}>
-            <Card className="gridCardd">
-              <CardContent className='navbar'>
-              <ReverseExampleNoSnap />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-      </Grid>
 
+        </Grid>      
+        <Grid item xs={12} >
+            <Card className="Cardd" >
+              <CardContent className='navbar'>
+              <ReverseExampleNoSnap />              
+              </CardContent>             
+            </Card>           
+        </Grid>
+    </Grid>  
+  </Grid>
+
+  {showForm &&
+       
+       (   
+        <Grid item xs={12} sm={3} >
+       <form className='formClass'>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={6}>
+            <TextField  name="CompanyName" label="CompanyName" variant="outlined" fullWidth  value={selectedSymbol}  onChange={handleInputChange}  />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField name="number" label="number" variant="outlined" fullWidth   value={formData.number}  onChange={handleInputChange}  />
+          </Grid> 
+          <Grid item xs={6}>
+            <TextField name="amount" label="amount" variant="outlined" fullWidth value={formData.amount} onChange={handleInputChange}  />
+          </Grid> 
+             
+          <Grid item xs={6}>
+            <Select labelId="active-label" variant="outlined" fullWidth style={{ height:'43px' }} value={formData.currency} onChange={handleSelectChange} >
+            <MenuItem value="EURO">EURO</MenuItem>
+            <MenuItem value="TND">TND</MenuItem>
+            <MenuItem value="DOLLAR">DOLLAR</MenuItem>
+           </Select>
+          </Grid>
+          <Grid item className='gridbtn' xs={12}>
+            <Button variant="contained" type="submit" className='buy' style={{backgroundColor:'rgb(22, 1, 41)' ,color:'white', width:'10%'}}>BUY </Button>
+            <Button variant="contained" type="submit"  className='cancel'  style={{backgroundColor:'rgb(127, 9, 9)' ,color:'white'}} onClick={handleCancelClick}>NOT NOW </Button>
+          </Grid>
+        </Grid> 
+      </form>
+      </Grid>
+      )
+      }
+  
       <Grid item xs={12} sm={3}>
         <Card className="gridCardd" style={{paddingLeft:'18%'}} >
           <CardContent >
@@ -213,11 +272,11 @@ const Stock = () => {
         </Card>
       </Grid>
 
-      <Grid item xs={12} sm={9}>
+      <Grid item xs={12} sm={showForm ? 6 : 9} >
       <Card className="gridCardd">
         <CardContent>
           <h2 className='symbol'>{selectedSymbol}</h2>
-          <table>
+          <table className='tableClass'>
             <thead>
               <tr>
                 <th>Date</th>

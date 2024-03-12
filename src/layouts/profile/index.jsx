@@ -62,48 +62,48 @@ function Overview() {
 
          <div className="attr1">
           <td><em>FirstName</em></td>
-          <td className="value">{user.firstname}</td>
+          <td className="tdClass">{user.firstname}</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           </div>
           <td>&nbsp;</td>
           <div className="attr1">
           <td><em>LastName</em></td>
-          <td >{user.lastname}</td>
+          <td  className="tdClass" >{user.lastname}</td>
           </div>
 
         </tr>
         <tr>
          <div className="attr1">
           <td><em>Profession</em></td>
-          <td>{user.profession}</td>
+          <td className="tdClass" >{user.profession}</td>
           </div>
           <td>&nbsp;</td>
           <div className="attr1">
           <td><em>Number</em></td>
-          <td >{user.phone}</td>
+          <td className="tdClass" >{user.phone}</td>
           </div>
         </tr>
         <tr >
         <div className="attr1">
           <td><em>City</em></td>
-          <td>{user.city}</td>
+          <td className="tdClass">{user.city}</td>
         </div>
           <td>&nbsp;</td>
           <div className="attr1">
           <td><em>Nationality</em></td>
-          <td>{user.nationality}</td>
+          <td className="tdClass" >{user.nationality}</td>
           </div>
         </tr>
         <tr>
         <div className="attr1">
           <td><em>Postcode</em></td>
-          <td >{user.postcode}</td>
+          <td className="tdClass" >{user.postcode}</td>
           </div>
           <td>&nbsp;</td>
           <div className="attr1">
           <td><em>Email</em></td>
-          <td >{user.email}</td>
+          <td className="tdClass" >{user.email}</td>
           </div>
         </tr>
         <tr>
