@@ -13,17 +13,17 @@ const Stock = () => {
   const [data, setData] = useState([
     { company: 'IBM', buy: 415.15, sell: 482.5, change: -0.52 },
     { company: 'AAPL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'RFY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'HVGD', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'DADAL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'RFDADY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'IBFDAM', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'AAAADAPL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'RFDAY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'IDABM', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'ADAAPL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'RDDFY', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'AAAADAPL', buy: 554, sell: 595, change: 1.35 },
+    { company: 'MSFT', buy: 415.15, sell: 482.5, change: -0.26 },
+    { company: 'AMZN', buy: 415.15, sell: 482.5, change: -0.52 },
+    { company: 'GOOGL', buy: 554, sell: 595, change: 1.35 },
+    { company: 'FB', buy: 415.15, sell: 482.5, change: -0.26 },
+    { company: 'JNJ', buy: 415.15, sell: 482.5, change: -0.52 },
+    { company: 'TSLA', buy: 554, sell: 595, change: 1.35 },
+    { company: 'JPM', buy: 415.15, sell: 482.5, change: -0.26 },
+    { company: 'V', buy: 415.15, sell: 482.5, change: -0.52 },
+    { company: 'WMT', buy: 554, sell: 595, change: 1.35 },
+    { company: 'XOM', buy: 415.15, sell: 482.5, change: -0.26 },
+    { company: 'BAC', buy: 554, sell: 595, change: 1.35 },
  
   
    
@@ -42,14 +42,13 @@ const Stock = () => {
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {
-        const response = await axios.get(
-         ` https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=7B2VWMKU9SVM59DQ`
-        );
+ const response = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`);
+ console.log ("SYMBOL",symbol);
   
        
-        if (response.data && response.data['Time Series (Daily)']) {
-          const timeSeriesData = response.data['Time Series (Daily)'];
-          const stockEntries = Object.entries(timeSeriesData).slice(0, 10).map(([date, values]) => ({
+        if (response.data && response.data['Time Series (5min)']) {
+          const timeSeriesData = response.data['Time Series (5min)'];
+          const stockEntries = Object.entries(timeSeriesData).slice(0, 6).map(([date, values]) => ({
             date,
             low: values['3. low'],
             high: values['2. high'],
@@ -60,7 +59,7 @@ const Stock = () => {
   
           setStockData(stockEntries);
         } else {
-          console.error('Time Series (Daily) data not found in response:', response.data);
+          console.error('Time Series (5min) data not found in response:', response.data);
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
@@ -205,7 +204,7 @@ const Stock = () => {
         <Grid item xs={12} >
             <Card className="Cardd" >
               <CardContent className='navbar'>
-              <ReverseExampleNoSnap />              
+              <ReverseExampleNoSnap selectedSymbol={selectedSymbol} />              
               </CardContent>             
             </Card>           
         </Grid>

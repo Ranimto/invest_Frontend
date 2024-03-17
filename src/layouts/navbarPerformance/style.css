@@ -1,0 +1,11 @@
+.navClass{
+    position: relative;
+    display: flex  !important;
+    gap: 1%;
+    margin-top: -3%;
+}
+.navClass p{
+    font-size: 10px;
+    color: rgb(2, 2, 31);
+    font-size: 15px;
+}

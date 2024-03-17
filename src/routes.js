@@ -11,8 +11,11 @@ import Home from "layouts/home";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import BankAccounts from "layouts/bankAccounts";
 import Stock from "layouts/Stock";
-
-
+import Performance from "layouts/Performance";
+import WebhookIcon from '@mui/icons-material/Webhook';
+import Activity from "layouts/activity/activity";
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import Transaction from "layouts/billing/components/Transaction";
 
 
 const routes = [
@@ -49,6 +52,22 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
+  {
+    type: "collapse",
+    name: "Performance",
+    key: "performance",
+    icon: <WebhookIcon/>,
+    route: "performance",
+    component: <Performance />,
+  },
+  {
+    type: "collapse",
+    name: "Activity",
+    key: "Activity",
+    icon: <PendingActionsIcon/>,
+    route: "activity",
+    component: <Activity/>,
+  },
 
   { type: "collapse",
   name: "BankAccounts",
@@ -83,15 +102,14 @@ const routes = [
   component: <Stock/>,
 },
 
+{
+key: "transaction",
+route: "transaction",
+component: <Transaction/>,
+},
+
   
- 
-
-
- 
-
-
- 
-  
+   
 ];
 
 export default routes;
