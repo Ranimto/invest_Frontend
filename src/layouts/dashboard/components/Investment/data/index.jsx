@@ -3,6 +3,7 @@ import axios from 'axios';
 import MDBox from "components/MDBox";
 import MDBadge from "components/MDBadge";
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function Data() {
   const [investments, setInvestments] = useState([]);
@@ -80,7 +81,7 @@ export default function Data() {
 
     companyName: (
       <MDBox width="8rem" textAlign="left">
-        {item.companyName}
+      <Link to={`/stock/${item.companyName}`} className="CompanyName">{item.companyName}</Link>
       </MDBox>
     ),
     type: (

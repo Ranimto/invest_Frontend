@@ -26,6 +26,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    isPrivate: true,
   },
   {
     type: "collapse",
@@ -34,6 +35,7 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+    isPrivate: true,
   },
   {
     type: "collapse",
@@ -42,6 +44,7 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
+    isPrivate: true,
   },
   
   {
@@ -51,6 +54,7 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
+    isPrivate: true,
   },
   {
     type: "collapse",
@@ -59,6 +63,7 @@ const routes = [
     icon: <WebhookIcon/>,
     route: "performance",
     component: <Performance />,
+    isPrivate: true,
   },
   {
     type: "collapse",
@@ -67,6 +72,7 @@ const routes = [
     icon: <PendingActionsIcon/>,
     route: "activity",
     component: <Activity/>,
+    isPrivate: true,
   },
 
   { type: "collapse",
@@ -75,6 +81,7 @@ const routes = [
   icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,
   route: "bankAccounts",
  component: <BankAccounts/>,
+ isPrivate: true,
 },
   {
     type: "collapse",
@@ -84,28 +91,34 @@ const routes = [
     route: "/authentication/sign-in",
     route: "/authentication/sign-in",
     component: <SignIn />,
+    isPrivate: false,
   },
   {
     route: "/authentication/sign-up",
     component: <SignUp />,
+    isPrivate: false,
   },
   { key: "form",
     route: "form",
     component: <Form/>,
+    isPrivate: true,
   },
   { key: "home",
     route: "home",
     component: <Home/>,
+    isPrivate: false,
   },
   { key: "stock",
-  route: "stock",
+  route: "/stock/:company",
   component: <Stock/>,
+  isPrivate: true,
 },
 
 {
 key: "transaction",
 route: "transaction",
 component: <Transaction/>,
+isPrivate: true,
 },
 
   

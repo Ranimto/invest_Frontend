@@ -34,7 +34,7 @@ import MDBox from "components/MDBox";
 import breakpoints from "assets/theme/base/breakpoints";
 
 // Images
-import burceMars from "assets/images/bruce-mars.jpg";
+import ProfileImg from "assets/images/ranim.png";
 import backgroundImage from "assets/images/bg-profile.jpeg";
 
 function Header({ children }) {
@@ -93,14 +93,14 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <img  className="profile_img" src={burceMars} alt="profile-image"/>
+            <img  className="profile_img" src={ProfileImg} alt="profile-image"/>
           </Grid>
-          <Grid item>
+          <Grid item  className="profileTitle">
             <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <h5>
-              Profil details
+              <h5 style={{fontSize:'26px'}}>
+                Profil details
               </h5>
-              <p className="text" style={{marginLeft:'-13%'}}>
+              <p className="profileText">
                 Personal Informations
               </p>
             </MDBox>

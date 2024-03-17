@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PageLayout from 'examples/LayoutContainers/PageLayout';
-import DefaultNavbar from 'examples/Navbars/DefaultNavbar';
 import './stock.css';
 import { Button, Card, CardContent, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import losses from 'assets/images/losses.webp'
 import earnings from 'assets/images/earnings.png'
 import axios from 'axios';
-import MixedChart from 'examples/Charts/MixedChart';
 import ReverseExampleNoSnap from './chart';
+import PropTypes from 'prop-types';
+import { Link, useParams } from 'react-router-dom';
 
 const Stock = () => {
+  const {company}=useParams();
+   
+
   const [data, setData] = useState([
     { company: 'IBM', buy: 415.15, sell: 482.5, change: -0.52 },
     { company: 'AAPL', buy: 554, sell: 595, change: 1.35 },
@@ -30,7 +33,7 @@ const Stock = () => {
  
   ])
   const [stockData, setStockData] = useState([]);
-  const [selectedSymbol, setSelectedSymbol] = useState('');
+  const [selectedSymbol, setSelectedSymbol] = useState(company);
   const [showForm, setShowForm] = useState(false);
   const [formData,setFormData]=useState({
     companyName:'',
@@ -65,10 +68,11 @@ const Stock = () => {
         console.error('Erreur lors de la récupération des données:', error);
       }
     };
-  
+
     fetchData(selectedSymbol);
+    
    
-  }, [selectedSymbol]);
+  }, [selectedSymbol, company]);
 
   const handleCompanyClick = (symbol) => {
     setSelectedSymbol(symbol);
@@ -123,7 +127,6 @@ const Stock = () => {
 
   return (
     <PageLayout>
-    
     <Grid container spacing={2} className="containerGridd" >
 
       <Grid item xs={12} sm={showForm ? 3 : 4}>
@@ -169,6 +172,7 @@ const Stock = () => {
        <Grid container spacing={1}>
          
         <Grid item xs={12}>
+        <Link to={'/dashboard'} className='backToDash'>Back to dashboard</Link>
         <Card className="gridCardd">
         <CardContent className='navbar'>
 
@@ -244,12 +248,12 @@ const Stock = () => {
       )
       }
   
-      <Grid item xs={12} sm={3}>
-        <Card className="gridCardd" style={{paddingLeft:'18%'}} >
+      <Grid item xs={12} sm={3} >
+        <Card className="gridCardd" style={{paddingLeft:'14%',height:'97%',paddingTop:'25%'}}  >
           <CardContent >
-          <Grid item xs={12} sm={12}  style={{paddingLeft:'13%' ,paddingBottom:'15%'}}>
+          <Grid item xs={12} sm={12}  style={{paddingLeft:'21%' ,paddingBottom:'10%'}}>
            <div className="text">Trade overview</div>
-           <div className="txt2" style={{paddingLeft:'8%'}}>78,2333.00</div>
+           <div className="txt2" style={{paddingLeft:'7%'}}>78,2333.00</div>
            </Grid>
            <Grid container spacing={3}>
            <Grid item xs={12} sm={6}>
@@ -308,6 +312,10 @@ const Stock = () => {
     </Grid>
     </PageLayout>
   );
+};
+
+Stock.propTypes = {
+  company: PropTypes.string.isRequired
 };
 
 export default Stock;

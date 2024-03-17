@@ -10,7 +10,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/rrr.jpg";
 import './style.css';
 import { Icon } from "@mui/material";
 import axios from 'axios';

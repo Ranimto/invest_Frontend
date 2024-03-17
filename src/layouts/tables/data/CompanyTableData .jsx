@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 export default function Data() {
@@ -81,7 +82,7 @@ export default function Data() {
 
     name: (
       <h3 className="CompanyName">
-        {item.name}
+      <Link to={`/stock/${item.name}`} className="CompanyName">{item.name}</Link>
       </h3>
     ),
    activity: (
