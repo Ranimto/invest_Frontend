@@ -56,7 +56,7 @@ function Cover() {
 
   return (
     <CoverLayout image={bgImage}>
-      <Card>
+      <Card className="signUpCard">
         
         <MDBox
           variant="gradient"
@@ -68,11 +68,12 @@ function Cover() {
           p={3}
           mb={1}
           textAlign="center"
+          className="signUpText"
         >
            <h4>
             Join us today
           </h4>
-            <p>Enter your email and password to register</p>     
+            <p >Enter your email and password to register</p>     
          
         </MDBox>
         <MDBox pt={2} pb={3} px={3}>
@@ -114,17 +115,16 @@ function Cover() {
               <h6>
                 &nbsp;&nbsp;I agree the&nbsp;<span style={{color:'rgba(41, 141, 228, 0.718)'}}>Terms and Conditions</span> </h6>    
             </MDBox>
-
+   
             <MDBox mt={4} mb={1}>
             {error && <div className="error_msg">{error}</div>}
               <MDButton variant="gradient" color="info" fullWidth type="submit">
                 sign up
               </MDButton>
             </MDBox>
-
-            <MDBox mt={3} mb={1} textAlign="center">
+            <MDBox mt={3} mb={2} textAlign="center">
               <p className="txt">
-                Already have an account?{" "}<span style={{color:'rgba(20, 103, 212, 0.741)'}}> Sign In </span>
+                Already have an account?{" "}<span style={{color:'rgba(20, 103, 212, 0.741)'}}> <Link to={"/authentication/sign-in"}>Sign In</Link>  </span>
               </p>
             </MDBox>
 

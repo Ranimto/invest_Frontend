@@ -122,7 +122,7 @@ function Basic() {
             <MDBox mt={3} mb={1} textAlign="center">
               <p className="txt">
                 Don&apos;t have an account?{" "}
-                <span style={{color:'rgba(20, 103, 212, 0.741)'}}> Sign up</span>
+                <span style={{color:'rgba(20, 103, 212, 0.741)'}}>  <Link to={"/authentication/sign-up"}>Sign Up</Link> </span>
               </p>
             </MDBox>
           </MDBox>

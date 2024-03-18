@@ -18,3 +18,22 @@ font-weight: 400;
 .green_btn{
     margin-top: 10px;
 }
+.signUpText p{
+    color: rgba(255, 255, 255, 0.736);
+    font-size: 14px;
+    font-weight: 400;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: oblique;
+}
+
+.signUpText h4{
+    color: rgb(255, 255, 255);
+    font-size: 19px;
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.signUpCard{
+    width: 112%;
+    margin-top: -10% ;
+}

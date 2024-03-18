@@ -8,6 +8,7 @@ import background from 'assets/images/R8Xg21.webp'
 import team1 from 'assets/images/team-4.jpg'
 import team2 from 'assets/images/team-1.jpg'
 import team3 from 'assets/images/team-3.jpg'
+import team4 from 'assets/images/ranim.png'
 import React from 'react'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
@@ -147,7 +148,7 @@ const Home = () => {
       </Card> 
 
       <Card className='team_card'  xs={12} md={4} >
-              <img src={team1}/> 
+              <img src={team4}/> 
               <h6>&apos;&apos;Name&apos;&apos;,<em> Profession</em></h6>
       </Card>   
     </Grid> 
