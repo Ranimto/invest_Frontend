@@ -9,6 +9,9 @@ import team1 from 'assets/images/team-4.jpg'
 import team2 from 'assets/images/team-1.jpg'
 import team3 from 'assets/images/team-3.jpg'
 import team4 from 'assets/images/ranim.png'
+import mobile from 'assets/images/phone_1-min.png'
+import mobile1 from 'assets/images/Rydoo-Phone-Mockup-Header-1-960x772.png'
+
 import React from 'react'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
@@ -46,13 +49,17 @@ const Home = () => {
       <MDBox mb={3}>
         <Grid className='grid' container spacing={3}>
           <Card className='cardClass' xs={12} md={4}>
-            <h4>Reliability and Transparency</h4>
+            <h4><strong>Now</strong> Money</h4>
+            <p>Cash Account</p>
+            
           </Card>
           <Card className='cardClass' xs={12} md={4}>
-            <h4>Innovation and Advanced Technology</h4>
+            <h4> <strong>Soon</strong>  Money</h4>
+            <p>Automated Tracking Portfolio</p>
           </Card>
           <Card className='cardClass' xs={12} md={4}>
-            <h4>Commitment to User Success</h4>
+             <h4><strong>Later</strong> Money</h4>
+            <p>Automated Investing Account</p>
           </Card>
         </Grid>
       </MDBox>
@@ -71,38 +78,8 @@ const Home = () => {
 
     <Grid container spacing={2} className="services_components">
         {/* Partie de gauche avec une liste de petites cartes alignées verticalement */}
-        <Grid item xs={12} md={6}>
-            <Grid container direction="column" spacing={2} className="services_items">
-                
-                <Grid item xs={12}>
-                    <Card variant="outlined" className='texttCard'>
-                        <p>Investment Management</p>
-                    </Card>
-                </Grid>
-           
-                <Grid item xs={12}>
-                    <Card variant="outlined" className='texttCard'>
-                        <p>Financial Analysis</p>
-                    </Card>
-                </Grid>
-
-                <Grid item xs={12}>
-                    <Card variant="outlined" className='texttCard'>
-                        <p>Portfolio Tracking</p>
-                    </Card>
-                </Grid>
-                <Grid item xs={12}>
-                    <Card variant="outlined" className='texttCard'>
-                        <p>Automatic Rebalancing</p>
-                    </Card>
-                </Grid>
-                <Grid item xs={12}>
-                    <Card variant="outlined" className='texttCard'>
-                        <p>Financial Prediction</p>
-                    </Card>
-                </Grid>
-  
-            </Grid>
+        <Grid item xs={12} md={6}>    
+          <img src={mobile1} style={{width:'75%',marginLeft:'10%',marginTop:'3%' }}/>     
         </Grid>
         {/* Partie de droite avec une carte contenant du texte */}
         <Grid item xs={12} md={6}>
@@ -160,24 +137,25 @@ const Home = () => {
       
       <div className="section-heading">
         <h6>Benefits </h6>
-        <h4>Our <em>Main</em> Benefits  </h4>
+        <h4>Ready <em>For</em> Your Money&apos;s New Home? </h4>
       </div>
       
     <Grid  className='teams_items'> 
 
       <Card className='reviews_card'  xs={12} md={4} >
-              <p> 5.000TND Minimum deposit</p>
+          
+              <p> <strong> 5.000TND +</strong> Minimum deposit</p>
       </Card> 
       <Card className='reviews_card'  xs={12} md={4} >
-              <p>0% Commissions</p>
-      </Card> 
-
-      <Card className='reviews_card'  xs={12} md={4} >
-      <p>1.000 TND Minimum investment amount</p>    
+              <p><strong>0%   </strong>Commissions</p>
       </Card> 
 
       <Card className='reviews_card'  xs={12} md={4} >
-              <p>0% Fees</p>
+      <p><strong> 1.000TND + </strong> Minimum investment</p>    
+      </Card> 
+
+      <Card className='reviews_card'  xs={12} md={4} >
+              <p><strong>0%  </strong> Fees</p>
       </Card> 
 
     </Grid> 
@@ -188,30 +166,74 @@ const Home = () => {
     <MDBox className='clients_section' mb={3}>
       
     <div className="section-heading">
-        <h6>Reviews </h6>
-        <h4>What <em>They </em> Think About Us </h4>
+
+        <h4>Tailor <em>Your Risk </em>  To Suit Your Investment Ambitons</h4>
       </div>
       <div className='clients_items'>  
            
-      <Card className='client_card'  xs={12} md={4} >
-           
-            <h6>&apos;&apos;Name&apos;&apos;,<em> Profession</em></h6>
-    
+      <Card className='quote_card'  xs={12} md={4} >
+           <h4>A smarter way to discover and buy stocks</h4>
+           <p>We decode the market for you, empowering faster, more strategic stock decisions. Dive into a multitude of themes and explore numerous themes and opportunities, delve into data
+              and insights, and invest seamlessly.</p>
+              <Button variant="contained" className='btnHomee' onClick={signupNavigate} >Start now</Button>
       </Card> 
-      <Card className='client_card'  xs={12} md={4} >
-      <p>hey</p>
+      <Card className='quote_card'  xs={12} md={4} >
+        <h4>Automated, diversified index investing</h4>
+      <p>Whether up or down, our expertly constructed portfolios help you stay diversified to achieve your goals. Limit your risk,
+         minimize your taxes and maximize your returns - all with built-in automation.</p>
+         <Button variant="contained" className='btnHomee' onClick={signupNavigate} >Start now</Button>
       </Card> 
 
-      <Card className='client_card'  xs={12} md={4} >
-       <p>hey</p>
+      <Card className='quote_card'  xs={12} md={4} >
+      <h4>Diversified investments options </h4>
+       <p>Unlock wealth effortlessly with our diversified options. Earn dividends with low-risk bonds, automate long-term investments, and more.Chart your financial future with confidence. From smart investments to savvy saving.</p>
+       <Button variant="contained" className='btnHomee' onClick={signupNavigate} >Start now</Button>
       </Card> 
 
-      <Card className='client_card'  xs={12} md={4} >
-      <p>hey</p>
+      <Card className='quote_card'  xs={12} md={4} >
+        <h4>Unlock Your Financial Potential </h4>
+      <p>Chart your financial future with confidence. From smart investments to savvy saving strategies, we are here to guide you every step of the way. We are here to support you through every twist and turn</p>
+      <Button variant="contained" className='btnHomee' onClick={signupNavigate} >Start now</Button>
       </Card> 
       
       </div> 
     </MDBox>
+
+
+
+
+<MDBox className='CardComponents'>
+
+<Grid container spacing={3} className="service-heading">
+<div className="section-heading">
+<h4> <em>Maximize </em> your money&apos;s momentum with ease </h4>
+</div>
+</Grid>
+
+<Grid container spacing={1} className="services_components">
+    {/* Partie de gauche avec une liste de petites cartes alignées verticalement */}
+    <Grid item xs={12} md={6} >
+        <Grid container direction="column" spacing={2} className="services_items"  style={{marginTop:"-10%"}} >
+            
+            <Grid item xs={12}>
+                <Card variant="outlined" className='LeftMobileCard'>
+                   <h4>Stake all your money in the right place</h4>
+                   <p>Explore a world of financial possibilities with our comprehensive suite of tools and resources. 
+                      From personalized investment strategies to cutting-edge portfolio management, we empower you to
+                      navigate the complexities of the financial markets with confidence. Whether you are a seasoned investor or just starting out,
+                      our platform offers the expertise and support you need to succeed. Join us on the journey to
+                      financial freedom and unlock your full potential today.</p>
+                      <Button variant="contained" className='btnHomee' onClick={signupNavigate} >don&apos;t miss out</Button>
+                </Card>
+            </Grid>
+        </Grid>
+    </Grid>
+    {/* Partie de droite avec une carte contenant du texte */}
+    <Grid item xs={12} md={6}>    
+          <img src={mobile} style={{width:'80%'}}/>     
+    </Grid>
+</Grid>
+</MDBox>
 
 
     </PageLayout>

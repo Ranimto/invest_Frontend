@@ -9,6 +9,7 @@ import axios from 'axios'
 import './style.css'
 import { useState } from "react";
 import MDButton from "components/MDButton";
+import MDAlert from "components/MDAlert";
 
 function Cover() {
 
@@ -22,42 +23,41 @@ function Cover() {
 		    verificationCode :""
 	});
 	const [error, setError] = useState("");
+  const [registred, setRegistred] = useState(false);
 	const navigate = useNavigate();
 	
-
-
-    // extraire la propriété currentTarget de l'événement et la renommer en input
-    // Mettre a jour la propriété spécifique de l'objet data  'input.name' en fonction du champ du formulaire qui a déclenché l'événement 'input.value'.
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
 	};
 
-	
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			const url = "http://localhost:8023/auth/register";
 			const { data: res } = await axios.post(url, data);
-			console.log(data);
-			navigate("/EmailVerif", { state: { email: data.email } });
-			console.log(res.message);
+      setRegistred(true);
+      showAlertAndNavigate("you've been successfully registered", "/form");
 		} catch (error) {
-			if (error.response) {
-
-				alert("Email already in use. Please choose a different email address");
-			} else {
-				setError(error.response.data.message);
-				alert(error);
-				
-			}
+		
+        showAlertAndNavigate("Registration failed, try again please", "/authentication/sign-up");
+		
 		}
 	};
 
+  const showAlertAndNavigate = ( message, destination) => {
+    setError(message); 
+    setTimeout(() => {
+      navigate(destination); 
+    }, 1800); 
+  };
+
+  
   return (
+    
     <CoverLayout image={bgImage}>
+      
       <Card className="signUpCard">
-        
         <MDBox
           variant="gradient"
           bgColor="info"
@@ -117,12 +117,12 @@ function Cover() {
             </MDBox>
    
             <MDBox mt={4} mb={1}>
-            {error && <div className="error_msg">{error}</div>}
+          
               <MDButton variant="gradient" color="info" fullWidth type="submit">
                 sign up
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={2} textAlign="center">
+            <MDBox mt={3} mb={1} textAlign="center">
               <p className="txt">
                 Already have an account?{" "}<span style={{color:'rgba(20, 103, 212, 0.741)'}}> <Link to={"/authentication/sign-in"}>Sign In</Link>  </span>
               </p>
@@ -131,6 +131,11 @@ function Cover() {
           </MDBox>
         </MDBox>
       </Card>
+      {error  && 
+           <MDAlert color={registred ? "success" : "error"} className="alertClasss">
+           {error}
+         </MDAlert>
+          }
     </CoverLayout>
   );
 }

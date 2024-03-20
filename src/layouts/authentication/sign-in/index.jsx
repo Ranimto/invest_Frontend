@@ -16,6 +16,7 @@ import { Icon } from "@mui/material";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../authRedux/Features/auth/auth';//Login action
+import MDAlert from "components/MDAlert";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -23,6 +24,7 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
 	const [data, setData] = useState({ email: "", password: ""});
+  const [authenticated, setAuthenticated] = useState(false);
 	const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,9 +40,9 @@ function Basic() {
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("token", res.token);
       dispatch(login({isAuthenticated:true, token: res.token, email: data.email })); //redux
-      alert('User is authenticated')
-      navigate("/dashboard");
-		
+      setAuthenticated(true);
+      showAlertAndNavigate("you've been successfully authenticated", "/dashboard");
+      
 		} catch (error) {
 			if (
 				error.response &&
@@ -48,10 +50,17 @@ function Basic() {
 				error.response.status <= 500
 			) {
 				setError(error.response.data.message);
-				alert(error.data);
+        showAlertAndNavigate("Authentication failed, try again please", "/authentication/sign-in");
 			}
 		}
 	};
+
+  const showAlertAndNavigate = ( message, destination) => {
+    setError(message); 
+    setTimeout(() => {
+      navigate(destination); 
+    }, 1800); 
+  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -127,7 +136,14 @@ function Basic() {
             </MDBox>
           </MDBox>
         </MDBox>
+
       </Card>
+
+      {error  && 
+           <MDAlert color={authenticated ? "success" : "error"} className="alertClass">
+           {error}
+         </MDAlert>
+          }
     </BasicLayout>
   );
 }
