@@ -30,7 +30,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <h6 className="settings">
-              Email me when someone follows me
+            Email me to receive my account updates 
             </h6>
           </MDBox>
         </MDBox>
@@ -40,7 +40,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <h6 className="settings">
-              Email me when someone answers on my post
+              Email me when new companies are added
             </h6>
           </MDBox>
         </MDBox>
@@ -65,7 +65,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <h6 className="settings">
-              New launches and projects
+              New companies
             </h6>
           </MDBox>
         </MDBox>
@@ -75,7 +75,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <h6 className="settings">
-              Monthly product updates
+              Monthly stocks updates
             </h6>
           </MDBox>
         </MDBox>
@@ -85,7 +85,7 @@ function PlatformSettings() {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <h6 className="settings">
-              Subscribe to newsletter
+            Monthly bonds updates
             </h6>
           </MDBox>
         </MDBox>

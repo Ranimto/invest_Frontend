@@ -32,14 +32,16 @@ export default function Data() {
     setUser(response.data);
 };
 
+
  useEffect(() => {
   fetchUserByEmail(email);
 }, [email]);
 
+
   const handleDelete = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8023/BankAccount/delete/${id}`);
+      await axios.delete(`http://localhost:8023/bankAccount/delete/${id}`);
       setAccounts(accounts.filter(account => account.id !== id));
     } catch (error) {
       setError("An error occurred while deleting the account.");
@@ -51,7 +53,7 @@ export default function Data() {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      await axios.put(`http://localhost:8023/BankAccount/update`, editedAccount);
+      await axios.put(`http://localhost:8023/bankAccount/update`, editedAccount);
       const updatedAccounts = accounts.map(account => {
         if (account.id === editedAccount.id) {
           return editedAccount;
@@ -85,7 +87,8 @@ export default function Data() {
     const fetchAccounts = async (id) => {
       try {
         setLoading(true);
-        const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${id}`;
+       // const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${id}`;
+       const url =`http://localhost:8023/bankAccount/getAll`;
         const response = await axios.get(url);
         setAccounts(response.data);
         setLoading(false);
@@ -103,11 +106,11 @@ export default function Data() {
 
   const columns = [
     { Header: "idAccount", accessor: "idAccount", width: "20%", align: "left" },
-    { Header: "accountNo", accessor: "accountNo", align: "center" },
+    { Header: "glCode", accessor: "glCode", align: "center" },
     { Header: "bankName", accessor: "bankName", align: "center" },
     { Header: "balance", accessor: "balance", align: "center" },
-    { Header: "currency", accessor: "currency", align: "center" },
-    { Header: "active", accessor: "active", align: "center" },
+    { Header: "manualEntriesAllowed", accessor: "manualEntriesAllowed", align: "center" },
+    { Header: "Disabled", accessor: "Disabled", align: "center" },
     { Header: "actions", accessor: "actions", align: "center" },
   ];
 
@@ -117,30 +120,30 @@ export default function Data() {
       <TextField name="id" value={editedAccount.id} onChange={handleFieldChange} />
       : <h3 className="idAccount">{item.id}</h3>
     ),
-    accountNo: (
+    glCode: (
       editedAccount && editedAccount.id === item.id ?
-      <TextField name="accountNo" value={editedAccount.accountNo} onChange={handleFieldChange} />
-      : <h3>{item.accountNo}</h3>
+      <TextField name="glCode" value={editedAccount.glCode} onChange={handleFieldChange} />
+      : <h3>{item.glCode}</h3>
     ),
     bankName: (
       editedAccount && editedAccount.id === item.id ?
-      <TextField name="bankName" value={editedAccount.bankName} onChange={handleFieldChange} />
-      : <h3>{item.bankName}</h3>
+      <TextField name="name" value={editedAccount.name} onChange={handleFieldChange} />
+      : <h3>{item.name}</h3>
     ),
     balance: (
       editedAccount && editedAccount.id === item.id ?
       <TextField name="balance" value={editedAccount.balance} onChange={handleFieldChange} />
       : <h3>{item.balance}</h3>
     ),
-    currency: (
+    disabled: (
       editedAccount && editedAccount.id === item.id ?
-      <TextField name="currency" value={editedAccount.currency} onChange={handleFieldChange} />
-      : <h3>{item.currency}</h3>
+      <TextField name="disabled" value={editedAccount.disabled} onChange={handleFieldChange} />
+      : <h3>{item.disabled}</h3>
     ),
-    active: (
+    manualEntriesAllowed: (
       editedAccount && editedAccount.id === item.id ?
-      <TextField name="active" value={editedAccount.active} onChange={handleFieldChange} />
-      : <h3>{item.active}</h3>
+      <TextField name="manualEntriesAllowed" value={editedAccount.manualEntriesAllowed} onChange={handleFieldChange} />
+      : <h3>{item.manualEntriesAllowed}</h3>
     ),
     actions: (
       <Grid className="gridButton" variant="contained">

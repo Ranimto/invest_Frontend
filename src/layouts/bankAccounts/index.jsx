@@ -26,15 +26,19 @@ const BankAccounts = () => {
     e.preventDefault(); 
 
     try {
-        const url = "http://localhost:8023/BankAccount/add";
+        const url = "http://localhost:8023/bankAccount/add";
         const response = await axios.post(url, account);
         console.log('bank account added:', response.data);
         setAccount({
-          accountNo: "",
-          bankName: "",
+          id:"",
+          glCode: "",
+          name: "",
           balance: "",
-          currency: "",
-          active: false
+          disabled: "",
+          manualEntriesAllowed: false,
+          accountType: "",
+          accountUsage: "",
+
         });
         setShowForm(false);
         setAccounts([...accounts, response.data]);
@@ -76,21 +80,25 @@ const BankAccounts = () => {
         <form onSubmit={handleSubmit} >
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={6}>
-              <TextField  name="accountNo" label="accountNo" variant="outlined" fullWidth value={account.accountNo} onChange={handleInputChange}  />
+              <TextField  name="glCode" label="glCode" variant="outlined" fullWidth value={account.glCode} onChange={handleInputChange}  />
             </Grid>
             <Grid item xs={6}>
-              <TextField name="bankName" label="bankName" variant="outlined" fullWidth value={account.bankName} onChange={handleInputChange} />
+              <TextField name="name" label="name" variant="outlined" fullWidth value={account.name} onChange={handleInputChange} />
             </Grid> 
             <Grid item xs={6}>
               <TextField name="balance" label="balance" variant="outlined" fullWidth value={account.balance} onChange={handleInputChange}  />
             </Grid>    
+          
             <Grid item xs={6}>
-              <TextField name="currency" label="currency" variant="outlined" fullWidth  value={account.currency} onChange={handleInputChange} />
+              <TextField name="manualEntriesAllowed" label="manualEntriesAllowed" variant="outlined" fullWidth  value={account.manualEntriesAllowed} onChange={handleInputChange} />
+            </Grid> 
+            <Grid item xs={6}>
+              <TextField name="accountType" label="accountType" variant="outlined" fullWidth  value={account.accountType} onChange={handleInputChange} />
             </Grid> 
 
           <Grid item xs={12}>
-            <InputLabel id="active-label" style={{ padding: '5px' ,color:'rgba(45, 43, 43, 0.911)',fontWeight:'500'}}>This new Bank Account is currently active ? </InputLabel>
-            <Select labelId="active-label" variant="outlined" fullWidth style={{ padding: '6px' }} value={account.active ? "true" : "false"} onChange={handleSelectChange}>
+            <InputLabel id="disabled-label" style={{ padding: '5px' ,color:'rgba(45, 43, 43, 0.911)',fontWeight:'500'}}>This new Bank Account is currently disabled ? </InputLabel>
+            <Select labelId="disabled-label" variant="outlined" fullWidth style={{ padding: '6px' }} value={account.disabled ? "true" : "false"} onChange={handleSelectChange}>
             <MenuItem value={true}>true</MenuItem>
             <MenuItem value={false}>false</MenuItem>
            </Select>

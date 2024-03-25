@@ -13,7 +13,7 @@ import PlatformSettings from "layouts/profile/components/PlatformSettings";
 import { useSelector } from 'react-redux'; //redux
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import './profil.css';
 
 
@@ -26,10 +26,12 @@ function Overview() {
   email :"",
   phone :"",
   city:"",
-  nationality:"",
-  postcode:"",
-  profession:"",
+  nationality: "",
+  postCode: 0,
+  profession: ""
 })
+
+
 
     const fetchUserByEmail= async (email) => {
         const url = `http://localhost:8023/user/findByEmail/${email}`;
@@ -42,86 +44,159 @@ function Overview() {
       fetchUserByEmail(email);
     }, [email]);
 
-  return (
+   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mb={2} />
+    <MDBox mb={2} />
       <Header>
-        <MDBox mt={5} mb={3}>
+    <MDBox mt={5} mb={3}>
           <Grid container spacing={1}>
             <Grid item xs={12} md={6} xl={4}>
               <PlatformSettings />
             </Grid>
-            <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
-              <Divider orientation="vertical" sx={{ ml: 4, mr: 2 }} />
+    <Grid item xs={12} md={6} xl={4} sx={{ display: "flex" }}>
+     <Divider orientation="vertical" sx={{ ml: 4, mr: 2 }} />
               
     <Grid container >
-    <table>
-      <tbody>
-        <tr>
+    <Card sx={{ boxShadow: "none" }}>
+      <MDBox p={2}>
+        <h6 className="title">
+        Personal Informations 
+        </h6>
+      </MDBox>
+      <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+        <h6  className="subtitle" style={{padding:"2%"}}>
+       INVESTOR DETAILS 
+        </h6>
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Firstname :  </h6>
+            <h4 className="tdClass">{user.firstname}</h4>               
+        </MDBox>
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Lastname :  </h6>
+            <h4 className="tdClass">{user.lastname}</h4>               
+        </MDBox>
 
-         <div className="attr1">
-          <td><em>FirstName</em></td>
-          <td className="tdClass">{user.firstname}</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          </div>
-          <td>&nbsp;</td>
-          <div className="attr1">
-          <td><em>LastName</em></td>
-          <td  className="tdClass" >{user.lastname}</td>
-          </div>
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  City :  </h6>
+            <h4 className="tdClass" style={{paddingLeft:"7%"}}>{user.city}</h4>               
+        </MDBox>
 
-        </tr>
-        <tr>
-         <div className="attr1">
-          <td><em>Profession</em></td>
-          <td className="tdClass" >{user.profession}</td>
-          </div>
-          <td>&nbsp;</td>
-          <div className="attr1">
-          <td><em>Number</em></td>
-          <td className="tdClass" >{user.phone}</td>
-          </div>
-        </tr>
-        <tr >
-        <div className="attr1">
-          <td><em>City</em></td>
-          <td className="tdClass">{user.city}</td>
-        </div>
-          <td>&nbsp;</td>
-          <div className="attr1">
-          <td><em>Nationality</em></td>
-          <td className="tdClass" >{user.nationality}</td>
-          </div>
-        </tr>
-        <tr>
-        <div className="attr1">
-          <td><em>Postcode</em></td>
-          <td className="tdClass" >{user.postcode}</td>
-          </div>
-          <td>&nbsp;</td>
-          <div className="attr1">
-          <td><em>Email</em></td>
-          <td className="tdClass" >{user.email}</td>
-          </div>
-        </tr>
-        <tr>
-       <Button variant="contained" className="closeAccount">Close Account </Button>
-       </tr>
-      </tbody>
-    </table>  
-</Grid>
-  
-  
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Number :  </h6>
+            <h4 className="tdClass" style={{paddingLeft:"7%"}}>{user.phone}</h4>               
+        </MDBox>
+
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Email:  </h6>
+            <h4 className="tdClass" style={{paddingLeft:"5%"}}>{user.email}</h4>               
+        </MDBox>
        
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Nationnality:  </h6>
+            <h4 className="tdClass">{user.nationality}</h4>               
+        </MDBox>
+
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+            <h6 className="settings" >  Profession :  </h6>
+            <h4 className="tdClass">{user.profession}</h4>               
+        </MDBox>
+    
+        <MDBox mt={3}>
+          <h6  className="subtitle" style={{paddingBottom:"3%"}}>
+          Who Provides What Service?
+          </h6>
+        </MDBox>
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
+          <MDBox width="80%" ml={1} >
+            <h6 className="settings" >
+            Investment Advice: Advisory services for traditional investments (e.g., ETFs) and digital assets are provided by Betterment LLC, an SEC-registered investment adviser.
+             InvestAI also offers the InvetsAI Cash Reserve product. InvestAI does not require clients to maintain a minimum investment account balance. However, accounts below a certain balance may have certain restrictions. For more information, please see additional disclosure.
+            </h6>
+          </MDBox>
+        </MDBox>
+        <MDBox mt={3}>
+          <h6  className="subtitle" style={{paddingBottom:"3%"}}>
+          Who Provides What Service?
+          </h6>
+        </MDBox>
+       
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
+          <MDBox width="80%" ml={1} >
+            <h6 className="settings" >
+            Before investing, consider your investment objectives and the fees and expenses associated with the InvestAI platform. InvestAI&apos;s online advisory 
+            services are designed to assist clients in achieving specific financial goals. 
+            </h6>
+          </MDBox>
+        </MDBox>
+       
+      </MDBox>
+    </Card> 
+</Grid>   
+
+<Divider orientation="vertical" sx={{ ml: 4, mr: 2 }} />
+              
+              <Grid container >
+              <Card sx={{ boxShadow: "none" }}>
+                <MDBox p={2}>
+                  <h6 className="title">
+                  Personal Informations 
+                  </h6>
+                </MDBox>
+                <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+                  <h6  className="subtitle" style={{padding:"2%"}}>
+                  Terms and Conditions
+                  </h6>
+                  <MDBox display="flex" alignItems="center" mb={0.5} ml={1} className="profileTextt">     
+                  
+                      <h4 className="terms" > This application is provided by InvestAI LLC. To the extent that there is marketing related to InvestAI Checking,
+                       it is provided by InvestAI Financial LLC. © InvestAI. All rights reserved.</h4>               
+                  </MDBox>
+
+                  <MDBox display="flex" alignItems="center" mb={0.5} ml={0.5} className="profileTextt">     
+                      <h6 className="settings" style={{fontSize:'15px'}}>ChangeEmail:  </h6>
+                      <Grid item xs={12}>
+                     <TextField  name="email" label="email" variant="outlined" fullWidth value={user.email} />
+                     </Grid>  
+                  </MDBox>          
+              
+                  <MDBox mt={3}>
+                    <h6  className="subtitle" style={{paddingBottom:"3%"}}>
+                    Who Provides What Service?
+                    </h6>
+                  </MDBox>
+                  <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
+                    <MDBox width="80%" ml={1} >
+                      <h6 className="settings" >
+                      Investment Advice: Advisory services for traditional investments (e.g., ETFs) and digital assets are provided by Betterment LLC, an SEC-registered investment adviser.
+                       InvestAI also offers the InvetsAI Cash Reserve product. InvestAI does not require clients to maintain a minimum investment account balance. However, accounts below a certain balance may have certain restrictions. For more information, please see additional disclosure.
+                      </h6>
+                    </MDBox>
+                  </MDBox>
+                  <MDBox mt={3}>
+                    <h6  className="subtitle" style={{paddingBottom:"3%"}}>
+                    Who Provides What Service?
+                    </h6>
+                  </MDBox>
+                 
+                  <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
+                    <MDBox width="80%" ml={1} >
+                      <h6 className="settings" >
+                      Before investing, consider your investment objectives and the fees and expenses associated with the InvestAI platform. InvestAI&apos;s online advisory 
+                      services are designed to assist clients in achieving specific financial goals. 
+                      </h6>
+                    </MDBox>
+                  </MDBox>
+                 
+                </MDBox>
+              </Card> 
+          </Grid> 
+  </Grid>     
   </Grid>
-            
-          
-  </Grid>
-  </MDBox>
-        
+  </MDBox>      
       </Header>
+
+     
       <Footer />
     </DashboardLayout>
   );

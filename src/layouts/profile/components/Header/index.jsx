@@ -26,38 +26,50 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Icon from "@mui/material/Icon";
 import './style.css'
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
-
-// Images
 import ProfileImg from "assets/images/ranim.png";
 import backgroundImage from "assets/images/bg-profile.jpeg";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function Header({ children }) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+  const email = useSelector((state) => state.auth.value.email);
+  const [user,setUser]=useState({ 
+    id:"",  
+    firstname:"",
+    lastname:"",
+    email :"",
+    phone :"",
+    city:"",
+    nationality:"",
+    postcode:"",
+    profession:"",
+  })
+
+  const fetchUserByEmail= async (email) => {
+    const url = `http://localhost:8023/user/findByEmail/${email}`;
+    const response = await axios.get(url);
+    console.log("Response from server:", response.data, response);
+    setUser(response.data);
+};
+
+ useEffect(() => {
+  fetchUserByEmail(email);
+}, [email]);
 
   useEffect(() => {
-    // A function that sets the orientation state of the tabs.
+
     function handleTabsOrientation() {
       return window.innerWidth < breakpoints.values.sm
         ? setTabsOrientation("vertical")
         : setTabsOrientation("horizontal");
     }
 
-    /** 
-     The event listener that's calling the handleTabsOrientation function when resizing the window.
-    */
     window.addEventListener("resize", handleTabsOrientation);
-
-    // Call the handleTabsOrientation function to set the state with the initial value.
     handleTabsOrientation();
-
-    // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
@@ -97,11 +109,11 @@ function Header({ children }) {
           </Grid>
           <Grid item  className="profileTitle">
             <MDBox height="100%" mt={0.5} lineHeight={1}>
-              <h5 style={{fontSize:'26px'}}>
-                Profil details
+              <h5 style={{fontSize:'35px'}}>
+              {user.firstname} {user.lastname}
               </h5>
               <p className="profileText">
-                Personal Informations
+                  Personal Account 
               </p>
             </MDBox>
           </Grid>
@@ -134,12 +146,10 @@ function Header({ children }) {
   );
 }
 
-// Setting default props for the Header
 Header.defaultProps = {
   children: "",
 };
 
-// Typechecking props for the Header
 Header.propTypes = {
   children: PropTypes.node,
 };

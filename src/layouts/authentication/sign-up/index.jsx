@@ -10,6 +10,8 @@ import './style.css'
 import { useState } from "react";
 import MDButton from "components/MDButton";
 import MDAlert from "components/MDAlert";
+import { useDispatch } from "react-redux";
+import { login } from '../../../authRedux/Features/auth/auth';
 
 function Cover() {
 
@@ -25,6 +27,8 @@ function Cover() {
 	const [error, setError] = useState("");
   const [registred, setRegistred] = useState(false);
 	const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 	
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
@@ -36,6 +40,7 @@ function Cover() {
 		try {
 			const url = "http://localhost:8023/auth/register";
 			const { data: res } = await axios.post(url, data);
+      dispatch(login({isAuthenticated:true, token: res.token, email: data.email }));
       setRegistred(true);
       showAlertAndNavigate("you've been successfully registered", "/form");
 		} catch (error) {

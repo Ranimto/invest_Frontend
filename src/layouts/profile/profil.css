@@ -22,3 +22,14 @@
   background-color: rgba(3, 2, 36, 0.886) !important;
   margin-top: -20% !important;
 }
+.profileTextt{
+  display: flex;
+  gap: 5%;
+  padding: 2%;
+}
+.terms{
+  padding: 2%;
+  font-size: 13px;
+  color: rgba(6, 6, 89, 0.819);
+  font-weight: 500;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import StepOneForm from './StepOneForm';
 import bgImage from "assets/images/R8Xg21.webp";
@@ -9,10 +9,14 @@ import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { store } from 'store';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 function Form() {
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({  
+    const [formData, setFormData] = useState({ 
+    userId:"", 
     employmentStatus: "",
     age: "",
     investmentGoal: "",
@@ -33,9 +37,25 @@ function Form() {
     financialRiskComfortLevel: "",
     sourceOfFunds: "",
 });
+const email = useSelector((state) => state.auth.value.email);
+
+    const fetchUserByEmail= async (email) => {
+        const url = `http://localhost:8023/user/findByEmail/${email}`;
+        const response = await axios.get(url);
+        console.log("Response from server:", response.data, response);
+        console.log('id',response.data.id);
+        setFormData({ ...formData, userId: response.data.id }); 
+        console.log('formData',formData);
+       
+    };
+
+     useEffect(() => {
+      fetchUserByEmail(email);
+    }, [email]);
+
     const [showThankYou, setShowThankYou] = useState(false);
     const navigate = useNavigate();
-
+   
     const handleNextStep = () => {
         setStep(step + 1);
     };
@@ -48,7 +68,7 @@ function Form() {
     const handleDone = async (values) => {
         setShowThankYou(true);
         await updateFormData(values);
-        handleSubmit(values);
+        handleSubmit();
         alert('Formulaire soumis avec succès');
         navigate("/authentication/sign-in");
     };
@@ -58,10 +78,10 @@ function Form() {
         console.log('hello',formData);
     };
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async () => {
         try {
             const url = "http://localhost:8023/profileData/addProfileData";
-            const response = await axios.post(url, values);
+            const response = await axios.post(url, formData);
             console.log('Profile data added:', response.data);
         } catch (error) {
             console.log(error);

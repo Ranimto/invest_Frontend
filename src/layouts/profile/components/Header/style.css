@@ -21,5 +21,15 @@ h5{
     font-weight: 400;
     color: rgba(90, 89, 89, 0.916)!important;
     margin-left: 20%!important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   
+}
+
+
+.profileTitle p{
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(90, 89, 89, 0.916)!important;
+    margin-left: 20%!important;
    
 }
