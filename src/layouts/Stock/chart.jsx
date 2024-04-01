@@ -74,7 +74,7 @@ const StockChart = ({ selectedSymbol }) => {
   };
 
   return (
-    <div style={{ width: '90%', height: '420px' }}>
+    <div style={{ width: '90%', height: '420px',color:'black' }}>
       <h2>Stock Chart for {selectedSymbol}</h2>
       <Line data={chartData} options={options} />
     </div>

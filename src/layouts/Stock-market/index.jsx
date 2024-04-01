@@ -26,10 +26,7 @@ const Stock = () => {
     { company: 'V', buy: 415.15, sell: 482.5, Mean: -0.52 },
     { company: 'WMT', buy: 554, sell: 595, Mean: 1.35 },
     { company: 'XOM', buy: 415.15, sell: 482.5, Mean: -0.26 },
-    { company: 'BAC', buy: 554, sell: 595, Mean: 1.35 },
- 
-  
-   
+    { company: 'BAC', buy: 554, sell: 595, Mean: 1.35 }, 
  
   ])
   const [stockData, setStockData] = useState([]);
@@ -276,7 +273,7 @@ const Stock = () => {
            <div className="grp">
              <img src={earnings} style={{width:'45%'}}/>
              <div className="txt1">earnings</div>
-             <div className="txt2">700.008.99</div>
+             <div className="txt2">700.008.999</div>
            </div>
            </Grid>
            <Grid item xs={12} sm={6}>

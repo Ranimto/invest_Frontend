@@ -1,0 +1,90 @@
+
+.recommandationContainer {
+   background-image: url('assets/images/rrrr.jpg');
+   background-repeat: none;
+   background-size: 100% 100% ;
+   height: 47rem;
+   padding-top: 5%;
+  
+  }
+  .recommandationContainer h1 {
+    display: flex;
+    justify-content: center;
+    color: rgba(240, 248, 255, 0.873);
+    padding-top: 3%;
+  }
+  .recommandationContainer h5 {
+    display: flex;
+    justify-content: center;
+    color: rgba(240, 248, 255, 0.873);
+    padding-top: 1%;
+    font-size: 14px;
+    font-weight: 100;
+  }
+  .recommandationContainerCard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px; 
+    padding: 2%;
+   }
+.recommandationCard{
+    background-color:transparent !important;
+    width: 20rem !important;
+    height: 14rem;
+    padding: 5%;
+    box-shadow: 1px 2px 4px 2px rgba(175, 145, 193, 0.91)!important;
+    border: 1px solid rgb(207, 180, 222) !important;
+}
+
+.recommandationCard h6{
+font-size: 17px;
+font-weight: 500;
+color: rgba(252, 252, 252, 0.873);
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.recommandationCard p   {
+  font-size: 13px;
+  color: rgba(245, 222, 179, 0.721);
+  font-weight: 100;
+  }
+  .formClasss{
+    background-color:white ;
+    width:40% ;
+    height:41rem;
+    margin:2% 10% 5% 30% ;
+    padding:5%;
+    color: rgb(163, 53, 53);
+    border-radius: 1%;
+  }
+ .formClasss p {
+  font-size: 17px;
+  color: rgba(9, 9, 9, 0.805);
+  font-weight: 600;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+ }
+ .btnRecommandation{
+  color: white !important;
+  background-color: rgb(58, 128, 42) !important;
+  padding: 10px !important;
+  display: flex;
+  margin:5% 0 0 30% !important;
+  width: 40%;
+  cursor: pointer;
+ }
+
+.formFooter{
+  display: flex;
+  flex-direction: column ;
+}
+.back{
+  padding: 3%;
+  margin-left: -10%;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 13px;
+ 
+}
+.back:hover{
+ color: rgb(15, 51, 104) ;
+ text-decoration: underline !important;
+ font-weight: 600  ;
+}

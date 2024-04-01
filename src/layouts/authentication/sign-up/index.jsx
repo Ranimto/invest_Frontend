@@ -15,12 +15,16 @@ import { login } from '../../../authRedux/Features/auth/auth';
 
 function Cover() {
 
-  const [data, setData] = useState({
+const [data, setData] = useState({
 		    firstname:"",
         lastname:"",
         email :"",
         password :"",
 		    phone :"",
+        nationality :"",
+        city :"",
+        profession:"",
+        postCode:"",
 		    enabled: false,
 		    verificationCode :""
 	});
@@ -69,7 +73,7 @@ function Cover() {
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
-          mt={-3}
+          mt={-6}
           p={3}
           mb={1}
           textAlign="center"
@@ -84,20 +88,19 @@ function Cover() {
         <MDBox pt={2} pb={3} px={3}>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
 
-            <MDBox mb={2}>
-              <MDInput type="text" label="firstname" variant="standard" fullWidth  	
+            <MDBox mb={2}  display="flex">
+              <MDInput type="text" label="Firstname" variant="standard" fullWidth  	
               name="firstname"
 							onChange={handleChange}
 							value={data.firstname}/>
-            </MDBox>
 
-            <MDBox mb={2}>
-              <MDInput type="text" label="lastname" variant="standard" fullWidth
+             <MDInput type="text" label="Lastname" variant="standard" fullWidth
                     name="lastname"
                     onChange={handleChange}
                     value={data.lastname}
               />
             </MDBox>
+
 
             <MDBox mb={2}>
               <MDInput type="email" label="Email" variant="standard" fullWidth
@@ -113,6 +116,35 @@ function Cover() {
                     onChange={handleChange}
                     value={data.password}
               />
+            </MDBox>
+
+            <MDBox mb={2}  display="flex">
+              <MDInput type="text" label="Number" variant="standard" fullWidth
+                    name="phone"
+                    onChange={handleChange}
+                    value={data.phone}
+              />
+
+             <MDInput type="text" label="Profession" variant="standard" fullWidth
+                    name="profession"
+                    onChange={handleChange}
+                    value={data.profession}
+              />
+            </MDBox>
+
+            <MDBox mb={2}  display="flex">
+              <MDInput type="text" label="City" variant="standard" fullWidth 
+                    name="city"
+                    onChange={handleChange}
+                    value={data.city}
+              />
+
+               <MDInput type="text" label="PostCode" variant="standard" fullWidth 
+                    name="postCode"
+                    onChange={handleChange}
+                    value={data.postCode}
+              />
+
             </MDBox>
 
             <MDBox display="flex" alignItems="center" ml={-1}>

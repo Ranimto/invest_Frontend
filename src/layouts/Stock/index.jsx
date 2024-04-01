@@ -11,29 +11,30 @@ import { Link, useParams } from 'react-router-dom';
 
 const Stock = () => {
   const {company}=useParams();
+  const [selectedIndex, setSelectedIndex] = useState(0); 
    
 
   const [data, setData] = useState([
-    { company: 'IBM', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'AAPL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'MSFT', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'AMZN', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'GOOGL', buy: 554, sell: 595, change: 1.35 },
-    { company: 'FB', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'JNJ', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'TSLA', buy: 554, sell: 595, change: 1.35 },
-    { company: 'JPM', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'V', buy: 415.15, sell: 482.5, change: -0.52 },
-    { company: 'WMT', buy: 554, sell: 595, change: 1.35 },
-    { company: 'XOM', buy: 415.15, sell: 482.5, change: -0.26 },
-    { company: 'BAC', buy: 554, sell: 595, change: 1.35 },
- 
-  
-   
+    { company: 'IBM', buy: 415.15, sell: 482.5, Mean: -0.52 },
+    { company: 'AAPL', buy: 554, sell: 595, Mean: 1.35 },
+    { company: 'MSFT', buy: 415.15, sell: 482.5, Mean: -0.26 },
+    { company: 'AMZN', buy: 415.15, sell: 482.5, Mean: -0.52 },
+    { company: 'GOOGL', buy: 554, sell: 595, Mean: 1.35 },
+    { company: 'FB', buy: 415.15, sell: 482.5, Mean: -0.26 },
+    { company: 'JNJ', buy: 415.15, sell: 482.5, Mean: -0.52 },
+    { company: 'TSLA', buy: 554, sell: 595, Mean: 1.35 },
+    { company: 'JPM', buy: 415.15, sell: 482.5, Mean: -0.26 },
+    { company: 'V', buy: 415.15, sell: 482.5, Mean: -0.52 },
+    { company: 'WMT', buy: 554, sell: 595, Mean: 1.35 },
+    { company: 'XOM', buy: 415.15, sell: 482.5, Mean: -0.26 },
+    { company: 'BAC', buy: 554, sell: 595, Mean: 1.35 }, 
  
   ])
   const [stockData, setStockData] = useState([]);
+  const [analyticsData, setAnalyticsData] = useState({});
+  const [analyticData, setAnalyticData] = useState([]);
   const [selectedSymbol, setSelectedSymbol] = useState(company);
+  const [symbol, setSymbol] = useState(company);
   const [showForm, setShowForm] = useState(false);
   const [formData,setFormData]=useState({
     companyName:'',
@@ -45,12 +46,12 @@ const Stock = () => {
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {
- const response = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`);
- console.log ("SYMBOL",symbol);
+        // Fetch stock data
+        const stockResponse = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`);
+        console.log("Stock data response:", stockResponse.data);
   
-       
-        if (response.data && response.data['Time Series (5min)']) {
-          const timeSeriesData = response.data['Time Series (5min)'];
+        if (stockResponse.data && stockResponse.data['Time Series (5min)']) {
+          const timeSeriesData = stockResponse.data['Time Series (5min)'];
           const stockEntries = Object.entries(timeSeriesData).slice(0, 6).map(([date, values]) => ({
             date,
             low: values['3. low'],
@@ -62,17 +63,71 @@ const Stock = () => {
   
           setStockData(stockEntries);
         } else {
-          console.error('Time Series (5min) data not found in response:', response.data);
+          console.error('Time Series (5min) data not found in stock response:', stockResponse.data);
         }
+  
+        // Fetch analytic data
+        const analyticResponse = await axios.get(`https://alphavantageapi.co/timeseries/running_analytics?SYMBOLS=AAPL,IBM,TLSA,AMZN&RANGE=2month&INTERVAL=DAILY&OHLC=close&WINDOW_SIZE=20&CALCULATIONS=STDDEV&apikey=7B2VWMKU9SVM59DQ`);
+        console.log("Analytics data response:", analyticResponse.data);
+  
+        const  list=["AAPL","IBM","TLSA","AMZN"]
+        for (let  symbol in list){
+
+        const payload = analyticResponse.data.payload.RETURNS_CALCULATIONS.MEAN.RUNNING_MEAN[symbol];
+        const analyticEntries = [];
+        console.log("payload:",payload);
+
+        for (const [date, value] of Object.entries(payload)) {
+          analyticEntries.push({ date, value });
+        }
+        console.log("analyticEntries i:",analyticEntries);
+        setAnalyticData(analyticEntries);
+        console.log("Analytic i data:", analyticData);
+      }
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
       }
     };
-
+  
     fetchData(selectedSymbol);
-    
-   
   }, [selectedSymbol, company]);
+  
+
+  useEffect(() => {
+    const fetchAnalyticsData = async () => {
+      try {
+        const analyticResponse = await axios.get(`https://alphavantageapi.co/timeseries/running_analytics?SYMBOLS=AAPL,IBM,TLSA,AMZN&RANGE=2month&INTERVAL=DAILY&OHLC=close&WINDOW_SIZE=20&CALCULATIONS=STDDEV&apikey=7B2VWMKU9SVM59DQ`);
+        const  list=["AAPL","IBM","TLSA","AMZN"]
+        for (let  symbol in list){
+          const payload = analyticResponse.data.payload.RETURNS_CALCULATIONS.MEAN.RUNNING_MEAN[symbol];
+          const analyticEntries= [];
+          for (const [date, value] of Object.entries(payload)) {
+          analyticEntries.push({ date, value });
+          console.log("analyticcs",analyticEntries)
+        }
+        setAnalyticsData(prevData => ({
+          ...prevData,
+          [symbol]: analyticEntries
+        }));
+      }
+    
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+      }
+    };
+  
+  
+    fetchAnalyticsData();
+  
+    const intervalId = setInterval(() => {
+      setSelectedIndex(prevIndex => (prevIndex + 1) % 22); // Assuming there are 22 entries for each symbol
+    }, 2000);
+  
+    // Clean up the interval when the component unmounts or when selectedSymbol changes
+    return () => clearInterval(intervalId)
+  }, []);
+  
+
 
   const handleCompanyClick = (symbol) => {
     setSelectedSymbol(symbol);
@@ -138,7 +193,8 @@ const Stock = () => {
                     <th>Company</th>
                     <th>Buy</th>
                     <th>Sell</th>
-                    <th>Change %</th>
+                    <th>Mean %</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -151,14 +207,27 @@ const Stock = () => {
                       > {item.company}</td>
                       <td onClick={() => handleCompanyClick(item.company)}>{item.buy}</td>
                       <td onClick={() => handleCompanyClick(item.company)}>{item.sell}</td>
-                      <td
-                        className="change-cell"
-                        style={{
-                          color: item.change > 0 ? 'green' : 'red'
-                        }}
-                      >
-                        {item.change}%
-                      </td>
+                      
+                             {/* Display Mean and date from analyticData */}
+                    {analyticsData[item.company] && analyticsData[item.company][index] ? (
+                      <>
+                        <td
+                          className="Mean-cell"
+                          style={{
+                            color: analyticsData[item.company][index].value > 0 ? 'green' : 'red'
+                          }}
+                        >
+                          {analyticsData[item.company][index].value}%
+                        </td>
+                        <td>{analyticsData[item.company][index].date}</td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="Mean-cell"></td>
+                        <td>----</td>
+                      </>
+                    )}
+                      
                     </tr>
                   ))}
                 </tbody>
@@ -187,12 +256,12 @@ const Stock = () => {
                   <div className="text">584{item.price}</div>
                 </Grid>
                 <Grid item xs={12} sm={2}>
-                  <div className="title">Change</div>
-                  <div className="text"> {item.change}%</div> 
+                  <div className="title">Mean</div>
+                  <div className="text"> {item.Mean}%</div> 
                 </Grid>
                 <Grid item xs={12} sm={2}>
                   <div className="title">24h Volume</div>
-                  <div className="text">544{item.volume}</div> 
+                  <div className="text">5464{item.volume}</div> 
                 </Grid>
                 <Grid item xs={12} sm={2}>
                   <div className="title">24h High</div>
@@ -287,8 +356,7 @@ const Stock = () => {
                 <th>High</th>
                 <th>Open</th>
                 <th>Close</th>
-                <th>Volume</th>
-            
+                <th>Volume</th>           
               </tr>
             </thead>
             <tbody>

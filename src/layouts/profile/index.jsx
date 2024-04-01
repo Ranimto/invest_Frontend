@@ -1,13 +1,9 @@
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
 import { useSelector } from 'react-redux'; //redux
@@ -36,7 +32,6 @@ function Overview() {
     const fetchUserByEmail= async (email) => {
         const url = `http://localhost:8023/user/findByEmail/${email}`;
         const response = await axios.get(url);
-        console.log("Response from server:", response.data, response);
         setUser(response.data);
     };
 
@@ -64,7 +59,7 @@ function Overview() {
         Personal Informations 
         </h6>
       </MDBox>
-      <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+      <MDBox pt={1} pb={2} px={2} lineHeight={1.4}>
         <h6  className="subtitle" style={{padding:"2%"}}>
        INVESTOR DETAILS 
         </h6>
@@ -104,31 +99,19 @@ function Overview() {
     
         <MDBox mt={3}>
           <h6  className="subtitle" style={{paddingBottom:"3%"}}>
-          Who Provides What Service?
+          Investment Advice?
           </h6>
         </MDBox>
         <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
           <MDBox width="80%" ml={1} >
             <h6 className="settings" >
-            Investment Advice: Advisory services for traditional investments (e.g., ETFs) and digital assets are provided by Betterment LLC, an SEC-registered investment adviser.
-             InvestAI also offers the InvetsAI Cash Reserve product. InvestAI does not require clients to maintain a minimum investment account balance. However, accounts below a certain balance may have certain restrictions. For more information, please see additional disclosure.
+             Advisory services for traditional investments (e.g., ETFs) and digital assets are provided by Betterment LLC, an SEC-registered investment adviser.
+             InvestAI also offers the InvetsAI Cash Reserve product. 
+             
             </h6>
           </MDBox>
         </MDBox>
-        <MDBox mt={3}>
-          <h6  className="subtitle" style={{paddingBottom:"3%"}}>
-          Who Provides What Service?
-          </h6>
-        </MDBox>
-       
-        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
-          <MDBox width="80%" ml={1} >
-            <h6 className="settings" >
-            Before investing, consider your investment objectives and the fees and expenses associated with the InvestAI platform. InvestAI&apos;s online advisory 
-            services are designed to assist clients in achieving specific financial goals. 
-            </h6>
-          </MDBox>
-        </MDBox>
+      
        
       </MDBox>
     </Card> 
@@ -143,7 +126,7 @@ function Overview() {
                   Personal Informations 
                   </h6>
                 </MDBox>
-                <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+                <MDBox pt={1} pb={2} px={2} lineHeight={1.7}>
                   <h6  className="subtitle" style={{padding:"2%"}}>
                   Terms and Conditions
                   </h6>
@@ -154,39 +137,25 @@ function Overview() {
                   </MDBox>
 
                   <MDBox display="flex" alignItems="center" mb={0.5} ml={0.5} className="profileTextt">     
-                      <h6 className="settings" style={{fontSize:'15px'}}>ChangeEmail:  </h6>
-                      <Grid item xs={12}>
-                     <TextField  name="email" label="email" variant="outlined" fullWidth value={user.email} />
+                      <h6 className="settings" style={{fontSize:'14px'}}>ChangeEmail:  </h6>
+                      <Grid item xs={12}  style={{fontSize:'13px'}}>
+                     {user.email}
                      </Grid>  
                   </MDBox>          
-              
                   <MDBox mt={3}>
-                    <h6  className="subtitle" style={{paddingBottom:"3%"}}>
-                    Who Provides What Service?
-                    </h6>
-                  </MDBox>
-                  <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
-                    <MDBox width="80%" ml={1} >
-                      <h6 className="settings" >
-                      Investment Advice: Advisory services for traditional investments (e.g., ETFs) and digital assets are provided by Betterment LLC, an SEC-registered investment adviser.
-                       InvestAI also offers the InvetsAI Cash Reserve product. InvestAI does not require clients to maintain a minimum investment account balance. However, accounts below a certain balance may have certain restrictions. For more information, please see additional disclosure.
-                      </h6>
-                    </MDBox>
-                  </MDBox>
-                  <MDBox mt={3}>
-                    <h6  className="subtitle" style={{paddingBottom:"3%"}}>
-                    Who Provides What Service?
-                    </h6>
-                  </MDBox>
-                 
-                  <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
-                    <MDBox width="80%" ml={1} >
-                      <h6 className="settings" >
-                      Before investing, consider your investment objectives and the fees and expenses associated with the InvestAI platform. InvestAI&apos;s online advisory 
-                      services are designed to assist clients in achieving specific financial goals. 
-                      </h6>
-                    </MDBox>
-                  </MDBox>
+          <h6  className="subtitle" style={{paddingBottom:"3%"}}>
+          Who Provides What Service?
+          </h6>
+        </MDBox>
+       
+        <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5} style={{paddingLeft:"5%"}}>  
+          <MDBox width="80%" ml={1} >
+            <h6 className="settings" >
+            Before investing, consider your investment objectives and the fees and expenses associated with the InvestAI platform. InvestAI&apos;s online advisory 
+            services are designed to assist clients in achieving specific financial goals. 
+            </h6>
+          </MDBox>
+        </MDBox>
                  
                 </MDBox>
               </Card> 

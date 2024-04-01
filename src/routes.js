@@ -16,7 +16,9 @@ import WebhookIcon from '@mui/icons-material/Webhook';
 import Activity from "layouts/activity/activity";
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import Transaction from "layouts/billing/components/Transaction";
+import CompaniesRecommandations from "layouts/companiesRecommandations/companiesRecommandations";
 
+  
 
 const routes = [
   {
@@ -83,6 +85,16 @@ const routes = [
  component: <BankAccounts/>,
  isPrivate: true,
 },
+
+{
+  type: "collapse",
+  name: "Recommandations",
+  key: "Recommandations",
+  icon: <Icon fontSize="small">receipt_long</Icon>,
+  route: "recommandations",
+  component: <CompaniesRecommandations/>,
+  isPrivate: true,
+  },
   {
     type: "collapse",
     name: "logout",
@@ -120,6 +132,7 @@ route: "transaction",
 component: <Transaction/>,
 isPrivate: true,
 },
+
 
   
    
