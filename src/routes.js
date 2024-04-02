@@ -17,6 +17,7 @@ import Activity from "layouts/activity/activity";
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import Transaction from "layouts/billing/components/Transaction";
 import CompaniesRecommandations from "layouts/companiesRecommandations/companiesRecommandations";
+import CompanyNews from "layouts/companyNews/companyNews";
 
   
 
@@ -94,6 +95,15 @@ const routes = [
   route: "recommandations",
   component: <CompaniesRecommandations/>,
   isPrivate: true,
+  },
+  {
+    type: "collapse",
+    name: "News",
+    key: "News",
+    icon: <PendingActionsIcon/>,
+    route: "news/:company",
+    component: <CompanyNews/>,
+    isPrivate: true,
   },
   {
     type: "collapse",

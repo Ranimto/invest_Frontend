@@ -42,7 +42,7 @@ const Stock = () => {
     amount:'',
     currency:'',
   })
-
+  
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {

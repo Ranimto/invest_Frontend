@@ -144,7 +144,7 @@ const CompaniesRecommandations = () => {
           <form onSubmit={handleSubmit} className='formClasss'>
           <p>Make your first step and add an investment</p>
           
-           <InputLabel id ='type' style={{padding: '6px'}}>Type </InputLabel>
+           <InputLabel id ='type' style={{padding: '6px'}}>Investment type </InputLabel>
             <Select label='type' fullWidth name="type" value={investment.type}  onChange={handleSelectChange} style={{padding: '11px'}}>
               <MenuItem value="Bond">Bond</MenuItem>
               <MenuItem value="Stock">Stock</MenuItem>

@@ -75,6 +75,7 @@ export default function Data() {
     { Header: "startDate", accessor: "startDate", align: "center" },
     { Header: "duration", accessor: "duration", align: "center" },
     { Header: "status", accessor: "status", align: "center" },
+    { Header: "CompanyNews", accessor: "CompanyNews", align: "center" },
   ];
 
   const rows = investments.map((item) => ({
@@ -109,6 +110,12 @@ export default function Data() {
     status: (
       <MDBox ml={-1}>
         <MDBadge badgeContent={item.status} color="success" variant="gradient" size="sm" />
+      </MDBox>
+    ),
+
+    CompanyNews: (
+      <MDBox width="10rem" textAlign="center" >
+       <Link to={`/news/${item.companyName}`} className="newsLink"> Check company News</Link>
       </MDBox>
     ),
   }));

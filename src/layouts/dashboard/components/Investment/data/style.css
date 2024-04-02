@@ -1,3 +1,12 @@
 h3{
   font-size:12px;
 }
+.newsLink{
+  color: rgb(142, 142, 216) !important;
+  font-size: 14px  !important;
+  font-weight: 100  !important;
+}
+.newsLink:hover{
+  color: rgb(151, 108, 137) !important;
+  text-decoration: underline !important;
+}
