@@ -1,14 +1,16 @@
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
-import PageLayout from 'examples/LayoutContainers/PageLayout'
 import NavbarPerformance from 'layouts/navbarPerformance'
 import React from 'react'
+import ActivityModel from './TransactionModel'
 
-const Transaction = () => {
+const Transation = () => {
   return (
-    <PageLayout>
+    <DashboardLayout>
     <NavbarPerformance />
-     Transaction
-   </PageLayout>
+    <br/>
+     <ActivityModel/>
+   </DashboardLayout>
+  
   )
 }
 

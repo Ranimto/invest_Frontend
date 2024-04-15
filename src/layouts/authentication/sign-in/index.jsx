@@ -41,7 +41,7 @@ function Basic() {
 			localStorage.setItem("token", res.token);
       dispatch(login({isAuthenticated:true, token: res.token, email: data.email })); //redux
       setAuthenticated(true);
-      showAlertAndNavigate("you've been successfully authenticated", "/dashboard");
+      showAlertAndNavigate("you've been successfully authenticated", "/recommandations");
       
 		} catch (error) {
 			if (
@@ -124,7 +124,7 @@ function Basic() {
               </h6>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth type="submit">
+            <MDButton variant="gradient" color="info" fullWidth type="submit">
                 sign in
               </MDButton>
             </MDBox>

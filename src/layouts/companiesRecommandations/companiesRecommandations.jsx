@@ -1,12 +1,13 @@
 import { Button, Card, Grid, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material'
 import PageLayout from 'examples/LayoutContainers/PageLayout'
-import DefaultNavbaRegister from 'examples/Navbars/DefaultNavbaRegister'
 import React, {useEffect, useState } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
+import MDButton from 'components/MDButton';
 
 const CompaniesRecommandations = () => {
 
@@ -14,15 +15,16 @@ const CompaniesRecommandations = () => {
     const [selectedCompanyId,setSelectedCompanyId]= useState("")
     const email=useSelector((state)=> state.auth.value.email);
     const [companies,setCompanies]=useState([
-        { name:"IBM",companyId:1, activity:"Technology", address:"", description:"" },
-        { name:"AAPL", companyId:2,activity:"Finance", address:"", description:"" },
-        { name:"AMZN", companyId:4,activity:"Technology", address:"", description:"" },
-        { name:"Company4", companyId:21, activity:"Technology", address:"", description:"" },
-        { name:"Company4", companyId:22 ,activity:"Technology", address:"", description:"" },
-        { name:"Company4", companyId:3,activity:"Technology", address:"", description:"" },
+        { name:"IBM",companyId:1, activity:"Technology", address:"", description:"IBM is a leading American multinational specializing in IT services, software, and hardware." },
+        { name:"AAPL", companyId:2,activity:"Finance", address:"", description:"Apple Inc. is an American multinational technology company known for its consumer electronics, software, and services." },
+        { name:"AMZN", companyId:4,activity:"Technology", address:"", description:"Amazon is a leading American multinational tech company known for e-commerce, cloud services, and AI." },
+        { name:"TESLA", companyId:21, activity:"Technology", address:"", description:" Tesla is an American electric vehicle and clean energy company founded in 2003 by Elon Musk." },
+        { name:"MFST", companyId:22 ,activity:"Technology", address:"", description:"Microsoft is a major American multinational technology company known for its software products and services. " },
+        { name:"XOM", companyId:3,activity:"Technology", address:"", description:"XOM is the ticker symbol for Exxon Mobil Corporation, which is one of the world's largest publicly traded international oil and gas companies" },
 
     ]); 
     const [investment, setInvestment] = useState({
+
       companyId:"",
       companyName:"",
       type:"",
@@ -49,11 +51,6 @@ const CompaniesRecommandations = () => {
       setInvestment({ ...investment, userId:(await response).data.id });
     }
 
-    useEffect(() => {
-      fetchUserByEmail(email);
-    }, [email]);
-
-
    const handleShowForm=(companyId)=>{
       setShowForm(true);
       setSelectedCompanyId(companyId);
@@ -64,17 +61,25 @@ const CompaniesRecommandations = () => {
       setInvestment({ ...investment, [name]: value });
     };
   
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
       event.preventDefault(); 
     
-      // Update the companyId in the investment state
       const updatedInvestment = { ...investment, companyId: selectedCompanyId };
       setInvestment(updatedInvestment);
-    
-      // Send the updated investment data to the backend
-      const response = axios.post("http://localhost:8023/investment/add", updatedInvestment)
+
+      
+      const investmentDescription = `Adding new investment in the ${updatedInvestment.companyId} company with amount : ${updatedInvestment.amount} USD`;
+      const response1 = await axios.post('http://localhost:8023/user-activity/save',
+      {
+        userId: user.id,
+        timestamp: new Date(),
+        description: investmentDescription,
+    }
+      );
+     
+      const response = await axios.post("http://localhost:8023/investment/add", updatedInvestment)
         .then(() => {
-          // Reset the investment state after successful submission
+      
           setInvestment({
             companyId: "",
             companyName: "",
@@ -85,13 +90,15 @@ const CompaniesRecommandations = () => {
             status: "",   
           });
           setShowForm(false);
+          
         })
         .catch(error => {
           console.error("Error adding investment:", error);
-          // Handle error
+          
         });
     };
 
+    
     const handleClose = (event) => {
       event.preventDefault();
       setShowForm(false); 
@@ -108,32 +115,33 @@ const CompaniesRecommandations = () => {
       console.log(investment);
     }, [selectedCompanyId]);
 
-   
+
+    useEffect(() => {
+      fetchUserByEmail(email);
+    }, [email]);
 
   return (
  <PageLayout>
-  <DefaultNavbaRegister />
+   <ComponentNavbar/>
   <div className="recommandationContainer">
   <h1> COMPANY SUGGESTIONS FOR YOU </h1>
   <h5>Personalized AI-driven recommendations tailored just for you</h5>
   <div className="recommandationContainerCard">
-{companies.map((item,index)=>(
-  <Grid key={index}>
-    <Card className="recommandationCard">
-    <Link to={`/stock/${item.name}`} className="CompanyName"> <h6>{item.name}</h6></Link>
-    <p><strong>Company Id :</strong> {item.companyId}</p> 
-    <p> <strong>Company Activity :</strong>{item.activity}</p>
-    <p><strong>Company Address : </strong>{item.address}</p>
-    <Button
-                  variant="contained"
-                  className='btnHomee'
-                  onClick={() => handleShowForm(item.companyId)}
-                >
-                  Invest now
-                </Button>
+       {companies.map((item,index)=>(
+ <Grid key={index} className="recommGrid">
+ <Card className="recommandationCard">
+   <Link to={`/stock/${item.name}`} > <h6 className="CompanyName">{item.name}</h6></Link>
+   <p className="text-initial"><strong>Company Id :</strong> {item.companyId}</p> 
+   <p className="text-initial"><strong>Company Activity :</strong>{item.activity}</p>
+   <p className="text-initial"><strong>Company Address : </strong>{item.address}</p>
+   
+ 
+   <p className="text-hover">{item.description}</p>
 
-    </Card>
-   </Grid>
+   <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={() => handleShowForm(item.companyId)} style={{width:"45%",margin:'5% 0 0 30%'}} className="Companybtnn"> Invest now</MDButton>
+
+ </Card>
+</Grid>
 ))}
 </div>
 </div>

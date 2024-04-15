@@ -8,16 +8,20 @@ import { Link } from 'react-router-dom';
 export default function Data() {
   const [investments, setInvestments] = useState([]);
   const [investment, setInvestment] = useState({
+    userId:1,
+    companyId:1,
     companyName:"",
     type:"",
-    amount :"",
+    investmentAmount :0,
+    currentInvestmentAmount :0,
+    dividendPayout :"",
     startDate :"",
     duration :"",
     status: ""
   });
   const [error, setError] = useState(null);
   const [user,setUser]=useState({ 
-    id:"",  
+    id:1,  
     firstname:"",
     lastname:"",
     email :"",
@@ -71,10 +75,13 @@ export default function Data() {
   const columns = [
     { Header: "companyName", accessor: "companyName", width: "20%", align: "left" },
     { Header: "type", accessor: "type", align: "left" },
-    { Header: "amount", accessor: "amount", align: "center" },
+    { Header: "investmentAmount", accessor: "investmentAmount", align: "center" },
+    { Header: "currentInvestmentAmount", accessor: "currentInvestmentAmount", align: "center" },
     { Header: "startDate", accessor: "startDate", align: "center" },
     { Header: "duration", accessor: "duration", align: "center" },
+    { Header: "dividendPayout", accessor: "dividendPayout", align: "center" },
     { Header: "status", accessor: "status", align: "center" },
+    { Header: "Performance", accessor: "Performance", align: "center" },
     { Header: "CompanyNews", accessor: "CompanyNews", align: "center" },
   ];
 
@@ -91,14 +98,24 @@ export default function Data() {
        </MDBox>
     ),
 
-    amount: (
+    investmentAmount: (
       <MDBox width="8rem" textAlign="center">
-       {item.amount} TND
+       {item.investmentAmount} TND
+       </MDBox>
+    ),
+    currentInvestmentAmount: (
+      <MDBox width="8rem" textAlign="center">
+       {item.currentInvestmentAmount} TND
        </MDBox>
     ),
     startDate: (
       <MDBox width="10rem" textAlign="center">
         {item.startDate}
+        </MDBox>
+    ),
+    dividendPayout: (
+      <MDBox width="10rem" textAlign="center">
+        {item.dividendPayout}
         </MDBox>
     ),
     duration: (
@@ -113,9 +130,15 @@ export default function Data() {
       </MDBox>
     ),
 
+    Performance: (
+      <Link to={`/performance/${item.userId}/${item.companyId}/${item.companyName}/${item.currentInvestmentAmount}/${item.investmentAmount}`}>
+      Go to Performance
+    </Link>
+    ),
+
     CompanyNews: (
       <MDBox width="10rem" textAlign="center" >
-       <Link to={`/news/${item.companyName}`} className="newsLink"> Check company News</Link>
+       <Link to={`/news/${item.companyName}`} className="newsLink"> Check the company News</Link>
       </MDBox>
     ),
   }));

@@ -1,21 +1,54 @@
 .backgrounddClass{
     background-color: rgba(132, 79, 132, 0.833) !important;
 }
+.pageHeader{
+    width: 92%;
+    height: 620px;
+    margin: 0 0  4%;
+    padding: 3%;
+   
+}
+.pageHeader img{
+    width: 70%;
+    height: 400px;
+    margin-left: 16%;
+    padding: 5%;
+    
+}
+
+.pageTitle{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: rgba(0, 0, 0, 0.804);
+    font-size: 37px;
+    font-style: italic;
+}
+.pageHeader p {
+    font-size: 14px;
+    font-weight: 100;
+    color: rgba(0, 0, 0, 0.886);
+    margin-top: -2%;
+}
+
 .newsClasss {
     background-color: transparent !important;
     width:95% ;
-    margin: 2%;
-    padding: 2%;
-    border: 0 1px 1px 0 solid rgb(148, 134, 202) !important;
-    box-shadow: 1px 1px 1px rgba(18, 5, 53, 0.6)!important;
+    padding: 5%;
+    margin-right: 2%;
+    border:  2px solid rgba(221, 11, 236, 0.645) !important;
     
- 
     
+}
+
+.gridNews{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px; 
+    padding-left:  6%;
 }
 
 .newsClasss h4 {
    padding-bottom: 1%;
-   color: rgb(6, 9, 74) !important;
+   color: rgb(20, 25, 121) !important;
    font-size: 16px;
    font-weight: 600;
 }
@@ -25,8 +58,8 @@
     font-size: 12px;
     font-weight: 200;
  }
- strong  {
-    color: rgba(56, 25, 158, 0.912) !important;
+ .newsClasss  strong  {
+    color: rgba(56, 25, 158, 0.781) !important;
     font-size: 13px;
  }
 .url {
@@ -41,7 +74,7 @@
 
 .newsClasss p {
     margin-top: -3%;
-    color: rgba(0, 0, 0, 0.577) !important;
+    color: rgba(0, 0, 0, 0.808) !important;
 }
 .title{
     padding: 4% 0 0 2%;
@@ -60,9 +93,9 @@
     display: flex !important;   
 }
 .newsClasss img{
-    padding-top: 3%;
-    width: 50%;
-    height: 330px;
+    padding-top: 12%;
    
+    width: 97%;
+    height: 350px;
     border-radius: 10px;
 }

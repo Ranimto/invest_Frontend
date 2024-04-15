@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 
-const StockChart = ({ selectedSymbol }) => {
-  const [stockData, setStockData] = useState([]);
 
+const StockChart = ({ selectedSymbol }) => {
+
+  const [stockData, setStockData] = useState([]);
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {
@@ -41,13 +42,14 @@ const StockChart = ({ selectedSymbol }) => {
       {
         label: 'Low',
         data: stockData.map(entry => entry.low),
-        borderColor: 'rgba(36, 100, 202, 0.753)',
-        fill: false
+        borderColor: 'rgb(255, 204, 0)',
+        fill: false,
+
       },
       {
         label: 'High',
         data: stockData.map(entry => entry.high),
-        borderColor: 'rgba(168, 8, 91, 0.71)',
+        borderColor: 'blueviolet',
         fill: false
       }
     ]
@@ -59,14 +61,14 @@ const StockChart = ({ selectedSymbol }) => {
       x: {
         ticks: {
           maxTicksLimit: 6 ,
-          color: 'black'
+          color: 'white'
         }
 
       },
       y: {
         ticks: {
           maxTicksLimit: 15 ,
-          color: 'black'
+          color: 'white'
         }
         
       }
@@ -74,7 +76,7 @@ const StockChart = ({ selectedSymbol }) => {
   };
 
   return (
-    <div style={{ width: '90%', height: '420px',color:'black' }}>
+    <div style={{ width: '90%', height: '467px',color:'white' , paddingTop:'4%'}}>
       <h2>Stock Chart for {selectedSymbol}</h2>
       <Line data={chartData} options={options} />
     </div>

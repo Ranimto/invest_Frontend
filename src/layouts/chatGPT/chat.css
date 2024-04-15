@@ -1,0 +1,58 @@
+.chat {
+    
+    background-color: #2382e0 !important; /* Light gray background */
+    padding: 20px;
+  }
+  
+  .bgContainer {
+    padding-top: 10% !important; 
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .backg {
+    background-image: url('assets/images/gg.PNG') ; 
+   
+  }
+  .chat-box {
+    background-color: #ebe9e9; /* White background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  .form-group textarea {
+    border-radius: 8px;
+    border: 1px solid #ced4da !important;; /* Gray border */
+    padding: 10px;
+    width: calc(100% - 22px); /* Adjust width for padding */
+    resize: none; /* Prevent textarea resize */
+  }
+  .form-group {
+   
+    padding: 10px;
+    width: calc(100% - 22px); /* Adjust width for padding */
+    resize: none; /* Prevent textarea resize */
+  }
+  
+  #send-btn {
+    border-radius: 8px !important;;
+  }
+  
+  #send-btn:hover {
+    background-color: #007bff !important; /* Blue on hover */
+    border-color: #007bff !important;; /* Blue border on hover */
+  }
+  
+  @media (max-width: 576px) {
+    .container {
+      padding: 0 10px;
+    }
+  }
+  .avatar{
+      width: 4%;
+  }
+  .chatBtn{
+    width: 10% !important;
+    margin:2% 0 0 90% !important;
+  }

@@ -1,0 +1,13 @@
+.userAcitivityTitle{
+    width: 120%;
+    font-size: 21px !important;
+    padding:3% 4% 4% 0 !important;
+    color: rgba(0, 0, 0, 0.837);
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.userAcitivityTitle strong{
+color: rgb(115, 35, 189);
+}
+.boxx{
+    width: 15rem !important;
+}

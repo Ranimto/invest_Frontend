@@ -1,38 +1,46 @@
 .containerGridd{
   color: white;
   background-color: rgb(1, 3, 16) !important;
-  margin-top: 0.1%!important;
+ ;
   padding-left: 2%!important; 
 }
 .gridCardd {
   color: white;
-  background-color: hsla(249, 95%, 8%, 0.505) !important;
+  background-color: transparent !important;
   box-shadow: 1px 2px 4px 2px rgba(0, 0, 0, 0.485)!important;
   color: rgb(236, 234, 234);
   padding-left:5%;
+  margin: 1% 2% 1% 0 !important;
+  border: 1px solid rgb(162, 114, 205) !important;
   
 }
+.chartClass h6{
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(240, 248, 255, 0.795);
+  padding-top:6%;
+ 
+ 
+}
 .Cardd {
-  color: white;
-  background-color: hsla(280, 24%, 80%, 0.901) !important;
+  background-color: transparent !important;
   box-shadow: 1px 2px 4px 2px rgba(86, 84, 84, 0.485)!important;
-  color: white;
-  padding-left:5%;
-  margin-right:2%; 
+  color: white !important;
+  margin: 1%  3%  0  0% ;
+  border: 1px solid rgb(162, 114, 205) !important;
 }
 .navbar {
   display: flex;
   gap: 2%;
-
 }
-.title {
+.stockTitle {
   font-weight: 600;
   font-size: 14px;
   color: white;
   font-family: Adamina, sans-serif;
 }
 
-.text ,.txt1 {
+.stockText ,.txt1 {
   font-size: 16px;
   font-weight: 600;
   color: white;
@@ -40,6 +48,7 @@
 }
 .txt2 {
   font-size: 16px;
+  font-weight:200;
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serifs;
   font-weight: 600;
@@ -89,20 +98,64 @@ tr {
    cursor: pointer;
 }
 .symbol:hover{
-  color: rgb(200, 163, 218);
+  color: rgb(150, 134, 158);
 }
 .formClass{
   margin-top: 80% !important;
   margin-right: 10% !important;
 }
 .backToDash{
-  color: rgba(255, 255, 255, 0.723);
+  color: rgba(255, 255, 255, 0.958);
   font-weight: 600;
   font-size: 14px;
   font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin-right: 50%;
+  display: flex;
+  justify-content: center;
+  padding: 0 0 1% 75%;
 }
 .backToDash:hover{
   color: rgba(160, 93, 242, 0.947);
 
+}
+.indicators h5 {
+  font-size: 13px;
+}
+.indicators  {
+  padding: 1%;
+  display: flex;
+  gap: 5%;
+}
+.indicators  .option {
+  border: 2px solid rgba(255, 230, 0, 0.829) !important;
+  padding: 1% !important;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.838);
+}
+
+ .option:hover {
+  border: 2px solid rgb(12, 188, 241) !important;
+  padding: 1% !important;
+  color: rgba(237, 223, 247, 0.838) !important ;
+}
+.containerGridd h5{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding:3% 0% 3% 0;
+}
+.btnStock{
+  color: white !important;
+  background-color: rgba(239, 147, 10, 0.897) !important;
+  padding: 10px !important;
+  margin-left: 40% !important;
+  margin-top: 5% !important;
+  width: 25%;
+  border: none;
+  cursor: pointer;
+}
+.stockForm{
+  background-color:white ;
+    width:40% ;
+    height:40rem;
+    margin:2% 10% 5% 30% ;
+    padding:5%;
+    border-radius: 1%;
 }

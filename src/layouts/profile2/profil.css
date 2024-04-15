@@ -1,0 +1,62 @@
+.tdClass {
+  color: rgba(42, 42, 44, 0.863) !important;
+  font-size: small!important;;
+  font-weight: 400 !important;;
+  font-size: 15px !important;; 
+  line-height: 1!important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+ td em {
+  color: rgba(0, 1, 13, 0.551)!important;
+  font-size: 15px;
+  font-style: normal; 
+  font-weight: 700;
+ 
+  }
+.attr1{
+ display: flex;
+ gap:20px;
+}
+.closeAccount{
+  color: white !important;
+  background-color: rgba(3, 2, 36, 0.886) !important;
+  margin-top: -20% !important;
+}
+.profileTextt{
+  display: flex;
+  gap: 5%;
+  padding: 2%;
+  text-align: justify;
+}
+
+.profileTextt h6{
+ color: rgba(0, 0, 0, 0.786) ;
+ font-weight: 600;
+ font-family:Arial, Helvetica, sans-serif;
+ font-size: 14px;
+ text-align: justify;
+}
+.terms{
+  margin-top: -5%;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.636);
+  font-weight: 400;
+  text-align: justify;
+  width: 160%;
+}
+.Information{
+  color: rgba(0, 0, 0, 0.679);
+  font-size: 14px;
+  width: 135%;
+  font-weight: 400;
+  text-align: justify;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+.subtitle{
+  font-size: 17px !important;
+  padding:3% 4% 8% 0 !important;
+  color: rgba(0, 0, 0, 0.852);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

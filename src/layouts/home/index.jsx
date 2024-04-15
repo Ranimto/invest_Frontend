@@ -2,8 +2,9 @@ import { Box, Button, Card, CardContent, Grid, Typography } from '@mui/material'
 import MDBox from 'components/MDBox';
 import PageLayout from 'examples/LayoutContainers/PageLayout'
 import DefaultNavbar from 'examples/Navbars/DefaultNavbar'
-
+import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
 import background from 'assets/images/R8Xg21.webp'
+import background2 from 'assets/images/rrr.jpg'
 
 import team1 from 'assets/images/team-4.jpg'
 import team2 from 'assets/images/team-1.jpg'
@@ -11,27 +12,41 @@ import team3 from 'assets/images/team-3.jpg'
 import team4 from 'assets/images/ranim.png'
 import mobile from 'assets/images/phone_1-min.png'
 import mobile1 from 'assets/images/Rydoo-Phone-Mockup-Header-1-960x772.png'
+import AAPL from 'assets/images/AAPL.png'
+import AMZN from 'assets/images/AMZN.png'
+import XOM from 'assets/images/ExxonMobil-Logo.png'
+import GOOGL from 'assets/images/GOOGL.png'
+import MFST from 'assets/images/MFST.png'
+import IBM from 'assets/images/IBM.png'
+import tesla from 'assets/images/tesla.png'
+import jpm from 'assets/images/jpm.png'
+import jnj from 'assets/images/jnj.png'
+import fb from 'assets/images/fb.png'
 
 import React from 'react'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Carousel from 'react-material-ui-carousel';
 
 const Home = () => {
   const navigate = useNavigate();
-
+  const isAuthenticated = useSelector((state)=>state.auth.value.isAuthenticated);
  const signupNavigate =()=>{
   navigate("/authentication/sign-in");
  }
   return (
     <PageLayout >
-        <DefaultNavbar/>
+     {isAuthenticated ?  <ComponentNavbar/>:
+        <DefaultNavbar/>}
 
    {/* Section 1 */}
    <div className="container">
   <Grid container spacing={3}>
     <Grid item xs={12}>
       <div className="background-image">
-        <img src={background} alt="Background Image" />
+        <img  src={background2} alt="Background2 Image" />
+
       </div>
     </Grid>
     <Grid item xs={12}>
@@ -45,25 +60,23 @@ const Home = () => {
   </Grid>
 </div>
 
-      {/* Section 2 */}
-      <MDBox mb={3}>
-        <Grid className='grid' container spacing={3}>
-          <Card className='cardClass' xs={12} md={4}>
-            <h4><strong>Now</strong> Money</h4>
-            <p>Cash Account</p>
+     {/* Section 2 */}
+      <MDBox mb={3} >
             
-          </Card>
-          <Card className='cardClass' xs={12} md={4}>
-            <h4> <strong>Soon</strong>  Money</h4>
-            <p>Automated Tracking Portfolio</p>
-          </Card>
-          <Card className='cardClass' xs={12} md={4}>
-             <h4><strong>Later</strong> Money</h4>
-            <p>Automated Investing Account</p>
-          </Card>
+        <Grid className='grid' container spacing={3}>
+   
+        <img src={AAPL} alt="AAPL Image" />
+        <img src={IBM} alt="IBM Image" />
+        <img src={AMZN} alt="AMZN Image" />
+        <img src={XOM} alt="XOM Image" />
+        <img src={GOOGL} alt="GOOGL Image" />
+        <img src={MFST} alt="MFST Image" />  
+        <img src={tesla} alt="tesla Image" />          
+        <img src={jpm} alt="jpm Image" />           
         </Grid>
+       
       </MDBox>
- 
+
 
 
   
@@ -97,7 +110,23 @@ const Home = () => {
 
 
 
-
+ {/* Section 2 */}
+ <MDBox mb={3} className="sectionn3">
+        <Grid className='gridSection3' container spacing={3}>
+          <Grid className='cardClass' xs={12} md={4}>
+            <h4><strong>Now</strong> Money</h4>
+            <p>Cash Account</p>        
+          </Grid>
+          <Grid className='cardClass' xs={12} md={4}>
+            <h4> <strong>Soon</strong>  Money</h4>
+            <p>Automated Tracking Portfolio</p>
+          </Grid>
+          <Grid className='cardClass' xs={12} md={4}>
+             <h4><strong>Later</strong> Money</h4>
+            <p>Automated Investing Account</p>
+          </Grid>
+        </Grid>
+      </MDBox>
 
 
     <MDBox className='teams_section' mb={3}>
@@ -129,7 +158,7 @@ const Home = () => {
               <h6>&apos;&apos;Name&apos;&apos;,<em> Profession</em></h6>
       </Card>   
     </Grid> 
-    </MDBox>$
+    </MDBox>
 
 
 
@@ -140,23 +169,26 @@ const Home = () => {
         <h4>Ready <em>For</em> Your Money&apos;s New Home? </h4>
       </div>
       
-    <Grid  className='teams_items'> 
+    <Grid  className='reviews_items'> 
 
-      <Card className='reviews_card'  xs={12} md={4} >
-          
-              <p> <strong> 5.000TND +</strong> Minimum deposit</p>
-      </Card> 
-      <Card className='reviews_card'  xs={12} md={4} >
-              <p><strong>0%   </strong>Commissions</p>
-      </Card> 
+      <Grid className='reviews_card'  xs={12} md={4} >
+      <p> <strong> 5.000TND +</strong> </p>
+              <p>Minimum deposit</p>
+      </Grid> 
+      <Grid className='reviews_card'  xs={12} md={4} >
+              <p><strong>0% </strong></p>
+              <p>Commissions</p>
+      </Grid> 
 
-      <Card className='reviews_card'  xs={12} md={4} >
-      <p><strong> 1.000TND + </strong> Minimum investment</p>    
-      </Card> 
+      <Grid className='reviews_card'  xs={12} md={4} >
+      <p><strong> 1.000TND + </strong>  </p>
+      <p>Minimum investment</p>    
+      </Grid> 
 
-      <Card className='reviews_card'  xs={12} md={4} >
-              <p><strong>0%  </strong> Fees</p>
-      </Card> 
+      <Grid className='reviews_card'  xs={12} md={4} >
+              <p><strong>0%  </strong></p>
+              <p> Fees</p>
+      </Grid> 
 
     </Grid> 
     </MDBox> 

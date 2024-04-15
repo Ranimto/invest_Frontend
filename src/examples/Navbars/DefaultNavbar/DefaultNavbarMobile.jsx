@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MDBox from "components/MDBox";
@@ -39,8 +26,7 @@ function DefaultNavbarMobile({ open, close }) {
       <MDBox px={0.5}>
         <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" />
         <DefaultNavbarLink icon="person" name="profile" route="/profile" />
-        <DefaultNavbarLink icon="account_circle" name="sign up" route="/authentication/sign-up" />
-        <DefaultNavbarLink icon="key" name="sign in" route="/authentication/sign-in" />
+        <DefaultNavbarLink icon="key" name="log out" route="/authentication/sign-in" />
       </MDBox>
     </Menu>
   );

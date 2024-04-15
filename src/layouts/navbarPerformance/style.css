@@ -1,11 +1,9 @@
-.navClass{
-    position: relative;
-    display: flex  !important;
-    gap: 1%;
-    margin-top: -3%;
+
+.btnPerformancee {
+    border: 1px solid transparent;
+    transition: border-color 0.3s ease; 
 }
-.navClass p{
-    font-size: 10px;
-    color: rgb(2, 2, 31);
-    font-size: 15px;
+.btnPerformancee :hover{
+    border-bottom: 2px solid rgb(59, 45, 149) !important;
+    background-color:gray  !important;
 }

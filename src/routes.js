@@ -2,7 +2,7 @@
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
-import Profile from "layouts/profile";
+import Profile2 from "layouts/profile2";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
@@ -18,6 +18,7 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import Transaction from "layouts/billing/components/Transaction";
 import CompaniesRecommandations from "layouts/companiesRecommandations/companiesRecommandations";
 import CompanyNews from "layouts/companyNews/companyNews";
+import Chat from "layouts/chatGPT/chat";
 
   
 
@@ -56,7 +57,7 @@ const routes = [
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
-    component: <Profile />,
+    component: <Profile2 />,
     isPrivate: true,
   },
   {
@@ -64,7 +65,7 @@ const routes = [
     name: "Performance",
     key: "performance",
     icon: <WebhookIcon/>,
-    route: "performance",
+    route: "performance/:investorId/:companyId/:symbol/:currentInvestmentAmount/:initialInvestmentAmount",
     component: <Performance />,
     isPrivate: true,
   },
@@ -141,6 +142,15 @@ key: "transaction",
 route: "transaction",
 component: <Transaction/>,
 isPrivate: true,
+},
+{
+  type: "collapse",
+  name: "Chat",
+  key: "Chat",
+  icon: <PendingActionsIcon/>,
+  route: "chat",
+  component: <Chat/>,
+  isPrivate: true,
 },
 
 

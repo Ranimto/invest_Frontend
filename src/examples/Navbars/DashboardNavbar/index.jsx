@@ -26,12 +26,14 @@ import {
   setOpenConfigurator,
 } from "context";
 
-function DashboardNavbar({ absolute, light, isMini }) {
+function DashboardNavbar({ absolute, light, isMini ,allData, onDataFiltered}) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
   
@@ -87,6 +89,25 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+
+  const handleSearch = (event) => {
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+    console.log('search item', searchTerm)
+
+     //Filter data depends on term searched
+     const results = allData.filter(item =>
+      Object.entries(item).some(([key, value]) =>
+        typeof value === 'string' && (key.toLowerCase().includes(searchTerm.toLowerCase()) || value.toLowerCase().includes(searchTerm.toLowerCase()))
+    )
+    );
+  
+    setSearchResults(results);
+    onDataFiltered(results);
+    console.log('search results', onDataFiltered)
+  };
+
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -100,10 +121,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
             <MDBox pr={1}>
-              <MDInput label="Search here" />
+              <MDInput label="Search here"
+               value={searchTerm}
+               onChange={handleSearch}/>
             </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
@@ -161,6 +184,8 @@ DashboardNavbar.propTypes = {
   absolute: PropTypes.bool,
   light: PropTypes.bool,
   isMini: PropTypes.bool,
+  allData:  PropTypes.array,
+  onDataFiltered: PropTypes.func,
 };
 
 export default DashboardNavbar;

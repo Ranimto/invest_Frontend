@@ -18,6 +18,7 @@ import axios from "axios";
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [investments, setInvestments] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [showForm,setShowForm]=useState(false);
   const [investment, setInvestment] = useState({
     userId:"",
@@ -33,6 +34,7 @@ function Dashboard() {
     e.preventDefault(); 
 
     try {
+      
         const url = "http://localhost:8023/investment/add";
         const response = await axios.post(url, investment);
         console.log('Investment added:', response.data);
@@ -47,6 +49,14 @@ function Dashboard() {
         });
         setShowForm(false);
         setInvestments([...investments, response.data]);
+
+        const investmentDescription = `Adding new investment in the ${investment.companyName} company`;
+        const userActivityResponse = await axios.post('http://localhost:8023/user-activity/save', {
+          userId: investment.userId,
+          timestamp: new Date(),
+          description: investmentDescription,
+        });
+   console.log ( "addUserActivity",)
         
     } catch (error) {
         console.log(error);
@@ -70,10 +80,16 @@ function Dashboard() {
     setInvestment({...investment,[name]: value});
   };
 
+  useEffect(() => {
+    setAllData(investments);
+    console.log("investments updated:", investments);
+    console.log("allData updated:", allData);
+  }, [investments]);
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar allData={allData}/>
+      {console.log("allData",allData)}
       <MDBox py={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
@@ -110,7 +126,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="warning"
                 icon="store"
-                title="stock"
+                title="Stocks"
                 count="34k"
                 percentage={{
                   color: "success",
@@ -125,7 +141,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Bond"
+                title="Bonds"
                 count="+91"
                 percentage={{
                   color: "success",
@@ -142,7 +158,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsBarChart
                   color="success"
-                  title="compagnies views"
+                  title="compagnies Financial News"
                   description="Best Company Performance"
                   date="company sent 2 days ago"
                   chart={reportsBarChartData}
@@ -153,7 +169,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="primary"
-                  title="daily sales"
+                  title="Companies Stocks"
                   description={
                     <>
                       (<strong>+15%</strong>) increase in today sales.
@@ -168,7 +184,7 @@ function Dashboard() {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="warning"
-                  title="completed tasks"
+                  title="Companies Bonds"
                   description="Last Campaign Performance"
                   date="just updated"
                   chart={tasks}
@@ -215,7 +231,6 @@ function Dashboard() {
       </Select>
         </Grid>
          
-
             <Grid item className='gridbtn' xs={12} style={{ margin: '2%' }}>
               <Button variant="contained" onClick={handleCancelClick} className='cancel'>Cancel</Button>
               <Button variant="contained" type="submit" className='add'>Add </Button>

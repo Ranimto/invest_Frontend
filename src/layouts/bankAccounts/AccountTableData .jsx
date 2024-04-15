@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, MenuItem, Select, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,8 +9,20 @@ import { useSelector } from 'react-redux';
 
 export default function Data() {
   const [accounts, setAccounts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [editedAccount, setEditedAccount] = useState(null);
+  const [editedAccount, setEditedAccount] = useState({  
+    accountNo:"",
+   savingsProductName:"",
+  summary:{
+    totalDeposits:"",
+    totalInterestEarned:"",
+    totalInterestPosted:"",
+    accountBalance:"",   
+    availableBalance:"",
+  },
+  active:false,
+});
+
+  const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [user,setUser]=useState({ 
     id:"",  
@@ -50,7 +62,7 @@ export default function Data() {
     }
   };
 
-  const handleUpdate = async () => {
+   const handleUpdate = async () => {
     setLoading(true);
     try {
       await axios.put(`http://localhost:8023/bankAccount/update`, editedAccount);
@@ -64,6 +76,15 @@ export default function Data() {
       setAccounts(updatedAccounts);
       console.log("Account updated");
       setEditedAccount(null);
+     
+      const response1 = await axios.post('http://localhost:8023/user-activity/save',
+      {
+        userId: account.userId,
+        timestamp: new Date(),
+        description: 'Bank account updated',
+    }
+      );
+
     } catch (error) {
       setError("An error occurred while updating the account.");
     } finally {
@@ -71,16 +92,14 @@ export default function Data() {
     }
   };
 
-  const handleEdit = (item) => {
+ const handleEdit = (item) => {
     setEditedAccount(item);
-  };
+  }; 
 
-  const handleFieldChange = (e) => {
-    const { name, value } = e.target;
-    setEditedAccount(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+
+  const handleSelectChange = (e) => {
+    const { name,value } = e.target;
+    setEditedAccount({...editedAccount, [name]: value});
   };
 
   useEffect(() => {
@@ -105,46 +124,52 @@ export default function Data() {
   }, [user.id]);
 
   const columns = [
-    { Header: "idAccount", accessor: "idAccount", width: "20%", align: "left" },
-    { Header: "glCode", accessor: "glCode", align: "center" },
-    { Header: "bankName", accessor: "bankName", align: "center" },
-    { Header: "balance", accessor: "balance", align: "center" },
-    { Header: "manualEntriesAllowed", accessor: "manualEntriesAllowed", align: "center" },
-    { Header: "Disabled", accessor: "Disabled", align: "center" },
+    { Header: "accountNo", accessor: "accountNo", width: "20%", align: "left" },
+    { Header: "savingsProductName", accessor: "savingsProductName", align: "center" },
+    { Header: "totalDeposits", accessor: "totalDeposits", align: "center" },
+    { Header: "accountBalance", accessor: "accountBalance", align: "center" },
+    { Header: "totalInterestPosted", accessor: "totalInterestPosted", align: "center" },
+    { Header: "availableBalance", accessor: "availableBalance", align: "center" },
+    { Header: "totalInterestEarned", accessor: "totalInterestEarned", align: "center" },
+    { Header: "active", accessor: "active", align: "center" },
+
     { Header: "actions", accessor: "actions", align: "center" },
   ];
 
   const rows = accounts.map((item) => ({
-    idAccount: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="id" value={editedAccount.id} onChange={handleFieldChange} />
-      : <h3 className="idAccount">{item.id}</h3>
+    accountNo: (
+
+       <h3 className="accountNo">{item.accountNo}</h3>
     ),
-    glCode: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="glCode" value={editedAccount.glCode} onChange={handleFieldChange} />
-      : <h3>{item.glCode}</h3>
+    savingsProductName: (
+     <h3>{item.savingsProductName}</h3>
     ),
-    bankName: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="name" value={editedAccount.name} onChange={handleFieldChange} />
-      : <h3>{item.name}</h3>
+    totalDeposits: (
+    <h3>{item.summary.totalDeposits}</h3>
     ),
-    balance: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="balance" value={editedAccount.balance} onChange={handleFieldChange} />
-      : <h3>{item.balance}</h3>
+    accountBalance: (
+    <h3>{item.summary.accountBalance}</h3>
     ),
-    disabled: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="disabled" value={editedAccount.disabled} onChange={handleFieldChange} />
-      : <h3>{item.disabled}</h3>
+    totalInterestPosted: (
+     <h3>{item.summary.totalInterestPosted}</h3>
     ),
-    manualEntriesAllowed: (
-      editedAccount && editedAccount.id === item.id ?
-      <TextField name="manualEntriesAllowed" value={editedAccount.manualEntriesAllowed} onChange={handleFieldChange} />
-      : <h3>{item.manualEntriesAllowed}</h3>
+    availableBalance: (
+      <h3>{item.summary.availableBalance}</h3>
+     ),
+     totalInterestEarned: (
+      <h3>{item.summary.totalInterestEarned}</h3>
+     ),
+
+   
+     active: (
+      editedAccount && editedAccount.accountNo === item.accountNo ?
+      <Select variant="outlined" name="active" value={editedAccount.active} onChange={handleSelectChange}>
+        <MenuItem value="true">true</MenuItem>
+        <MenuItem value="false">false</MenuItem>
+      </Select>
+      : <h3>{item.active.toString()}</h3>
     ),
+
     actions: (
       <Grid className="gridButton" variant="contained">
         <Button variant="contained" className='actionButtonn'  title='edit' onClick={() => handleEdit(item)}><EditIcon/></Button>

@@ -11,7 +11,7 @@ import MDButton from "components/MDButton";
 import { useMaterialUIController } from "context";
 import './style.css';
 
-function Bill({ name, company, email, vat, noGutter }) {
+function Bill({ name,profession,email,number,savings,deposits,earned, posted,status}) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -24,7 +24,6 @@ function Bill({ name, company, email, vat, noGutter }) {
       bgColor={darkMode ? "transparent" : "grey-100"}
       borderRadius="lg"
       p={3}
-      mb={noGutter ? 0 : 1}
       mt={2}
     >
       <MDBox width="100%" display="flex" flexDirection="column">
@@ -52,7 +51,7 @@ function Bill({ name, company, email, vat, noGutter }) {
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
           <p>
-            Company Name:&nbsp;&nbsp;&nbsp; <span className="Cname">{company} </span>   
+          Investor profession:&nbsp;&nbsp;&nbsp; <span className="Cname">{profession} </span>   
           </p>
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
@@ -61,25 +60,43 @@ function Bill({ name, company, email, vat, noGutter }) {
           </p>
         </MDBox>
         <p>
-          VAT Number:&nbsp;&nbsp;&nbsp;<span className="Cname">{vat}</span>
+        Savings Product Name:&nbsp;&nbsp;&nbsp;<span className="Cname">{savings}</span>
+        </p>
+        
+        <p>
+        Account Number:&nbsp;&nbsp;&nbsp;<span className="Cname">{number}</span>
+        </p>
+        
+        <p>
+        Total Deposits:&nbsp;&nbsp;&nbsp;<span className="Cname">{deposits}</span>
+        </p>
+        <p>
+        Total Interest Earned:&nbsp;&nbsp;&nbsp;<span className="Cname">{earned}</span>
+        </p>
+        <p>
+        Total Interest Posted:&nbsp;&nbsp;&nbsp;<span className="Cname">{posted}</span>
+        </p>
+        <p>
+        Status:&nbsp;&nbsp;&nbsp;<span className="Cname">{status}</span>
         </p>
       </MDBox>
     </MDBox>
   );
 }
 
-// Setting default values for the props of Bill
-Bill.defaultProps = {
-  noGutter: false,
-};
 
 // Typechecking props for the Bill
 Bill.propTypes = {
   name: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
+  profession: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  vat: PropTypes.string.isRequired,
-  noGutter: PropTypes.bool,
+  number: PropTypes.number.isRequired,
+  savings: PropTypes.string.isRequired,
+  deposits: PropTypes.number.isRequired,
+  earned: PropTypes.number.isRequired,
+  posted: PropTypes.number.isRequired,
+  status:  PropTypes.string.isRequired,
+ 
 };
 
 export default Bill;

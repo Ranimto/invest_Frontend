@@ -20,7 +20,7 @@ function PlatformSettings() {
           platform settings
         </h6>
       </MDBox>
-      <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
+      <MDBox>
         <h6  className="subtitle">
           ACCOUNT
         </h6>

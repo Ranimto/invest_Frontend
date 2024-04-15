@@ -1,33 +1,19 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 export default function NavbarPerformance() {
-  const [value, setValue] = React.useState('one');
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <Box sx={{ width: '100%' }}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        textColor="info"
-        indicatorColor="secondary"
-        aria-label="secondary tabs example">
-
-        <Tab value="one" label="Performance" component={Link} to="/performance" /> 
-        <Tab value="two" label="Activity"  component={Link} to="/activity"/>
-        <Tab value="three" label="Transactions" component={Link} to="/billing"/>
  
-        
-  
-       
-      </Tabs>
+  function changeCompo() {
+    var compo = document.getElementById("compoChanger");
+    var btn = document.querySelector('.btnPerformance');
+    btn.style.border = "1px solid blueviolet";
+}
+  return (
+    <Box sx={{ width: '100%' }} display="flex">     
+     <Button  className="btnPerformancee" onclick="changeCompo()"><Link to='performance/108/21/GOOGL/0/12528280'>Performance</Link></Button>
+     <Button className="btnPerformancee" onclick="changeCompo()"><Link to='/activity'>Activities</Link></Button>    
     </Box>
   );
 }

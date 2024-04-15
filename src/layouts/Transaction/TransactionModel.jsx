@@ -3,9 +3,9 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import './style.css';
 import DataTable from "examples/Tables/DataTable";
-import data from "layouts/activity/ActivityData";
+import data from "layouts/transaction/TransactionData";
 
-function ActivityModel() {
+function TransactionModel() {
   const { columns, rows } = data(1);
 
   return (
@@ -30,4 +30,4 @@ function ActivityModel() {
   );
 }
 
-export default ActivityModel;
+export default TransactionModel;

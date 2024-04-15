@@ -1,0 +1,138 @@
+/* CSS */
+
+.detailsTitle{
+  font-size: 30px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: rgba(0, 0, 0, 0.867);
+  padding: 2% 0 0 30%;
+}
+.detailsTitle strong{
+  color: rgba(76, 10, 93, 0.719);
+}
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    padding: 10%;
+    margin: 5%;
+
+    box-shadow: 1px 2px 4px 2px rgba(168, 99, 208, 0.91)!important;
+  }  
+  .profile_imgg {
+    width: 245px; 
+    height: 230px;
+    border-radius: 50%;
+    margin: 2% 2% 2% 15% !important;
+    Box-shadow: 1px 2px 4px 2px rgb(137, 137, 137);
+ 
+  }
+  .btnProfile{
+    color: white !important;
+    background-color: blueviolet !important;
+    margin: 2% 2% 7% 30% !important;
+   }
+  
+  .profile-details {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .update-form-card {
+    padding: 5%;
+    margin: -18% 7% 0 0  !important;
+    box-shadow: 1px 2px 4px 2px rgba(30, 41, 80, 0.622)!important;
+  }
+
+  .detailsValues {
+    color: rgba(42, 42, 44, 0.863) !important;
+    font-size: small!important;;
+    font-weight: 400 !important;;
+    font-size: 15px !important;; 
+    line-height: 1!important;
+    display: flex;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+   td em {
+    color: rgba(0, 1, 13, 0.551)!important;
+    font-size: 15px;
+    font-style: normal; 
+    font-weight: 700;
+   
+    }
+  .attr1{
+   display: flex;
+   gap:20px;
+  }
+  .closeAccount{
+    color: white !important;
+    background-color: rgba(3, 2, 36, 0.886) !important;
+    margin-top: -20% !important;
+  }
+  .profileTextt{
+    display: flex;
+    gap: 5%;
+    padding: 2%;
+    text-align: justify;
+  }
+  
+  .profileTextt h6{
+   color: rgba(0, 0, 0, 0.786) ;
+   font-weight: 600;
+   font-family:Arial, Helvetica, sans-serif;
+   font-size: 14px;
+   text-align: justify;
+  }
+  .terms{
+    margin-top: -5%;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.636);
+    font-weight: 400;
+    text-align: justify;
+    width: 160%;
+  }
+  .Information{
+    color: rgba(0, 0, 0, 0.679);
+    font-size: 14px;
+  
+    width: 40%;
+    font-weight: 400;
+    text-align: justify;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+  }
+  .details{
+    font-size: 18px !important;
+    padding:3% 4% 4% 0 !important;
+    color: rgba(0, 0, 0, 0.837);
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+  .detailsField{
+    font-weight: 600 !important;
+    color: rgba(17, 1, 21, 0.9) !important;
+    font-size: 14px !important;
+    width: 100% !important;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif!important;
+}
+ 
+  .update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .empty-card {
+   
+    padding-left: 5%;
+    width: 95% !important;
+    box-shadow: 1px 2px 4px 2px rgba(189, 159, 23, 0.91)!important;
+  }
+  .profileFormBtn{
+    color: white !important;
+    background-color: blueviolet !important;
+   
+
+  }
+  

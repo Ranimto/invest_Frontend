@@ -8,44 +8,91 @@ import DataTable from 'examples/Tables/DataTable';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import'./accountStyle.css';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import MDAlert from 'components/MDAlert';
 
 const BankAccounts = () => {
   const [showForm,setShowForm]=useState(false);
   const { columns, rows } = AccountTableData();
   const [accounts, setAccounts] = useState([]);
-  const [account, setAccount] = useState({
-    id:"",
+  const [alert,setAlert]=useState(false);
+  const [error,setError]=useState(false);
+ const email= useSelector((state)=>state.auth.value.email);
+  const [requestAccount, setRequestAccount] = useState(
+    {
     accountNo:"",
-    bankName:"",
-    balance:"",
-    active:"",
-    currency:"",   
+    userId:"",
+    status:"",
+    }
+  );
+  const [account, setAccount] = useState({
+     
+    accountNo:"",
+    savingsProductName:"",
+    summary:{
+      totalDeposits:"",
+      totalInterestEarned:"",
+      totalInterestPosted:"",
+      accountBalance:"",   
+      availableBalance:"",
+    },
+    active:false,
+    userId:"",
+  });
+  const [user,setUser]=useState({ 
+    id:"",  
+    firstname:"",
+    lastname:"",
+    email :"",
+    phone :"",
+    city:"",
+    nationality:"",
+    postcode:"",
+    profession:"",
+    imageUrl:""
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); 
-
-    try {
-        const url = "http://localhost:8023/bankAccount/add";
-        const response = await axios.post(url, account);
-        console.log('bank account added:', response.data);
-        setAccount({
-          id:"",
-          glCode: "",
-          name: "",
-          balance: "",
-          disabled: "",
-          manualEntriesAllowed: false,
-          accountType: "",
-          accountUsage: "",
-
-        });
-        setShowForm(false);
-        setAccounts([...accounts, response.data]);
-    } catch (error) {
-        console.log(error);
-    }
+  const fetchUserByEmail= async (email) => {
+    const url = `http://localhost:8023/user/findByEmail/${email}`;
+    const response = await axios.get(url);
+    console.log("Response from server:", response.data, response);
+    setUser(response.data);
 };
+
+ useEffect(() => {
+  fetchUserByEmail(email);
+  setRequestAccount({...requestAccount,userId:user.id});
+ 
+}, [email]);  
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8023/requestAccount/approveRequestAccount";
+      setAccount({...account,userId:requestAccount.userId});
+      const response = await axios.post(url, requestAccount);
+      // console.log('Bank account added:', response.data);
+      setAccounts([...accounts, response.data]);
+      console.log('list accoints:', accounts);
+      showAlert("your bank account is added succesfully!")
+
+      await axios.post('http://localhost:8023/user-activity/save', {
+        userId: user.id,
+        timestamp: new Date(),
+        description: `Adding a new bank account with account number: ${response.data.accountNo}`,
+      });    
+
+      // Reset the form fields after successful submission
+      setRequestAccount({
+        accountNo: "",
+        userId: "",
+        status: "",
+      });
+    } catch (error) {
+      showAlert({error})
+      console.error("Error submitting form:", error);
+    }
+  };
 
   const handleAddAccountClick=()=>{
     setShowForm(true);
@@ -54,21 +101,18 @@ const BankAccounts = () => {
     setShowForm(false); 
   };
 
-  const handleSelectChange = (e) => {
-    const { value } = e.target;
-    setAccount({
-      ...account,
-      active: value === "true" ? true : false
-    });
-  };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setAccount({
-      ...account,
+    setRequestAccount({
+      ...requestAccount,
       [name]: value
     });
   };
+
+  const showAlert= ( message) => {
+    setAlert(true);  
+  };
+
 
   return (
     <DashboardLayout>
@@ -79,32 +123,9 @@ const BankAccounts = () => {
       ) : (
         <form onSubmit={handleSubmit} >
           <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <TextField  name="glCode" label="glCode" variant="outlined" fullWidth value={account.glCode} onChange={handleInputChange}  />
+            <Grid item xs={12}>
+              <TextField  name="accountNo" label="accountNo" variant="outlined" fullWidth value={requestAccount.accountNo} onChange={handleInputChange}  />
             </Grid>
-            <Grid item xs={6}>
-              <TextField name="name" label="name" variant="outlined" fullWidth value={account.name} onChange={handleInputChange} />
-            </Grid> 
-            <Grid item xs={6}>
-              <TextField name="balance" label="balance" variant="outlined" fullWidth value={account.balance} onChange={handleInputChange}  />
-            </Grid>    
-          
-            <Grid item xs={6}>
-              <TextField name="manualEntriesAllowed" label="manualEntriesAllowed" variant="outlined" fullWidth  value={account.manualEntriesAllowed} onChange={handleInputChange} />
-            </Grid> 
-            <Grid item xs={6}>
-              <TextField name="accountType" label="accountType" variant="outlined" fullWidth  value={account.accountType} onChange={handleInputChange} />
-            </Grid> 
-
-          <Grid item xs={12}>
-            <InputLabel id="disabled-label" style={{ padding: '5px' ,color:'rgba(45, 43, 43, 0.911)',fontWeight:'500'}}>This new Bank Account is currently disabled ? </InputLabel>
-            <Select labelId="disabled-label" variant="outlined" fullWidth style={{ padding: '6px' }} value={account.disabled ? "true" : "false"} onChange={handleSelectChange}>
-            <MenuItem value={true}>true</MenuItem>
-            <MenuItem value={false}>false</MenuItem>
-           </Select>
-          </Grid>
-         
-
             <Grid item className='gridbtn' xs={12}>
               <Button variant="contained" onClick={handleCancelClick} className='cancel'>Cancel</Button>
               <Button variant="contained" type="submit" className='add'>Add </Button>
@@ -144,6 +165,11 @@ const BankAccounts = () => {
           </Grid>
           <Grid item xs={12}></Grid>
         </Grid>
+        {error  && 
+           <MDAlert color={success ? "success" : "error"} className="alertClass">
+           {console.log("errrror",error)}   {error}
+         </MDAlert>
+          }
       </MDBox>
     </DashboardLayout>
   )
