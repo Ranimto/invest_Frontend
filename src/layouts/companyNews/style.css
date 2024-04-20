@@ -4,14 +4,13 @@
 .pageHeader{
     width: 92%;
     height: 620px;
-    margin: 0 0  4%;
-    padding: 3%;
-   
+    margin-top: -1% ;
+    padding: 3%;  
 }
 .pageHeader img{
-    width: 70%;
-    height: 400px;
-    margin-left: 16%;
+    width: 50%;
+    height: 300px;
+    margin-left: 27%;
     padding: 5%;
     
 }
@@ -19,7 +18,7 @@
 .pageTitle{
     font-family:Georgia, 'Times New Roman', Times, serif;
     color: rgba(0, 0, 0, 0.804);
-    font-size: 37px;
+    font-size: 34px;
     font-style: italic;
 }
 .pageHeader p {
@@ -32,18 +31,19 @@
 .newsClasss {
     background-color: transparent !important;
     width:95% ;
+    height: 35rem;
     padding: 5%;
     margin-right: 2%;
-    border:  2px solid rgba(221, 11, 236, 0.645) !important;
-    
-    
+    border:  2px solid rgba(16, 9, 149, 0.645) !important;   
 }
 
 .gridNews{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 20px; 
-    padding-left:  6%;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px; 
+    padding: 4%;
+    height: 50px;
+    margin-top: -33%;
 }
 
 .newsClasss h4 {
@@ -94,8 +94,39 @@
 }
 .newsClasss img{
     padding-top: 12%;
-   
     width: 97%;
-    height: 350px;
+    height: 220px;
     border-radius: 10px;
 }
+
+.newsClasss:hover .url {
+    display: none; 
+  }
+
+  .newsClasss:hover .text-initial {
+    display: none; 
+  }
+
+  .newsClasss:hover .text-hover{
+    display: block;
+    border: none !important;
+    color: white;
+    font-size: 15px;
+    margin-top: 20%;
+    font-weight: 400;
+    color: white !important;
+  }
+
+  .newsClasss .text-hover{
+    display: none;
+  }
+
+
+  .newsGrid :hover{
+    background-color:rgb(90, 3, 220) !important;
+    height: 35rem;  
+  }
+  .newsClasss:hover .text-hover strong{
+      color: rgb(221, 217, 217) !important;
+      font-size: 17px;
+  }  

@@ -57,10 +57,11 @@ function ReportsBarChart({ color, title, description, date, chart }) {
               bgColor={color}
               borderRadius="lg"
               coloredShadow={color}
-              py={2}
-              pr={0.5}
-              mt={-5}
-              height="12.5rem"
+              py={1}
+              pr={1}
+              mt={-4}
+              height="11rem"
+              width="20rem"
             >
               <Bar data={data} options={options} redraw />
             </MDBox>

@@ -45,7 +45,7 @@ const Home = () => {
   <Grid container spacing={3}>
     <Grid item xs={12}>
       <div className="background-image">
-        <img  src={background2} alt="Background2 Image" />
+        <img  src={background} alt="Background2 Image" />
 
       </div>
     </Grid>

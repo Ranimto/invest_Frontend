@@ -40,8 +40,8 @@ function Investment() {
 
   return (
     <Card>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-        <MDBox>
+      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={2} className="investt" >
+        <MDBox >
           <h6 className="title">
             Investments
           </h6>
@@ -69,8 +69,8 @@ function Investment() {
         <DataTable
           table={{columns, rows }}
           showTotalEntries={false}
-          isSorted={false}
-          noEndBorder
+          isSorted={false}    
+       
           entriesPerPage={false}
         />
       </MDBox>

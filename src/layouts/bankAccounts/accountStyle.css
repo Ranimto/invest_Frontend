@@ -8,7 +8,8 @@
 .actionButtonn {
     color: white !important; 
     cursor: pointer;
-    min-width: 10px !important;
+    min-width: 2px !important;
+
     width: 10px !important;
 }
 .roundedAdd{

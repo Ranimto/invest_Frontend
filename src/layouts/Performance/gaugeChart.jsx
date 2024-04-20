@@ -6,8 +6,8 @@ const CustomGauge = ({ value }) => {
   return <GaugeChart id="gauge-chart1" 
   percent={value /100} 
   formatTextValue={() => `${value}`} 
-  textColor="#000" 
-  style={{ height:"20px",width:"90%",fontWeight:"600" ,paddingTop:"10%" }}
+  textColor="dark" 
+  style={{ height:"20px",width:"85%",fontWeight:"600" ,paddingTop:"10%" }}
  
 
   

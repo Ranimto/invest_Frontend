@@ -19,6 +19,9 @@ import Transaction from "layouts/billing/components/Transaction";
 import CompaniesRecommandations from "layouts/companiesRecommandations/companiesRecommandations";
 import CompanyNews from "layouts/companyNews/companyNews";
 import Chat from "layouts/chatGPT/chat";
+import Markets from "layouts/markets/markets";
+import RestoreIcon from '@mui/icons-material/Restore';
+import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
 
   
 
@@ -101,21 +104,12 @@ const routes = [
     type: "collapse",
     name: "News",
     key: "News",
-    icon: <PendingActionsIcon/>,
+    icon: <RestoreIcon/>,
     route: "news/:company",
     component: <CompanyNews/>,
     isPrivate: true,
   },
-  {
-    type: "collapse",
-    name: "logout",
-    key: "logout",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    route: "/authentication/sign-in",
-    component: <SignIn />,
-    isPrivate: false,
-  },
+
   {
     route: "/authentication/sign-up",
     component: <SignUp />,
@@ -152,8 +146,26 @@ isPrivate: true,
   component: <Chat/>,
   isPrivate: true,
 },
+{
+  type: "collapse",
+  name: "markets",
+  key: "markets",
+  icon: <BabyChangingStationIcon/>,
+  route: "markets",
+  component: <Markets/>,
+  isPrivate: true,
+},
 
-
+{
+  type: "collapse",
+  name: "logout",
+  key: "logout",
+  icon: <Icon fontSize="small">login</Icon>,
+  route: "/authentication/sign-in",
+  route: "/authentication/sign-in",
+  component: <SignIn />,
+  isPrivate: false,
+},
   
    
 ];

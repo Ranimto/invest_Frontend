@@ -1,22 +1,18 @@
 import Icon from "@mui/material/Icon";
-
 import PropTypes from 'prop-types';
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";
 
 function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
   const [controller] = useMaterialUIController();
-  const { darkMode } = controller;
+  
 
   return (
     <MDBox
       component="th"
       width={width}
-      py={1.5}
-      px={3}
+      py={0.1}
+      px={2}
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
         borderBottom: `${borderWidth[1]} solid ${light.main}`,
       })}
@@ -25,11 +21,11 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
         {...rest}
         position="relative"
         textAlign={align}
-        color={darkMode ? "white" : "secondary"}
-        opacity={0.7}
-        sx={({ typography: { size, fontWeightBold } }) => ({
-          fontSize: size.xxs,
-          fontWeight: fontWeightBold,
+        color= "secondary"
+        opacity={1} 
+        sx={({ typography: { size} }) => ({
+          fontSize: size.xs,
+          fontWeight: 600,
           textTransform: "uppercase",
           cursor: sorted && "pointer",
           userSelect: sorted && "none",
@@ -40,7 +36,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
           <MDBox
             position="absolute"
             top={0}
-            right={align !== "right" ? "16px" : 0}
+            right={align !== "right" ? "10px" : 0}
             left={align === "right" ? "-5px" : "unset"}
             sx={({ typography: { size } }) => ({
               fontSize: size.lg,
@@ -49,16 +45,16 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
             <MDBox
               position="absolute"
               top={-6}
-              color={sorted === "asce" ? "text" : "secondary"}
-              opacity={sorted === "asce" ? 1 : 0.5}
+              color= "text" 
+              opacity= {1}
             >
               <Icon>arrow_drop_up</Icon>
             </MDBox>
             <MDBox
               position="absolute"
               top={0}
-              color={sorted === "desc" ? "text" : "secondary"}
-              opacity={sorted === "desc" ? 1 : 0.5}
+              color="text" 
+              opacity={0.2}
             >
               <Icon>arrow_drop_down</Icon>
             </MDBox>

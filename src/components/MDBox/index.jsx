@@ -60,6 +60,7 @@ MDBox.propTypes = {
     "light",
     "dark",
     "none",
+    "rgb(5, 2, 37)"
   ]),
 };
 

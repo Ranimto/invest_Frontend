@@ -37,8 +37,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   
 
   const handleLogout = () => {
-    localStorage.clear();
-    dispatchRedux(logout());
+     localStorage.clear();
+    
     navigate('/authentication/sign-in')
    };
 

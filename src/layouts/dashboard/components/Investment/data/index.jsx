@@ -14,7 +14,6 @@ export default function Data() {
     type:"",
     investmentAmount :0,
     currentInvestmentAmount :0,
-    dividendPayout :"",
     startDate :"",
     duration :"",
     status: ""
@@ -79,7 +78,6 @@ export default function Data() {
     { Header: "currentInvestmentAmount", accessor: "currentInvestmentAmount", align: "center" },
     { Header: "startDate", accessor: "startDate", align: "center" },
     { Header: "duration", accessor: "duration", align: "center" },
-    { Header: "dividendPayout", accessor: "dividendPayout", align: "center" },
     { Header: "status", accessor: "status", align: "center" },
     { Header: "Performance", accessor: "Performance", align: "center" },
     { Header: "CompanyNews", accessor: "CompanyNews", align: "center" },
@@ -88,7 +86,7 @@ export default function Data() {
   const rows = investments.map((item) => ({
 
     companyName: (
-      <MDBox width="8rem" textAlign="left">
+      <MDBox width="6rem" textAlign="left">
       <Link to={`/stock/${item.companyName}`} className="CompanyName">{item.companyName}</Link>
       </MDBox>
     ),
@@ -113,11 +111,7 @@ export default function Data() {
         {item.startDate}
         </MDBox>
     ),
-    dividendPayout: (
-      <MDBox width="10rem" textAlign="center">
-        {item.dividendPayout}
-        </MDBox>
-    ),
+   
     duration: (
       <MDBox width="8rem" textAlign="center">
        {item.duration}
@@ -135,7 +129,6 @@ export default function Data() {
       Go to Performance
     </Link>
     ),
-
     CompanyNews: (
       <MDBox width="10rem" textAlign="center" >
        <Link to={`/news/${item.companyName}`} className="newsLink"> Check the company News</Link>

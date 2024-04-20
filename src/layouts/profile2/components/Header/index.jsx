@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import './style.css'
 import MDBox from "components/MDBox";
 import breakpoints from "assets/theme/base/breakpoints";
-import backgroundImage from "assets/images/bg-profile.jpeg";
+import backgroundImage from "assets/images/topcryptocex.jpg";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { AppBar, Box, Button, Icon, Modal, Switch, Tab, Tabs, TextField, Typography } from "@mui/material";
@@ -185,10 +185,7 @@ const handleUpdateUser= async () => {
   );
 };
   return (
-
-    
-    <MDBox position="relative" mb={5}>
-      
+    <MDBox position="relative" mb={5}>      
       <MDBox
         display="flex"
         alignItems="center"
@@ -209,16 +206,17 @@ const handleUpdateUser= async () => {
       <Card
         sx={{
           position: "relative",
-          mt: -8,
+          mt: -25,
           mx: 3,
-          py: 2,
+          py: -5,
           px: 2,
         }}
       >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h6  className="detailsTitle" >
          MY  <strong>PROFILE</strong> INFORMATIONS 
         </h6>
-        <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }} style={{paddingTop:'1%',width:'35%'}}>
+        <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }} style={{paddingTop:'1%'}}>
             <AppBar position="static" >
               <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
                 <Tab
@@ -254,10 +252,11 @@ const handleUpdateUser= async () => {
           minWidth: 400,
           maxWidth: 600,
           borderRadius: 8,
+
         }}
       >
         <Typography variant="h5" component="h2" mb={2}>
-          Compose Message
+          Contact Message
         </Typography>
         <form onSubmit={handleSendMessage}>
           <Box mb={2}>
@@ -325,6 +324,7 @@ const handleUpdateUser= async () => {
               </Tabs>
             </AppBar>
   </Grid>
+  </div>
   <Grid container spacing={3} alignItems="center">
          
   <Grid item xs={12} sm={6} style={{ height: '50rem' }}>
@@ -361,17 +361,17 @@ const handleUpdateUser= async () => {
 
         <MDBox display="flex" alignItems="center" mb={0.5}  className="profileTextt">     
             <h6 className="detailsField" >  Number :  </h6>
-            <h4 className="tdClass" style={{paddingLeft:"7%"}}>{user.phone}</h4>               
+            <h4 className="detailsValues" style={{paddingLeft:"7%"}}>{user.phone}</h4>               
         </MDBox>
 
         <MDBox display="flex" alignItems="center" mb={0.5}  className="profileTextt">     
-            <h6 className="detailsField" >  Email:  </h6>
-            <h4 className="tdClass" style={{paddingLeft:"5%"}}>{user.email}</h4>               
+            <h6 className="detailsField"  >  Email:  </h6>
+            <h4 className="detailsValues" style={{paddingLeft:"5%" ,fontSize:'10px'}}>{user.email}</h4>               
         </MDBox>     
 
         <MDBox display="flex" alignItems="center" mb={0.5}  className="profileTextt">     
             <h6 className="detailsField" >  Profession :  </h6>
-            <h4 className="tdClass">{user.profession}</h4>               
+            <h4 className="detailsValues">{user.profession}</h4>               
         </MDBox>
       </MDBox>
     </Card>
@@ -385,7 +385,7 @@ const handleUpdateUser= async () => {
       {/* Top Section */}
       <Grid item>
         <Card className="update-form-card">
-         <h5 className="details">EDIT PROFILE</h5>
+         <h5 className="detailsForm">EDIT PROFILE</h5>
           <form className="update-form">
             <TextField label="First Name" name="firstname" value={user.firstname} variant="outlined" fullWidth onChange={handleProfileChange}/>
             <TextField label="Last Name" name="lastname" value={user.lastname} variant="outlined" fullWidth onChange={handleProfileChange}/>
@@ -393,38 +393,36 @@ const handleUpdateUser= async () => {
             <TextField label="Phone" name="phone" value={user.phone} variant="outlined" fullWidth onChange={handleProfileChange} />
             <TextField label="Profession" name="profession" value={user.profession} variant="outlined" fullWidth onChange={handleProfileChange}/>
            
-            <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={handleUpdateUser}>Update</MDButton>
+            <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={handleUpdateUser} style={{width:"50%" ,marginLeft:"26%"}}>Update</MDButton>
 
 
           </form>
         </Card>
       </Grid>
-      {/* Bottom Section */}
       <Grid item  >   
       <Card className="empty-card">
-
       <MDBox>
-        <h6 className="details">
+        <h6 className="details" style={{color:"white"}}>
           Platform Settings
         </h6>
       </MDBox>
       <MDBox>
-        <h6  style={{color:"grey", paddingTop:'5%'}}>
-          ACCOUNT
+        <h6  style={{color:"white", marginTop:'-3%'}}>
+          Account
         </h6>
       </MDBox>
       <MDBox display="flex" alignItems="center" mb={0.5} ml={-1.5}>
         
           <MDBox mt={0.5} display='flex'>
             <Switch checked={followsMe} onChange={() => setFollowsMe(!followsMe)} />
-            <h6 className="settings">
+            <h6 className="settings" style={{color:"white"}}>
              News Alert
             </h6>
           </MDBox>
 
-          <MDBox mt={0.5} display='flex'>
+          <MDBox mt={0.5} display='flex' style={{color:"white"}}>
           <Switch checked={mentionsMe} onChange={() => setMentionsMe(!mentionsMe)} />
-            <h6 className="settings">
+            <h6 className="settings" style={{color:"white" ,flexWrap:"nowrap"}}>
            Company Notifications
             </h6>
           </MDBox>

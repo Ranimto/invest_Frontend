@@ -189,9 +189,7 @@ useEffect(()=>{
                     <th>Company</th>
                     <th>Price</th>
                     <th>change</th>
-                    <th>change %</th>
-                    
-                    
+                    <th>change %</th>               
                   </tr>
                 </thead>
                 <tbody>
@@ -276,7 +274,7 @@ useEffect(()=>{
                 </Grid>
                 <Grid item xs={12} sm={2}>
                   <div className="stockTitle ">Price</div>
-                  <div className="stockText">584{item.price}</div>
+                  <div className="stockText">{item.price}</div>
                 </Grid>
                 <Grid item xs={12} sm={2}>
                   <div className="stockTitle ">Mean</div>
@@ -327,8 +325,8 @@ useEffect(()=>{
 
   { showForm &&
 <Modal open={showForm} >
-        <div className="modalContent">
-         
+        <div className="modalContent" >
+        <div style={{ maxHeight: '650px', overflowY: 'auto' }}>
           <form  className='stockForm' style={{ height: checkout ? "43rem" : "35rem" }}>
           <p>Make your first step and BUY a stock</p>
            
@@ -357,6 +355,7 @@ useEffect(()=>{
            <Link to="/stock/AAPL" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to stock</Link>
            </div>     
           </form>
+          </div> 
         </div>
       </Modal>
 }

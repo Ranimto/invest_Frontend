@@ -26,7 +26,7 @@ const colors = {
   },
 
   primary: {
-    main: "#e91e63",
+    main: "rgb(5, 2, 37)",
     focus: "#e91e63",
   },
 
@@ -80,16 +80,20 @@ const colors = {
   gradients: {
     primary: {
       main: "#c877dbf1",
-      state: "#5a1469f1",
+      state: "#5a1469f1",   
+    },
+    secondary: {
+      main: "rgba(51, 10, 110, 0.812)",
+      state: "rgb(5,20,35)",
       
       
     },
 
-    secondary: {
+  /*   secondary: {
       main: "#747b8a",
       state: "#495361",
      
-    },
+    }, */
 
     info: {
       main: "rgba(51, 109, 218, 0.812)",

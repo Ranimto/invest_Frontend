@@ -7,7 +7,6 @@ import MasterCard from "examples/Cards/MasterCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import PaymentMethod from "layouts/billing/components/PaymentMethod";
 import Invoices from "layouts/billing/components/Invoices";
-import BillingInformation from "layouts/billing/components/BillingInformation";
 import Transactions from "layouts/billing/components/Transactions";
 import './style.css'
 import { useSelector } from "react-redux";
@@ -69,11 +68,11 @@ function Billing() {
   return (
     <DashboardLayout>
       <DashboardNavbar absolute isMini />
-      <MDBox mt={8}>
+      <MDBox mt={1}>
         <MDBox mb={3}>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} lg={8}>
-              <Grid container spacing={3}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} xl={6}>
                 <MasterCard number=  {2222222222222222} holder= {user.firstname + ' '+user.lastname} expires="11/27" />    
                 </Grid>
@@ -93,8 +92,8 @@ function Billing() {
                     value={activeAccount.summary.availableBalance}
                   />
                 </Grid>
-                {4562112+(activeAccount.accountNo)}
-                <Grid item xs={12}>
+                {/* {4562112+(activeAccount.accountNo)} */}
+                <Grid item xs={12}  >
                   <PaymentMethod />
                 </Grid>
               </Grid>
@@ -107,18 +106,18 @@ function Billing() {
 
        {/* Billing info */}
         <MDBox mb={3}>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={7}>
             <Card id="delete-account">
-          <MDBox pt={3} px={2}>
+          <MDBox pt={1} px={1}>
 
-        <h6 className="title">
-          Billing Information
-        </h6>
+              <h6 className="title">
+              Billing Information
+             </h6>
         
-      </MDBox>
-      <MDBox pt={1} pb={2} px={2}>
-        <MDBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
+          </MDBox>
+      <MDBox  pb={1} px={2}  style={{height:"32rem"}}>
+        <MDBox component="ul" display="flex" flexDirection="column" p={1} m={4}  style={{marginTop:"-5px"}}>
           <Bill
             name={user.firstname + ' ' + user.lastname}
             profession={user.profession}
@@ -137,8 +136,8 @@ function Billing() {
             </Grid>
 
 
-            <Grid item xs={12} md={5}>
-              <Transactions />
+            <Grid item xs={12} md={5}  style={{height:"37rem"}}>
+              <Transactions   />
             </Grid>
           </Grid>
         </MDBox>

@@ -1,0 +1,86 @@
+
+.marketsCard{
+    height: 9rem;
+    padding: 5%;
+    margin: 3%;
+    border: none;
+    color: rgb(17, 15, 15) !important;
+    border-radius: 5%;
+    width: 900px !important;
+
+}
+
+.section{
+ margin: 2%;
+
+}
+.section h3{
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.section p{
+    color: black;
+    margin-top:-5%;
+    font-size: 14px;
+    font-weight: 100;
+
+}
+.marketsCardSection2{
+    height: 13rem;
+    padding: 5%;
+    margin: 2%;
+    background-color: #9da9eb !important;
+    border: none;
+    color: white !important;
+    border-radius: 5%;
+    width: 160px !important;
+    box-shadow: 1px 2px 10px 1px rgb(33, 32, 32) !important;
+}
+
+.tableHeader th{
+color: black;
+width: 6%;
+font-size: 15px;
+border: 1px solid #464444;
+padding: 7px;
+text-align: left;
+color: #73da84;
+}
+
+.tableHeader td{
+  color: black;
+  justify-items:flex-start;
+  border: 1px solid #464444;
+  padding: 7px;
+  text-align: left;
+  width: 5%;
+}
+.btnMarket{
+    color: rgb(0, 0, 0) !important;
+    background-color: rgb(255, 200, 0) !important;
+    margin-left: 30%;
+}
+
+.marketsCard h6{
+    color:black;
+    padding: 5%;
+    font-size:18px;
+    margin-top: -35%;
+    margin-left: -35%;
+    font-weight: 600;
+}
+.marketsCard p{
+    color:black;
+    margin-left: -30%;
+    margin-top: -10%;
+    font-size:14px;
+    font-weight: 100;
+}
+.MarketImg{
+    height: 2.5rem;
+    width: 70% !important;
+    margin-top: 5%;
+}
+

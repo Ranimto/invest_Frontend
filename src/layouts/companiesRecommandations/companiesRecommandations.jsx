@@ -1,5 +1,4 @@
 import { Button, Card, Grid, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material'
-import PageLayout from 'examples/LayoutContainers/PageLayout'
 import React, {useEffect, useState } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
 import MDButton from 'components/MDButton';
+import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 
 const CompaniesRecommandations = () => {
 
@@ -121,7 +121,7 @@ const CompaniesRecommandations = () => {
     }, [email]);
 
   return (
- <PageLayout>
+ <DashboardLayout>
    <ComponentNavbar/>
   <div className="recommandationContainer">
   <h1> COMPANY SUGGESTIONS FOR YOU </h1>
@@ -138,7 +138,7 @@ const CompaniesRecommandations = () => {
  
    <p className="text-hover">{item.description}</p>
 
-   <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={() => handleShowForm(item.companyId)} style={{width:"45%",margin:'5% 0 0 30%'}} className="Companybtnn"> Invest now</MDButton>
+   <MDButton variant="gradient"  fullWidth type="submit" onClick={() => handleShowForm(item.companyId)} style={{width:"45%",margin:'5% 0 0 30%'}} className="Companybtnn"> Invest now</MDButton>
 
  </Card>
 </Grid>
@@ -198,7 +198,7 @@ const CompaniesRecommandations = () => {
         </div>
       </Modal>
 }
- </PageLayout>
+</DashboardLayout>
   )
 }
 

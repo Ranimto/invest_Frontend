@@ -41,9 +41,7 @@ function Overview2() {
       <DashboardNavbar />
     <MDBox mb={2} />
       <Header>    
-      </Header>
-
-     
+      </Header>     
       <Footer />
     </DashboardLayout>
   );
