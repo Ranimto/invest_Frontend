@@ -17,8 +17,7 @@ import { AppBar, Box, Button, Icon, Modal, Switch, Tab, Tabs, TextField, Typogra
 import { useNavigate } from "react-router-dom";
 import MDButton from "components/MDButton";
 
-
-function Header({ children }) {
+function Header() {
 
   const [followsMe, setFollowsMe] = useState(true);
   const [mentionsMe, setMentionsMe] = useState(true);
@@ -49,8 +48,7 @@ function Header({ children }) {
   });
 
   const fileInputRef=useRef(null);
-  const [currentUserDetails,setCurrentUserDetails ]=useState(null);
-  const profileImageUrl = user?.imageUrl || "";
+  const profileImageUrl = user?.imageUrl || "src/main/resources/imagesstock/avatar.png";
   const filename=profileImageUrl?profileImageUrl.split('/').pop():'';
   const imageUrlPath=`http://localhost:8023/user/images/${encodeURI(filename)}`
   const [selectedFileName ,setSelectedFileName]= useState('') ;
@@ -442,8 +440,6 @@ Header.defaultProps = {
   children: "",
 };
 
-Header.propTypes = {
-  children: PropTypes.node,
-};
+
 
 export default Header;

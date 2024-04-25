@@ -110,7 +110,7 @@ useEffect(()=>{
      <Grid className='performance_item'>
         <p  > <strong>Sharpe</strong> Ratio</p>
         <div className="customGaugee">
-           <CustomGauge value={data.sharpe_ratio.toFixed(5)}/>
+           <CustomGauge value={data.sharpe_ratio.toFixed(6)}/>
         </div>
        
      </Grid>
@@ -119,7 +119,7 @@ useEffect(()=>{
      <Grid className='performance_item'>
         <p> <strong>Sortino</strong> Ratio</p>
         <div className="customGaugee">
-           <CustomGauge value={data.sortino_ratio.toFixed(5)}/>
+           <CustomGauge value={data.sortino_ratio.toFixed(6)}/>
         </div>
       
      </Grid>
@@ -128,7 +128,7 @@ useEffect(()=>{
      <Grid className='performance_item'>
         <p><strong>Annual</strong> Return </p>
         <div className="customGaugee">
-           <CustomGauge value={data.annual_return.toFixed(5)}/>
+           <CustomGauge value={data.annual_return.toFixed(6)}/>
         </div>
         
      </Grid>
@@ -137,7 +137,7 @@ useEffect(()=>{
      <Grid className='performance_item'>
         <p > <strong>Total</strong> Return </p>
         <div className="customGaugee">
-           <CustomGauge value={data.total_return.toFixed(5)}/>
+           <CustomGauge value={data.total_return.toFixed(6)}/>
         </div>
        
      </Grid>

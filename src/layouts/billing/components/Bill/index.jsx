@@ -1,13 +1,5 @@
 import PropTypes from "prop-types";
-
-// @mui material components
-import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
-
-// Material Dashboard 2 React context
 import { useMaterialUIController } from "context";
 import './style.css';
 
@@ -40,13 +32,11 @@ function Bill({ name,profession,email,number,savings,deposits,earned, posted,sta
 
           <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
             <MDBox mr={1}>
-              <MDButton variant="text" color="error">
-                <Icon>delete</Icon>&nbsp;delete
-              </MDButton>
+              
             </MDBox>
-            <MDButton variant="text" color={darkMode ? "white" : "dark"}>
+            {/* <MDButton variant="text" color={darkMode ? "white" : "dark"}>
               <Icon>edit</Icon>&nbsp;edit
-            </MDButton>
+            </MDButton> */}
           </MDBox>
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
@@ -87,15 +77,15 @@ function Bill({ name,profession,email,number,savings,deposits,earned, posted,sta
 
 // Typechecking props for the Bill
 Bill.propTypes = {
-  name: PropTypes.string.isRequired,
-  profession: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  number: PropTypes.number.isRequired,
-  savings: PropTypes.string.isRequired,
-  deposits: PropTypes.number.isRequired,
-  earned: PropTypes.number.isRequired,
-  posted: PropTypes.number.isRequired,
-  status:  PropTypes.string.isRequired,
+  name: PropTypes.string,
+  profession: PropTypes.string,
+  email: PropTypes.string,
+  number: PropTypes.number,
+  savings: PropTypes.string,
+  deposits: PropTypes.number,
+  earned: PropTypes.number,
+  posted: PropTypes.number,
+  status:  PropTypes.string,
  
 };
 

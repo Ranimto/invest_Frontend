@@ -7,16 +7,19 @@ import { Link } from 'react-router-dom';
 export default function Data() {
   const [companies, setCompanies] = useState([]);
   const [Company, setCompany] = useState({
-    name:"",
-    activity:"",
-    address:"",
-    description:"",
-    nbOfInvestors:"",
-    liquidityRatio:"",
-    interestCoverageRatio: "",
-    salesGrowthRatio:"",
-    profitabilityRatio: "",
-    rib:""
+    id: "",
+    activity: "",
+    companyName: "",
+    reportedCurrency: "",
+    operatingCashflow: 0.0,
+    paymentsForOperatingActivities: 0.0,
+    capitalExpenditures: 0.0,
+    cashflowFromInvestment: 0.0,
+    cashflowFromFinancing: 0.0,
+    dividendPayout: 0.0,
+    changeInExchangeRate: 0.0,
+    netIncome: 0.0,
+    RIB: 0.0,
   });
 
   const [error, setError] = useState(null);
@@ -64,80 +67,70 @@ export default function Data() {
   }, [user.id]);
 
  
-
   const columns = [
-    { Header: "name", accessor: "name", width: "45%", align: "left" },
-    { Header: "activity", accessor: "activity", align: "left" },
-    { Header: "address", accessor: "address", align: "center" },
-    { Header: "nbOfInvestors", accessor: "nbOfInvestors", align: "center" },
-    { Header: "debtRatio", accessor: "debtRatio", align: "center" },
-    { Header: "liquidityRatio", accessor: "liquidityRatio", align: "center" },
-    { Header: "interestCoverageRatio", accessor: "interestCoverageRatio", align: "center" },
-    { Header: "salesGrowthRatio", accessor: "salesGrowthRatio", align: "center" },
-    { Header: "profitabilityRatio", accessor: "profitabilityRatio", align: "center" },
-    { Header: "rib", accessor: "rib", align: "center" },
+  
+    { Header: "Name", accessor: "name", align: "center" },
+    { Header: "Activity", accessor: "activity", align: "left" },
+    { Header: "Reported_Currency", accessor: "reportedCurrency", align: "center" },
+    { Header: "Operating_Cash_Flow", accessor: "operatingCashflow", align: "center" },
+    { Header: "payments_ForOperating_Activities", accessor: "paymentsForOperatingActivities", align: "center" },
+    { Header: "Capital_Expenditures", accessor: "capitalExpenditures", align: "center" },
+    { Header: "Dividend_Payout", accessor: "dividendPayout", align: "center" },
+    { Header: "Change_in_Exchange_Rate", accessor: "changeInExchangeRate", align: "center" },
+    { Header: "Net_Income", accessor: "netIncome", align: "center" },
+    { Header: "RIB", accessor: "RIB", align: "center" }
   ];
 
   const rows = companies.map((item) => ({
 
     name: (
       <h3 className="CompanyName">
-      <Link to={`/stock/${item.name}`} className="CompanyName">{item.name}</Link>
+      <Link to={`/stock/${item.companyName}`} className="CompanyName">{item.companyName}</Link>
       </h3>
     ),
-   activity: (
+    activity: (
       <h3>
-       {item.activity}
+        {item.activity}
       </h3>
     ),
-
-    description: (
+    reportedCurrency: (
       <h3>
-       {item.description} TND
+        {item.reportedCurrency}
       </h3>
     ),
-    address: (
+    operatingCashflow: (
       <h3>
-        {item.address}
+        {item.operatingCashflow}
       </h3>
     ),
-    nbOfInvestors: (
+    paymentsForOperatingActivities: (
       <h3>
-       {item.nbOfInvestors}
+        {item.paymentsForOperatingActivities}
       </h3>
     ),
-
-    debtRatio: (
+    capitalExpenditures: (
       <h3>
-       {item.debtRatio}
+        {item.capitalExpenditures}
       </h3>
     ),
-
-    liquidityRatio: (
+    dividendPayout: (
       <h3>
-       {item.liquidityRatio}
+        {item.dividendPayout}
       </h3>
     ),
-
-    interestCoverageRatio: (
+    changeInExchangeRate: (
       <h3>
-       {item.interestCoverageRatio}
+        {item.changeInExchangeRate}
       </h3>
     ),
-    salesGrowthRatio: (
+    netIncome: (
       <h3>
-       {item.salesGrowthRatio}
+        {item.netIncome}
       </h3>
     ),
-    profitabilityRatio: (
+    RIB: (
       <h3>
-       {item.profitabilityRatio}
-      </h3>
-    ),
-
-    rib: (
-      <h3>
-       {item.rib}
+        {item.RIB}
       </h3>
     ),
   }));

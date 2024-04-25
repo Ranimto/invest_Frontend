@@ -3,7 +3,9 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
-function Transaction({ color, icon, name, description, value }) {
+function Transaction({ color, icon, toAccountNo, transferAmount ,transferDate, transferDescription}) {
+
+
   return (
     <MDBox key={name} component="li" py={1} pr={2} mb={1}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
@@ -15,16 +17,21 @@ function Transaction({ color, icon, name, description, value }) {
           </MDBox>
           <MDBox display="flex" flexDirection="column">
             <h6>
-              {name}
+              {toAccountNo}
             </h6>
             <p>
-              {description}
+              {transferDescription}
             </p>
+            <p style={{color:"rgba(5, 8, 59, 0.903)" , fontSize:"13px"}}> 
+         <strong>{transferDate}</strong>  
+        </p>
           </MDBox>
         </MDBox>
-        <h6 className="title">
-          {value}
+        <h6 className="title" >
+          {transferAmount}$
         </h6>
+      
+       
       </MDBox>
     </MDBox>
   );
@@ -43,9 +50,10 @@ Transaction.propTypes = {
     "dark",
   ]).isRequired,
   icon: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  toAccountNo: PropTypes.string.isRequired,
+  transferDescription: PropTypes.string.isRequired,
+  transferAmount: PropTypes.number.isRequired,
+  transferDate: PropTypes.string.isRequired,
 };
 
 export default Transaction;

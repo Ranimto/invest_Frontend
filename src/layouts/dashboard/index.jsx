@@ -22,10 +22,12 @@ function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
   const [investments, setInvestments] = useState([]);
   const [allData, setAllData] = useState([]);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [error, setError] = useState(false);
   const email=useSelector((state)=> state.auth.value.email);
   const [showForm,setShowForm]=useState(false);
+
   const [investment, setInvestment] = useState({
-    userId:"",
     companyName:"",
     type:"",
     investmentAmount :"",
@@ -58,17 +60,21 @@ function Dashboard() {
       
         const url = "http://localhost:8023/investment/add";
         const response = await axios.post(url, investment);
-        console.log('Investment added:', response.data);
+
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+        }, 5000);
+
         setInvestment({
-          userId:"",
-          companyId:"",
+          userId:user.id,
           type:"",
           amount :"",
           startDate:"",
           duration:"",
+          status: "IN_PROGRESS", 
             
         });
-        setShowForm(false);
         setInvestments([...investments, response.data]);
         const investmentDescription = `Adding new investment in the ${investment.companyName} company`;
         const userActivityResponse = await axios.post('http://localhost:8023/user-activity/save', {
@@ -79,6 +85,19 @@ function Dashboard() {
    console.log ( "addUserActivity",)
         
     } catch (error) {
+      setError(true)
+      setTimeout(() => {
+      setError(false);
+      }, 5000);
+
+      setInvestment({
+        userId: user.id,
+        type: "",
+        investmentAmount: "",
+        startDate: "",
+        duration: "",
+        status: "IN_PROGRESS",   
+      });
         console.log(error);
     }
 };
@@ -90,10 +109,11 @@ function Dashboard() {
     setShowForm(false); 
   };
 
-  const handleSelectChange = (e) => {
+  const handleSelectChange = (fieldName) => (e) => {
     const { value } = e.target;
-    setInvestment({...investment, type: value === "Stock" ? "Stock" : "Bond" });
+    setInvestment({ ...investment, [fieldName]: value });
   };
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -229,13 +249,12 @@ function Dashboard() {
         
         <Modal open={showForm}>
         <div className="modalContent">
-          <form onSubmit={handleSubmit} className='formClasss'style={{width: '30%' ,height:"30rem", marginLeft:"40%"}} >
+          <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"33rem", marginLeft:"40%"}} >
             <p>Add an investment</p>
-            <InputLabel id='type' style={{padding: '6px'}}>Investment type </InputLabel>
-            <Select label='type' fullWidth name="type" value={investment.type} onChange={handleSelectChange} style={{padding: '11px'}}>
-              <MenuItem value="Bond">Bond</MenuItem>
-              <MenuItem value="Stock">Stock</MenuItem>
-            </Select>
+            <Select labelId='type' fullWidth name="type" value={investment.type} onChange={handleSelectChange('type')} style={{padding: '11px'}}>
+           <MenuItem value="Bond">Bond</MenuItem>
+           <MenuItem value="Stock">Stock</MenuItem>
+          </Select>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
@@ -256,6 +275,7 @@ function Dashboard() {
                   name="duration"
                   value={investment.duration}
                   onChange={handleInputChange}
+                  type="number"
                   fullWidth
                   margin="normal"
                   required />
@@ -267,27 +287,30 @@ function Dashboard() {
                   name="investmentAmount"
                   value={investment.investmentAmount}
                   onChange={handleInputChange}
+                  type="number"
                   fullWidth
                   margin="normal"
                   required />
               </Grid>
-              {/* Add more pairs of fields here */}
               <Grid item xs={6}>
-                <TextField
-                  label="companyId"
-                  variant="outlined"
-                  name="companyId"
-                  value={investment.companyId}
-                  onChange={handleInputChange}
-                  fullWidth
-                  margin="normal"
-                  required />
+          <InputLabel id ='type' style={{padding: '6px'}}>Company Name </InputLabel>
+            <Select label='type' fullWidth name="type" value={investment.companyName}  onChange={handleSelectChange('companyName')}  style={{padding: '11px'}}>
+               <MenuItem value="IBM">IBM</MenuItem>
+              <MenuItem value="AAPL">AAPL</MenuItem>
+              <MenuItem value="MFST">MFST</MenuItem>
+              <MenuItem value="AMZN">AMZN</MenuItem>
+              <MenuItem value="TESLA">TESLA</MenuItem>
+              <MenuItem value="XOM">XOM</MenuItem>
+              <MenuItem value="GOOGL">GOOGL</MenuItem>
+            </Select>
               </Grid>
             </Grid>
             <div className="formFooter">
               <Button type="submit" variant="contained" className='btnRecommandation'>
                 Submit
               </Button>
+              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! please try again {error} </p>)}
               <Link to="/dashboard" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to List</Link>
             </div>
           </form>

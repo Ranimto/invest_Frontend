@@ -6,7 +6,6 @@ import Footer from "examples/Footer";
 import MasterCard from "examples/Cards/MasterCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import PaymentMethod from "layouts/billing/components/PaymentMethod";
-import Invoices from "layouts/billing/components/Invoices";
 import Transactions from "layouts/billing/components/Transactions";
 import './style.css'
 import { useSelector } from "react-redux";
@@ -14,6 +13,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Bill from "./components/Bill";
 import { Card } from "@mui/material";
+import TransactionForm from "./components/TransactionForm";
+
 
 function Billing() {
 
@@ -22,11 +23,11 @@ function Billing() {
     accountNo:"",
     savingsProductName:"",
     summary:{
-      totalDeposits:"",
-      totalInterestEarned:"",
-      totalInterestPosted:"",
-      accountBalance:"",   
-      availableBalance:"",
+      totalDeposits:0,
+      totalInterestEarned:0,
+      totalInterestPosted:0,
+      accountBalance:0,   
+      availableBalance:0,
     },
     active:"",
     userId: 0,
@@ -81,7 +82,7 @@ function Billing() {
                     icon="account_balance"
                     title="Account Balance"
                     description=" total account balance"
-                    value= {activeAccount.summary.accountBalance}
+                    value= {activeAccount.summary.accountBalance || 0}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} xl={3}>
@@ -89,7 +90,7 @@ function Billing() {
                     icon="account_balance"
                     title="Available Balance"
                     description="available balance"
-                    value={activeAccount.summary.availableBalance}
+                    value={activeAccount.summary.availableBalance || 0}
                   />
                 </Grid>
                 {/* {4562112+(activeAccount.accountNo)} */}
@@ -99,7 +100,7 @@ function Billing() {
               </Grid>
             </Grid>
             <Grid item xs={12} lg={4}>
-              <Invoices />
+              <TransactionForm />
             </Grid>
           </Grid>
         </MDBox>
@@ -124,9 +125,9 @@ function Billing() {
             email={user.email}
             savings={activeAccount.savingsProductName}
             number={activeAccount.accountNo}
-            deposits={activeAccount.summary.totalDeposits}
-            earned={activeAccount.summary.totalInterestEarned}
-            posted={activeAccount.summary.totalInterestPosted}
+            deposits={activeAccount.summary.totalDeposits || 0}
+            earned={activeAccount.summary.totalInterestEarned || 0}
+            posted={activeAccount.summary.totalInterestPosted || 0}
             status="Active"
 
           />
@@ -137,8 +138,9 @@ function Billing() {
 
 
             <Grid item xs={12} md={5}  style={{height:"37rem"}}>
-              <Transactions   />
+              <Transactions  fromAccountNo={activeAccount.accountNo}  />
             </Grid>
+
           </Grid>
         </MDBox>
       </MDBox>

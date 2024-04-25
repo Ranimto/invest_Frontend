@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 import Bill from "layouts/billing/components/Bill";
 
 function BillingInformation() {

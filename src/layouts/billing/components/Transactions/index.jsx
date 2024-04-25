@@ -1,9 +1,37 @@
+import React, { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
+import axios from "axios";
 import MDBox from "components/MDBox";
 import Transaction from "layouts/billing/components/Transaction";
+import PropTypes from "prop-types";
 
-function Transactions() {
+function Transactions({ fromAccountNo }) {
+  const [transactions, setTransactions] = useState([]);
+  const [dateFormatee, setDateFormatee] = useState('');
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const url = `http://localhost:8023/transaction/findTransactionsByAccountNo/${fromAccountNo}`;
+        const response = await axios.get(url);
+        setTransactions(response.data); // Utilisation de response.data
+      } catch (error) {
+        console.error("Error fetching transactions by Account number:", error);
+      }
+    };
+
+    fetchTransactions();
+  }, [fromAccountNo]);
+
+  useEffect(() => {
+    const dateActuelle = new Date();
+    const formattedDate = dateActuelle.toLocaleDateString();
+    setDateFormatee(formattedDate);
+  }, []);
+
+  console.log("transactions", transactions);
+
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={3} px={2}>
@@ -17,43 +45,15 @@ function Transactions() {
             </Icon>
           </MDBox>
           <p>
-            23 - 30 March 2020
+          {dateFormatee}
           </p>
         </MDBox>
       </MDBox>
       <MDBox pt={3} pb={2} px={2}>
-        <MDBox mb={2}>
-          <h6 className="upercase">
-          NEWEST
-          </h6 >
-        </MDBox>
-        <MDBox
-          component="ul"
-          display="flex"
-          flexDirection="column"
-          p={0}
-          m={0}
-          sx={{ listStyle: "none" }}
-        >
-          <Transaction
-            color="error"
-            icon="expand_more"
-            name="Netflix"
-            description="27 March 2020, at 12:30 PM"
-            value="- $ 2,500"
-          />
-          <Transaction
-            color="success"
-            icon="expand_less"
-            name="Apple"
-            description="27 March 2020, at 04:30 AM"
-            value="+ $ 2,000"
-          />
-
-        </MDBox>
+       
         <MDBox mt={1} mb={2}>
           <h6 className="upercase">
-         YESTERDAY
+       <div  style={{ fontSize: "13px" ,alignContent:"center" , color:"rgb(5, 8, 59)" ,width:"100%"}}> CHECK YOUR TRANSACTIONS </div>
           </h6>
         </MDBox>
         <MDBox
@@ -62,28 +62,28 @@ function Transactions() {
           flexDirection="column"
           p={0}
           m={0}
-          sx={{ listStyle: "none" }}
+          sx={{ listStyle: "none", overflowY: "auto", maxHeight: "26.3rem" }}
         >
-          <Transaction
-            color="success"
-            icon="expand_less"
-            name="Stripe"
-            description="26 March 2020, at 13:45 PM"
-            value="+ $ 750"
-          />
-          <Transaction
-            color="success"
-            icon="expand_less"
-            name="HubSpot"
-            description="26 March 2020, at 12:30 PM"
-            value="+ $ 1,000"
-          />
-        
+        {transactions.map((item, index) => (
+    <Transaction 
+    key={index}
+    color="success"
+    icon="expand_less"
+    toAccountNo={item.toAccountNo}
+    transferDescription={item.transferDescription}
+    transferAmount={item.transferAmount}
+    transferDate={item.transferDate}
+  />
+))}
          
         </MDBox>
       </MDBox>
     </Card>
   );
 }
+
+Transactions.propTypes = {
+  fromAccountNo: PropTypes.string.isRequired
+};
 
 export default Transactions;

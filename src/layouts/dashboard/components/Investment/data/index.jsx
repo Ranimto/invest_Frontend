@@ -98,12 +98,12 @@ export default function Data() {
 
     investmentAmount: (
       <MDBox width="8rem" textAlign="center">
-       {item.investmentAmount} TND
+       $ {item.investmentAmount}  
        </MDBox>
     ),
     currentInvestmentAmount: (
       <MDBox width="8rem" textAlign="center">
-       {item.currentInvestmentAmount} TND
+      $ {item.currentInvestmentAmount}
        </MDBox>
     ),
     startDate: (

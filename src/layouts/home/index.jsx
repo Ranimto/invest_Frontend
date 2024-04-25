@@ -4,8 +4,6 @@ import PageLayout from 'examples/LayoutContainers/PageLayout'
 import DefaultNavbar from 'examples/Navbars/DefaultNavbar'
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
 import background from 'assets/images/R8Xg21.webp'
-import background2 from 'assets/images/rrr.jpg'
-
 import team1 from 'assets/images/team-4.jpg'
 import team2 from 'assets/images/team-1.jpg'
 import team3 from 'assets/images/team-3.jpg'
