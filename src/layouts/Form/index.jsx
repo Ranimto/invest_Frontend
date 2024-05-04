@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import VerificationPage from 'layouts/VerificationPage/verificationPage';
+
 import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import StepOneForm from './StepOneForm';
-import bgImage from "assets/images/R8Xg21.webp";
-import validationImage from "assets/images/3d-checklist-icon-png.webp";
+import bgImage from "assets/images/bb.jpg";
 import StepTwoForm from './StepTwoForm';
 import StepThreeForm from './StepThreeForm';
 import StepFourForm from './StepFourForm';
 import { Stepper, Step, StepLabel, Button, Card } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { store } from 'store';
 import { useDispatch, useSelector } from 'react-redux';
 
 
 function Form() {
     const [step, setStep] = useState(1);
+    const[FormSuccess,setFormSuccess] =useState(false)
+    const[userVerification,setUserVerification] =useState(false)
+     const [prevUserVerification, setPrevUserVerification] = useState(false);
+    const[user,setUser] =useState(false)
     const [formData, setFormData] = useState({ 
     userId:"", 
     employmentStatus: "",
@@ -42,35 +46,29 @@ const email = useSelector((state) => state.auth.value.email);
     const fetchUserByEmail= async (email) => {
         const url = `http://localhost:8023/user/findByEmail/${email}`;
         const response = await axios.get(url);
-        console.log("Response from server:", response.data, response);
-        console.log('id',response.data.id);
+        setUser(response.data)
         setFormData({ ...formData, userId: response.data.id }); 
-        console.log('formData',formData);
-       
+        console.log('formData',formData); 
     };
 
      useEffect(() => {
       fetchUserByEmail(email);
     }, [email]);
 
-    const [showThankYou, setShowThankYou] = useState(false);
     const navigate = useNavigate();
    
     const handleNextStep = () => {
         setStep(step + 1);
     };
-
-    const handlePrevStep = () => {
-        setStep(step - 1);
-    };
-
      
     const handleDone = async (values) => {
-        setShowThankYou(true);
         await updateFormData(values);
-        handleSubmit();
-        alert('Formulaire soumis avec succès');
+       handleSubmit();
+       setFormSuccess(true)
+       setTimeout(() => {
         navigate("/authentication/sign-in");
+    }, 5000);
+   
     };
 
     const updateFormData = (values) => {
@@ -88,8 +86,13 @@ const email = useSelector((state) => state.auth.value.email);
         }
     };
 
+
+
+
     return (
-        <BasicLayout image={bgImage}>
+
+        <BasicLayout
+         image={bgImage}>
           <div className="stepper">
             <Stepper  activeStep={step - 1} alternativeLabel>
                 <Step key={1}>
@@ -119,14 +122,16 @@ const email = useSelector((state) => state.auth.value.email);
                         </div>
                     </div>
                 )}
-                {showThankYou && (
-                  <Card className='card' style={{backgroundColor:'transparent', width:'120%' }}>
-                    <img src={validationImage}style={{ width:'35%', marginLeft:'30%'}}/>
-                    <p className='message'>Thank you for submitting the form!</p>
-                  </Card>
+                {FormSuccess && (
+                  <div className="FormSuccess">
+                   Your Form has been filled  <strong style={{color:'green' , backgroundColor:"red"}}>successfully</strong>  
+                  </div>
                 )}
+
             </div>
         </BasicLayout>
+
+
     );
 }
 

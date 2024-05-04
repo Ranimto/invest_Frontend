@@ -237,7 +237,7 @@ useEffect(()=>{
           {data.gain_percentage > 0 ? (
             <p >Your investment has been  <strong  style={{color:"green"}}>amplified</strong> {data.gain_percentage} times.</p>
           ) : (
-            <p> Your investment has <strong style={{color:"red"}}>decremented</strong>  {Math.abs(data.gain_percentage)} times.</p>
+            <p> Your investment has <strong style={{color:"red"}}>decremented</strong> {Math.abs(data.gain_percentage.toFixed(3))} <span style={{fontWeight:"600"}}> times.</span> </p>
           )}
         </div>
       )}

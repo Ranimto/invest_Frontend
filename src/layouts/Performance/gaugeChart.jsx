@@ -9,8 +9,6 @@ const CustomGauge = ({ value }) => {
   textColor="dark" 
   style={{ height:"20px",width:"85%",fontWeight:"600" ,paddingTop:"10%" }}
  
-
-  
   />;
 };
 

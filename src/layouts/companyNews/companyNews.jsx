@@ -41,8 +41,7 @@ const CompanyNews = () => {
        </div>
         <Grid className='pageHeader'>
           <h1 className="pageTitle">&quot; Stay ahead of the curve and make informed decisions with our insightful analysis of company news  &quot;</h1>
-          <p> Discover the latest financial narratives driving today&apos; market with our tailored news updates. From groundbreaking IPOs to strategic mergers, we bring you the stories behind the numbers. Dive into the dynamic world of corporate finance and explore the impact of key events on your investment portfolio. Our platform provides comprehensive coverage, keeping you informed about the latest developments shaping the future of your investments.</p>
-         
+          <p> Discover the latest financial narratives driving today&apos; market with our tailored news updates. From groundbreaking IPOs to strategic mergers, we bring you the stories behind the numbers. Dive into the dynamic world of corporate finance and explore the impact of key events on your investment portfolio. Our platform provides comprehensive coverage, keeping you informed about the latest developments shaping the future of your investments.</p>        
         </Grid>
 
        <Grid className='gridNews'>
@@ -58,6 +57,7 @@ const CompanyNews = () => {
        <p className="text-hover">{item.title}</p>
        </Card>
        </Grid> 
+       
        )}
        </Grid>               
        </Grid>

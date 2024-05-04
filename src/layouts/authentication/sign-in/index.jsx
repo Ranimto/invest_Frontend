@@ -64,15 +64,15 @@ function Basic() {
 
   return (
     <BasicLayout image={bgImage}>
-      <Card>
+      <Card className="SigninForm">
         <MDBox
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
-          mt={-3}
-          p={2}
+          mt={-6}
+          p={1}
           mb={1}
           textAlign="center"      
         >
@@ -135,10 +135,9 @@ function Basic() {
               </p>
             </MDBox>
           </MDBox>
+          
         </MDBox>
-
       </Card>
-
       {error  && 
            <MDAlert color={authenticated ? "success" : "error"} className="alertClass">
            {error}

@@ -48,12 +48,12 @@ Transaction.propTypes = {
     "error",
     "light",
     "dark",
-  ]).isRequired,
-  icon: PropTypes.node.isRequired,
-  toAccountNo: PropTypes.string.isRequired,
-  transferDescription: PropTypes.string.isRequired,
-  transferAmount: PropTypes.number.isRequired,
-  transferDate: PropTypes.string.isRequired,
+  ]),
+  icon: PropTypes.node,
+  toAccountNo: PropTypes.string,
+  transferDescription: PropTypes.string,
+  transferAmount: PropTypes.number,
+  transferDate: PropTypes.string,
 };
 
 export default Transaction;

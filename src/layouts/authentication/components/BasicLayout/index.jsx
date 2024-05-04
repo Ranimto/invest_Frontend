@@ -32,7 +32,7 @@ function BasicLayout({ image, children }) {
           </Grid>
         </Grid>
       </MDBox>
-      <Footer light />
+    
     </PageLayout>
   );
 }

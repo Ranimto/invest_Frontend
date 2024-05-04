@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AccountTableData from "layouts/bankAccounts/AccountTableData ";
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
-import { Button, Card, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Card, Grid, InputLabel, MenuItem, Modal, Select, TextField } from '@mui/material';
 import MDBox from 'components/MDBox';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import DataTable from 'examples/Tables/DataTable';
@@ -9,14 +9,14 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import'./accountStyle.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import MDAlert from 'components/MDAlert';
+import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 
 const BankAccounts = () => {
   const [showForm,setShowForm]=useState(false);
   const { columns, rows } = AccountTableData();
   const [accounts, setAccounts] = useState([]);
-  const [alert,setAlert]=useState(false);
-  const [error,setError]=useState(false);
+  const [errorForm,setErrorForm]=useState(false);
+  const [error,setError]=useState("");
  const email= useSelector((state)=>state.auth.value.email);
   const [requestAccount, setRequestAccount] = useState(
     {
@@ -61,8 +61,6 @@ const BankAccounts = () => {
 
  useEffect(() => {
   fetchUserByEmail(email);
-  setRequestAccount({...requestAccount,userId:user.id});
- 
 }, [email]);  
 
   const handleSubmit = async (e) => {
@@ -73,7 +71,7 @@ const BankAccounts = () => {
       const response = await axios.post(url, requestAccount);
       // console.log('Bank account added:', response.data);
       setAccounts([...accounts, response.data]);
-      console.log('list accoints:', accounts);
+      console.log('list accounts:', accounts);
       showAlert("your bank account is added succesfully!")
 
       await axios.post('http://localhost:8023/user-activity/save', {
@@ -85,14 +83,19 @@ const BankAccounts = () => {
       // Reset the form fields after successful submission
       setRequestAccount({
         accountNo: "",
-        userId: "",
+        userId: user.id,
         status: "",
       });
     } catch (error) {
-      showAlert({error})
-      console.error("Error submitting form:", error);
+      setError(error.response.data);
+      setErrorForm(true);
+      console.error("Error submitting form:", error.response.data);
     }
   };
+
+  useEffect(()=>{
+    setRequestAccount({...requestAccount,userId:user.id});
+  },[user.id])
 
   const handleAddAccountClick=()=>{
     setShowForm(true);
@@ -109,9 +112,6 @@ const BankAccounts = () => {
     });
   };
 
-  const showAlert= ( message) => {
-    setAlert(true);  
-  };
 
   return (
     <DashboardLayout>
@@ -123,7 +123,14 @@ const BankAccounts = () => {
         <form onSubmit={handleSubmit} >
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12}>
-              <TextField  name="accountNo" label="accountNo" variant="outlined" fullWidth value={requestAccount.accountNo} onChange={handleInputChange}  />
+              <TextField 
+              name="accountNo" 
+              label="accountNo" 
+              type="number"
+              variant="outlined"
+               fullWidth 
+               value={requestAccount.accountNo} 
+               onChange={handleInputChange}  />
             </Grid>
             <Grid item className='gridbtn' xs={12}>
               <Button variant="contained" onClick={handleCancelClick} className='cancel'>Cancel</Button>
@@ -164,11 +171,14 @@ const BankAccounts = () => {
           </Grid>
           <Grid item xs={12}></Grid>
         </Grid>
-        {error  && 
-           <MDAlert color={success ? "success" : "error"} className="alertClass">
-           {console.log("errrror",error)}   {error}
-         </MDAlert>
-          }
+        {errorForm && (
+  <Modal open={errorForm} >
+    <Grid className='errorForm'>
+    <p> <ErrorRoundedIcon/> {error.message}</p>
+    <button onClick={()=>setErrorForm(false)}>Cancel</button>
+    </Grid>
+  </Modal>
+)}
       </MDBox>
     </DashboardLayout>
   )

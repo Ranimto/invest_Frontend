@@ -21,7 +21,7 @@ import jpm from 'assets/images/jpm.png'
 import jnj from 'assets/images/jnj.png'
 import fb from 'assets/images/fb.png'
 
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -29,10 +29,37 @@ import Carousel from 'react-material-ui-carousel';
 
 const Home = () => {
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+   const [isScrolling, setIsScrolling] = useState(true);
+
   const isAuthenticated = useSelector((state)=>state.auth.value.isAuthenticated);
  const signupNavigate =()=>{
   navigate("/authentication/sign-in");
  }
+
+
+ 
+useEffect(() => {
+    const container = containerRef.current;
+
+    const scroll = () => {
+      if (container && isScrolling) {
+        container.scrollLeft += 2; // Vitesse de défilement
+      }
+    };
+
+    const interval = setInterval(scroll, 50); // Intervalle de temps entre chaque défilement
+
+    return () => clearInterval(interval);
+  }, [isScrolling]);
+
+  const handleScrollStart = () => {
+    setIsScrolling(false);
+  };
+
+  const handleScrollEnd = () => {
+    setIsScrolling(true);
+  };
   return (
     <PageLayout >
      {isAuthenticated ?  <ComponentNavbar/>:
@@ -58,22 +85,24 @@ const Home = () => {
   </Grid>
 </div>
 
-     {/* Section 2 */}
-      <MDBox mb={3} >
-            
-        <Grid className='grid' container spacing={3}>
-   
-        <img src={AAPL} alt="AAPL Image" />
-        <img src={IBM} alt="IBM Image" />
-        <img src={AMZN} alt="AMZN Image" />
-        <img src={XOM} alt="XOM Image" />
-        <img src={GOOGL} alt="GOOGL Image" />
-        <img src={MFST} alt="MFST Image" />  
-        <img src={tesla} alt="tesla Image" />          
-        <img src={jpm} alt="jpm Image" />           
-        </Grid>
+<MDBox mb={3}>
+      <div
+        className="scrollable-container"
+        ref={containerRef}
        
-      </MDBox>
+      >
+        <Grid className="grid" container spacing={6} >
+          <img src={AAPL} alt="AAPL Image" />
+          <img src={IBM} alt="IBM Image" />
+          <img src={AMZN} alt="AMZN Image" />
+          <img src={XOM} alt="XOM Image" />
+          <img src={GOOGL} alt="GOOGL Image" />
+          <img src={MFST} alt="MFST Image" />
+          <img src={tesla} alt="tesla Image" />
+          <img src={jpm} alt="jpm Image" />
+        </Grid>
+      </div>
+    </MDBox>
 
 
 

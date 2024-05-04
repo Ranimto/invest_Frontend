@@ -3,13 +3,14 @@ import MDBox from "components/MDBox";
 import './style.css'
 import MDButton from "components/MDButton";
 import { useState } from "react";
-import { Card, TextField } from "@mui/material";
+import { Card, Grid, Modal, TextField } from "@mui/material";
 import axios from "axios";
 
 function TransactionForm() {
 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(false);
+  const [confirmForm,setConfirmForm]=useState(false);
   const [transactionForm, setTransactionForm] = useState({
     fromAccountNo:0,
     toAccountNo:0,
@@ -27,6 +28,7 @@ function TransactionForm() {
     const url = "http://localhost:8023/transaction/addTransaction";
     console.log(transactionForm);
     const response = await axios.post(url, transactionForm).then(() => {
+      setConfirmForm(false)
       setShowSuccessMessage(true);
       setTimeout(() => {
         setShowSuccessMessage(false);
@@ -39,6 +41,7 @@ function TransactionForm() {
      
     })
     .catch(error => {
+      setConfirmForm(false)
       setError(true)
       setTimeout(() => {
         setError(false);
@@ -46,6 +49,10 @@ function TransactionForm() {
       console.error("Error adding transaction:", error);   
     });
 };
+
+ const handleConfirmation =()=>{
+  setConfirmForm(true);
+}
 
   return (
     <MDBox
@@ -59,7 +66,7 @@ function TransactionForm() {
 
 <Card  className="formStylee">
   
-<form onSubmit={handleSubmit} style={{ display: "flex", gap: "35px" , flexDirection:"column" }}>
+<form  style={{ display: "flex", gap: "35px" , flexDirection:"column" }}>
 
      <h5> <strong>Make A Withdrawal Transaction</strong> </h5>
        
@@ -96,14 +103,28 @@ function TransactionForm() {
           required
         />
 
-        <MDButton type="submit" variant="contained" style={{backgroundColor: "rgba(255, 162, 0, 0.921)" , color:"white"}}>
+        <MDButton type="button" variant="contained" style={{backgroundColor: "rgba(255, 162, 0, 0.921)" , color:"white"}} onClick={handleConfirmation}>
           Submit
         </MDButton>
        {showSuccessMessage &&  (<p style={{marginTop:"-10%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
        { error && (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction ! please try again</p>)}
       </form>
       </Card>
+
+  {confirmForm && (
+  <Modal open={confirmForm} >
+    <Grid className='confirmForm'>
+    <p> Are you sure to confirm the addition of this transaction ?</p>
+    <Grid display="flex" gap="13%">
+    <MDButton  className="confirmBtnn" onClick={handleSubmit} >Confirm</MDButton>
+    <MDButton className="cancelBtnn"  onClick={()=> setConfirmForm(false)}>Cancel</MDButton>
+    </Grid>
+    </Grid>
+  </Modal>
+)}
+
     </MDBox>
+
   );
 }
 export default TransactionForm;

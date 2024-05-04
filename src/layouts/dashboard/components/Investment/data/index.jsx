@@ -52,15 +52,10 @@ export default function Data() {
       console.log('heyy' ,user.id)
       const response = await axios.get(url);
       console.log("Response from server:", response.data, response);
-      setInvestments(response.data);
-      
+      setInvestments(response.data);    
       setError(null);
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else {
-        setError("Error is presented when extracting investments.");
-      }
+        setError(error.response.data.message);  
     }
   };
 

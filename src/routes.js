@@ -22,6 +22,7 @@ import Chat from "layouts/chatGPT/chat";
 import Markets from "layouts/markets/markets";
 import RestoreIcon from '@mui/icons-material/Restore';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
+import VerificationPage from "layouts/VerificationPage/verificationPage";
 
   
 
@@ -82,7 +83,8 @@ const routes = [
     isPrivate: true,
   },
 
-  { type: "collapse",
+  { 
+  type: "collapse",
   name: "BankAccounts",
   key: "BankAccounts",
   icon: <AccountBalanceWalletIcon>compte</AccountBalanceWalletIcon>,
@@ -112,6 +114,7 @@ const routes = [
 
   {
     route: "/authentication/sign-up",
+    key: "signUp",
     component: <SignUp />,
     isPrivate: false,
   },
@@ -133,7 +136,7 @@ const routes = [
 
 {
 key: "transaction",
-route: "transaction",
+route: "/transaction",
 component: <Transaction/>,
 isPrivate: true,
 },
@@ -142,7 +145,7 @@ isPrivate: true,
   name: "Chat",
   key: "Chat",
   icon: <PendingActionsIcon/>,
-  route: "chat",
+  route: "/chat",
   component: <Chat/>,
   isPrivate: true,
 },
@@ -165,6 +168,14 @@ isPrivate: true,
   route: "/authentication/sign-in",
   component: <SignIn />,
   isPrivate: false,
+},
+{
+  
+  key: "verification",
+  route: "/verification",
+  icon: <Icon fontSize="small">login</Icon>,
+  component: <VerificationPage/>,
+  isPrivate: true,
 },
   
    

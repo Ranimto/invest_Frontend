@@ -12,6 +12,9 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import MAVChart from './MAVChart';
 import PayPal from 'layouts/payPal/payPal';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePrice } from '../../authRedux/Features/auth/stock'; // update action
+
 
   const Stock = () => {
   const {company}=useParams();
@@ -25,33 +28,55 @@ const [priceData, setPriceData] =useState(
 )
 /***  */
 
-
+const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [data, setData] = useState([])
+  const [investments, setInvestments] = useState([])
   const [stockData, setStockData] = useState([]);
   const [analyticData, setAnalyticData] = useState([]);
   const [selectedSymbol, setSelectedSymbol] = useState(company);
-  const [symbol, setSymbol] = useState(company);
   const [symbols, setSymbols] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showSellForm, setShowSellForm] = useState(false);
+  const [stockActualPrice, setStockActualPrice] = useState(0);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const totalPrice= 6500.0
-  const [formData,setFormData]=useState({
-    companyName:'',
-    number:'',
-    amount:'',
-    currency:'',
-  })
+  const [user,setUser]=useState({})
+  const dispatch = useDispatch();
 
+  const [formData,setFormData]=useState({
+    userId: user.id,
+    companyName:"",
+    type: "STOCK",
+    numberOfStock: 1,
+    investmentAmount: 0,
+    stockActualPrice:stockActualPrice,
+    startDate: new Date(),
+    duration: "",
+    status: "IN_PROGRESS",  
+  })
+  const [sellFormData,setSellFormData]=useState({
+    companyName:"",
+    numberOfStock: 1,
+    fromAccountNo: "",
+    amount: 0,
+    stockActualPrice:stockActualPrice   
+  })
+  const email=useSelector((state)=> state.auth.value.email);
   const currentDate = new Date(); // Create a new Date object
   const year = currentDate.getFullYear(); // Extract the year
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Extract the month (adding 1 because month is zero-based)
   const day = String(currentDate.getDate()).padStart(2, '0'); // Extract the day
-
   const formattedDate = `${year}-${month-1}-${day}`;
 
-  
+  const fetchUserByEmail= async(email)=>{
+    const response=axios.get(`http://localhost:8023/user/findByEmail/${email}`)
+    setUser((await response).data);  
+    setFormData({ ...formData, userId:(await response).data.id });
+  }
+
   const handleCompanyClick = (symbol) => {
     setSelectedSymbol(symbol);
-
   };
 
   const handleSwitchSMA = () => {
@@ -61,7 +86,6 @@ const [priceData, setPriceData] =useState(
     setSMAChart(false);
   };
  
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -69,13 +93,14 @@ const [priceData, setPriceData] =useState(
       [name]: value
     });
   };
-  const handleSelectChange = (e) => {
-    const { value } = e.target;
-    setFormData({
-      ...formData,
-      currecny: value === formData.currency 
+
+  const handleSellInputChange = (event) => {
+    const { name, value } = event.target;
+    setSellFormData({
+      ...sellFormData,
+      [name]: value
     });
-  };
+  }
 
   const handleCancelClick = () => {
     setShowForm(false); 
@@ -129,9 +154,127 @@ const [priceData, setPriceData] =useState(
     };
   
     fetchData(selectedSymbol);
-  }, [selectedSymbol, company]);
+  }, [selectedSymbol]); //company
+
+
+
+  //dispatch of the Stock Actual Price
+
+  const handlePriceClick = (symbol, price) => {
+    setSelectedSymbol(symbol);
+    setStockActualPrice(price);
+    dispatch(updatePrice(price));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const newFormData = {
+        ...formData,
+        companyName: selectedSymbol,
+        stockActualPrice: stockActualPrice,
+        investmentAmount: formData.numberOfStock * stockActualPrice,
+      };
   
+      const url = "http://localhost:8023/investment/add";
   
+      const response = await axios.post(url, newFormData);
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+
+      console.log("newFormData",newFormData)
+  
+      setInvestments([...investments, response.data]);
+  
+      const investmentDescription = `Adding new investment in the ${newFormData.companyName} company`;
+      await axios.post('http://localhost:8023/user-activity/save', {
+        userId: newFormData.userId,
+        timestamp: new Date(),
+        description: investmentDescription,
+      });
+  
+      setFormData({
+        userId:user.id,
+        companyName:selectedSymbol,
+        type:"STOCK",
+        investmentAmount:0,
+        numberOfStock:1,
+        stockActualPrice:stockActualPrice,
+        startDate:"",
+        duration:"",
+        status: "IN_PROGRESS", 
+          
+      });
+    } catch (error) {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+      setErrorMessage(error.response.data.message);
+    }
+  };
+  
+
+
+
+  const handleSellSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const newFormData = {
+        ...sellFormData,
+        companyName: selectedSymbol,
+        stockActualPrice: stockActualPrice,
+        amount: sellFormData.numberOfStock * stockActualPrice,
+      };
+      console.log("sellFormData",sellFormData)
+      console.log("newFormData",newFormData)
+
+      const SellFormRequest = {
+        fromAccountNo:newFormData.fromAccountNo,
+        amount: newFormData.amount,
+      };
+
+      console.log("newFormData",newFormData)
+      console.log("SellFormRequest",SellFormRequest)
+
+      const url = `http://localhost:8023/transaction/addSellTransaction/108/${newFormData.companyName}/${newFormData.numberOfStock}`;
+      const response = await axios.post(url, SellFormRequest);
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 5000);
+
+  
+      const sellDescription = `Sell ${newFormData.numberOfStock} stocks in the ${newFormData.companyName} company to ${newFormData.fromAccountNo}`;
+      await axios.post('http://localhost:8023/user-activity/save', {
+        userId: user.id,
+        timestamp: new Date(),
+        description: sellDescription,
+      });
+
+      setSellFormData({
+        companyName:"",
+        numberOfStock: 1,
+        fromAccountNo: "",
+        amount: 0,
+        stockActualPrice:stockActualPrice   
+      });
+    
+    } catch (error) {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 5000);
+      setErrorMessage(error.response.data.message);
+    }
+  };
+
+  
+
+
+
   useEffect(() => {
 
     const fetchData = async () => {
@@ -142,6 +285,7 @@ const [priceData, setPriceData] =useState(
         console.error('Error fetching price data:', error);
       }
     };
+  
     const fetchAnalyticData = async () => {
       try {
         const response = await axios.get(`http://localhost:8023/stockData/runningAnalyticsData?symbols=AAPL,MSFT,IBM,AMZN,GOOGL`);
@@ -174,12 +318,16 @@ useEffect(()=>{
   addPaypalScript() ;  
 },[])
 
+useEffect(() => {
+  fetchUserByEmail(email);
+}, [email]);
+
   return (
     <PageLayout>
     <Grid container spacing={2} className="containerGridd" >
      
-
-      <Grid item xs={12} sm={4}>
+{/* Left section */}
+<Grid item xs={12} sm={4}>
       <h5 >Company Fluctuations:</h5>
           <Card className="gridCardd">
             <CardContent>
@@ -211,16 +359,17 @@ useEffect(()=>{
             {item["Global Quote"]["10. change percent"]}
           </td>
           <td>
-          <Button variant="contained" type="submit" className='btnStock' onClick={()=>{setShowForm(true);}}>Buy</Button>
+          <Button variant="contained" type="submit" className='btnStock' onClick={()=>{setShowSellForm(true); handlePriceClick(item["Global Quote"]["01. symbol"], item["Global Quote"]["05. price"])}}>Sell</Button>
           </td>
+          <td>
+          <Button variant="contained" type="submit" className='btnStock' onClick={()=>{setShowForm(true); handlePriceClick(item["Global Quote"]["01. symbol"], item["Global Quote"]["05. price"])}}>Buy</Button>
+          </td>         
         </tr>
       ))}
     </tbody>
-              </table>
+      </table>
             </CardContent>
-          </Card>
-          
-         
+          </Card>    
            <Grid>
           <h5 >Company Running Analytics :</h5>
           <Card className="gridCardd">
@@ -244,7 +393,6 @@ useEffect(()=>{
                       > {item}</td>
                       <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.MEAN[item] >= 0 ? 'green' : 'red' }} >
                         { analyticData.payload.RETURNS_CALCULATIONS.MEAN[item].toFixed(6)}</td>
-                        {console.log("hello",analyticData.payload.RETURNS_CALCULATIONS.MEAN[item].toFixed(6))}
                       <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item] >= 0 ? 'green' : 'red' }}>
                         { analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item].toFixed(6)}</td>
                       <td>{ analyticData.meta_data.max_dt}</td>
@@ -256,44 +404,12 @@ useEffect(()=>{
           </Card>
           </Grid>
       </Grid>
-      
+{/* right section */}
 
-      <Grid item xs={12} sm={8}>
+      <Grid item xs={8}>
        <Grid container spacing={1}>
-         
         <Grid item xs={12} style={{paddingTop:"3%"}}>
         <Link to={'/dashboard'} className='backToDash'>Back to dashboard <NavigateNextIcon/></Link>
-        <Card className="gridCardd">
-        <CardContent className='navbar'>
-
-          {data.filter(item => item.company === selectedSymbol) .map((item, index) => (
-              <Grid container spacing={3} key={index}>
-                <Grid item xs={12} sm={2}>
-                  <div className="stockTitle ">Company</div>
-                  <div className="stockText">{item.company}</div> 
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <div className="stockTitle ">Price</div>
-                  <div className="stockText">{item.price}</div>
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <div className="stockTitle ">Mean</div>
-                  <div className="stockText"> {item.Mean}%</div> 
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <div className="stockTitle ">24h Volume</div>
-                  <div className="stockText">5464{item.volume}</div> 
-                </Grid>
-                <Grid item xs={12} sm={2}>
-                  <div className="stockTitle ">24h High</div>
-                  <div className="stockText">4545{item.high}</div>
-                </Grid>
-              </Grid>
-            ))}
-            
-        </CardContent>
-      </Card>
-
         </Grid>      
         <Grid item xs={12} className="chartClass">
           <div style={{display:"flex" , gap:"35%"}}>
@@ -323,35 +439,143 @@ useEffect(()=>{
     </Grid>  
   </Grid>
 
-  { showForm &&
+  { showSellForm &&
+<Modal open={showSellForm} >
+        <div className="modalContent"  >
+        <div >
+          <form  className='stockForm' style={{ height: '100px'}}  >
+          <p>Make your first step and SELL a stock</p>
+            
+          <TextField  name="fromAccountNo" 
+            label="to Account Number" 
+            variant="outlined"
+            type="number" 
+            fullWidth  
+            value={sellFormData.fromAccountNo}  
+            onChange={handleSellInputChange} 
+            margin="normal"
+            required /> 
+
+            <TextField  name="companyName" 
+            label="Company Name" 
+            variant="outlined" 
+            fullWidth  
+            value={selectedSymbol}  
+            onChange={handleSellInputChange} 
+            margin="normal"
+            required />  
+
+           <TextField 
+           name="numberOfStock" 
+           label="number Of Stocks" 
+           variant="outlined" 
+            fullWidth 
+            type="number"
+            value={sellFormData.numberOfStock} 
+            onChange={handleSellInputChange}
+            margin="normal"
+            required />
+
+           <TextField name="stockActualPrice" 
+           label="Stock Actual Price" 
+           variant="outlined" 
+            fullWidth 
+            value={stockActualPrice} 
+            onChange={handleSellInputChange}
+            margin="normal"
+            required />
+
+            <TextField 
+           name="amount" 
+           label="Sell Amount" 
+           variant="outlined" 
+           fullWidth 
+           type="text"
+           value={sellFormData.numberOfStock * stockActualPrice} 
+           onChange={handleSellInputChange}
+           margin="normal"
+           required />
+      
+           <div className="checkoutClass" display='grid'>            
+           <Button variant="contained" type="submit" className='btnRecommandation' style={{backgroundColor:'red'}} onClick={handleSellSubmit}>Sell</Button> 
+           {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your sell transaction has been completed <strong style={{color:"green"}}>Successfully !</strong></p>)}
+             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add sell transaction ! <strong>{errorMessage} !</strong> </p>)}        
+           <Link to="/stock/AAPL" onClick={()=>{setShowSellForm(false)}} className='back' style={{ marginLeft:"-75%"}}> <ArrowBackIcon/> Back to stock</Link>
+           </div>     
+          </form>
+          </div> 
+        </div>
+      </Modal>
+}
+
+{ showForm &&
 <Modal open={showForm} >
         <div className="modalContent" >
-        <div style={{ maxHeight: '650px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: '720px', overflowY: 'auto' }}>
           <form  className='stockForm' style={{ height: checkout ? "43rem" : "35rem" }}>
           <p>Make your first step and BUY a stock</p>
            
-            <TextField  name="CompanyName" label="CompanyName" variant="outlined" fullWidth  value={selectedSymbol}  onChange={handleInputChange} 
-              margin="normal"
-              required />
-          
-          <TextField name="number" label="number" variant="outlined" fullWidth   value={formData.number}  onChange={handleInputChange} margin="normal"
-              required />
+            <TextField  name="companyName" 
+            label="CompanyName" 
+            variant="outlined" 
+            fullWidth  value={selectedSymbol}  
+            onChange={handleSellInputChange} 
+            margin="normal"
+            required />  
 
-          <TextField name="amount" label="amount" variant="outlined" fullWidth value={formData.amount} onChange={handleInputChange} margin="normal"
-              required />
+          <TextField 
+           name="numberOfStock" 
+           label="numberOfStock" 
+           variant="outlined" 
+           fullWidth 
+           type="number"
+           value={formData.numberOfStock} 
+           onChange={handleInputChange}
+           margin="normal"
+           required />
 
-           <Select labelId="active-label" variant="outlined" fullWidth style={{ height:'43px' }} value={formData.currency} onChange={handleSelectChange} >
-            <MenuItem value="EURO">EURO</MenuItem>
-            <MenuItem value="TND">TND</MenuItem>
-            <MenuItem value="DOLLAR">DOLLAR</MenuItem>
-           </Select>
+           <TextField 
+           name="investmentAmount" 
+           label="investmentAmount" 
+           variant="outlined" 
+           fullWidth 
+           type="number"
+           value={formData.numberOfStock * stockActualPrice} 
+           onChange={handleInputChange}
+           margin="normal"
+           required />  
+
+          <TextField name="stockActualPrice" 
+           label="Stock Actual Price" 
+           variant="outlined" 
+            fullWidth 
+            value={stockActualPrice} 
+            onChange={handleInputChange}
+            margin="normal"
+            required />
+
+                <TextField
+                  label="Duration"
+                  variant="outlined"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleInputChange}
+                  type="number"
+                  fullWidth
+                  margin="normal"
+                  required />
+       
 
            <div className="formFooter">
-     
+           <div className="checkoutClass" display='grid'>
             {checkout ? 
             (<PayPal totalPrice={totalPrice} nameProgram="investAI"/>) :
-            (<Button variant="contained" type="submit" className='btnRecommandation'  onClick={()=>{setCheckout(true);}}>Checkout</Button>)
+            (<Button variant="contained" type="submit" className='btnRecommandation'  onClick={()=>{setCheckout(true);}}>Checkout with PayPal</Button>)
             }
+           <Button variant="contained" type="submit" className='btnRecommandation' style={{backgroundColor:'red'}} onClick={handleSubmit}>Checkout</Button>
+             {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! <strong>{errorMessage} !</strong> </p>)}
+           </div>
            <Link to="/stock/AAPL" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to stock</Link>
            </div>     
           </form>
@@ -360,12 +584,6 @@ useEffect(()=>{
       </Modal>
 }
 
-
-
-
-
-  
-  
       <Grid item xs={12} sm={3} >
         <Card className="gridCardd" style={{paddingLeft:'14%',height:'97%',paddingTop:'25%'}}  >
           <CardContent >
@@ -432,7 +650,7 @@ useEffect(()=>{
 };
 
 Stock.propTypes = {
-  company: PropTypes.string.isRequired
+  company: PropTypes.string
 };
 
 export default Stock;

@@ -83,7 +83,7 @@ function Transactions({ fromAccountNo }) {
 }
 
 Transactions.propTypes = {
-  fromAccountNo: PropTypes.string.isRequired
+  fromAccountNo: PropTypes.string
 };
 
 export default Transactions;

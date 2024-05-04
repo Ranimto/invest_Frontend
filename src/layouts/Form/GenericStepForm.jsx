@@ -42,6 +42,7 @@ const GenericStepForm = ({ questions, onNextStep, updateFormData }) => {
                       name={questionData.value}
                       value={formik.values[questionData.value]}
                       onChange={formik.handleChange}
+                      required
                     >
                       <MenuItem style={{ fontWeight: '600' }} value="">Select an option</MenuItem>
                       {questionData.options.map((option, optionIndex) => (

@@ -27,7 +27,7 @@ function StepTwoForm({ onNextStep ,updateFormData}) {
         },
         {
           question: "9. What is your annual income range?",
-          options: ["Under 25,000  TND", " 25,000 TND - 50,000  TND", "50,000 TND - 100,000 TND", "Over 100,000 TND"],
+          options: ["Under 25,000 TND", "25,000 TND - 50,000 TND", "50,000 TND - 100,000 TND", "Over 100,000 TND"],
           value: "annualIncomeRange"
         },
         {

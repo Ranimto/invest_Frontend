@@ -33,8 +33,8 @@ function DefaultNavbarMobile({ open, close }) {
 }
 
 DefaultNavbarMobile.propTypes = {
-  open: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]).isRequired,
-  close: PropTypes.oneOfType([PropTypes.func, PropTypes.bool, PropTypes.object]).isRequired,
+  open: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  close: PropTypes.oneOfType([PropTypes.func, PropTypes.bool, PropTypes.object]),
 };
 
 export default DefaultNavbarMobile;

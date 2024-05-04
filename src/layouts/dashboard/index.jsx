@@ -24,16 +24,17 @@ function Dashboard() {
   const [allData, setAllData] = useState([]);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const email=useSelector((state)=> state.auth.value.email);
   const [showForm,setShowForm]=useState(false);
 
   const [investment, setInvestment] = useState({
     companyName:"",
-    type:"",
-    investmentAmount :"",
+    numberOfStock:1,
+    investmentAmount:0,
+    stockActualPrice:0,
     startDate:"",
-    duration:"",
-      
+    duration:"",  
   });
   const [user,setUser]=useState({ 
     id:"",  
@@ -53,13 +54,19 @@ function Dashboard() {
     setInvestment({ ...investment, userId:(await response).data.id });
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+
+    const newInvestment = {
+      ...investment,  
+      investmentAmount: investment.numberOfStock * investment.stockActualPrice,
+    };
+  
     try {
       
         const url = "http://localhost:8023/investment/add";
-        const response = await axios.post(url, investment);
+        const response = await axios.post(url, newInvestment);
+        console.log('investmentAdded',newInvestment)
 
         setShowSuccessMessage(true);
         setTimeout(() => {
@@ -70,6 +77,9 @@ function Dashboard() {
           userId:user.id,
           type:"",
           amount :"",
+          numberOfStock:0,
+          investmentAmount:0,
+          stockActualPrice:0,
           startDate:"",
           duration:"",
           status: "IN_PROGRESS", 
@@ -82,9 +92,10 @@ function Dashboard() {
           timestamp: new Date(),
           description: investmentDescription,
         });
-   console.log ( "addUserActivity",)
-        
-    } catch (error) {
+
+   console.log ( "addUserActivity",)       
+    } 
+    catch (error) {
       setError(true)
       setTimeout(() => {
       setError(false);
@@ -94,11 +105,14 @@ function Dashboard() {
         userId: user.id,
         type: "",
         investmentAmount: "",
+        numberOfStock:1,
         startDate: "",
         duration: "",
         status: "IN_PROGRESS",   
       });
         console.log(error);
+
+        setErrorMessage(error.response.data.message)
     }
 };
 
@@ -252,7 +266,6 @@ function Dashboard() {
           <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"33rem", marginLeft:"40%"}} >
             <p>Add an investment</p>
             <Select labelId='type' fullWidth name="type" value={investment.type} onChange={handleSelectChange('type')} style={{padding: '11px'}}>
-           <MenuItem value="Bond">Bond</MenuItem>
            <MenuItem value="Stock">Stock</MenuItem>
           </Select>
             <Grid container spacing={2}>
@@ -280,12 +293,25 @@ function Dashboard() {
                   margin="normal"
                   required />
               </Grid>
+
               <Grid item xs={6}>
+
+              <TextField 
+              name="numberOfStock" 
+              label="numberOfStock" 
+              variant="outlined" 
+              fullWidth 
+              type="number"
+               value={investment.numberOfStock} 
+              onChange={handleInputChange}
+              margin="normal"
+               required />
+
                 <TextField
                   label="Investment Amount"
                   variant="outlined"
                   name="investmentAmount"
-                  value={investment.investmentAmount}
+                  value={investment.numberOfStock*investment.stockActualPrice}
                   onChange={handleInputChange}
                   type="number"
                   fullWidth
@@ -303,14 +329,25 @@ function Dashboard() {
               <MenuItem value="XOM">XOM</MenuItem>
               <MenuItem value="GOOGL">GOOGL</MenuItem>
             </Select>
+
+            <TextField 
+              name="stockActualPrice" 
+              label="stockActualPrice" 
+              variant="outlined" 
+              fullWidth 
+              type="number"
+               value={investment.stockActualPrice} 
+              onChange={handleInputChange}
+              margin="normal"
+               required />
               </Grid>
             </Grid>
             <div className="formFooter">
               <Button type="submit" variant="contained" className='btnRecommandation'>
                 Submit
               </Button>
-              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
-             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! please try again {error} </p>)}
+              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! <strong>{errorMessage} !</strong> </p>)}
               <Link to="/dashboard" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to List</Link>
             </div>
           </form>

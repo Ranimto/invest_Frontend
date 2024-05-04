@@ -10,8 +10,12 @@ font-size: 14px;
 font-weight: 400;
 }
 .alertClass{
-  margin-top: 9% !important;
-  font-size: 16px;
+ margin: 7%;
+  font-size: 14px;
   font-weight: 500!important;
- font-style: italic;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+.SigninForm{
+    margin-top:25%
 }

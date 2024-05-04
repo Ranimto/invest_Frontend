@@ -44,12 +44,6 @@ export default function Data() {
     setUser(response.data);
 };
 
-
- useEffect(() => {
-  fetchUserByEmail(email);
-}, [email]);
-
-
   const handleDelete = async (id) => {
     setLoading(true);
     try {
@@ -103,11 +97,15 @@ export default function Data() {
   };
 
   useEffect(() => {
-    const fetchAccounts = async (id) => {
+    fetchUserByEmail(email);
+  }, [email]);
+
+  useEffect(() => {
+    const fetchAccounts = async () => {
       try {
         setLoading(true);
-       // const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${id}`;
-       const url =`http://localhost:8023/bankAccount/getAll`;
+       const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${user.id}`;
+       // const url =`http://localhost:8023/bankAccount/getAll`;
         const response = await axios.get(url);
         setAccounts(response.data);
         setLoading(false);
@@ -120,7 +118,7 @@ export default function Data() {
         setLoading(false);
       }
     };
-    fetchAccounts(user.id);
+    fetchAccounts();
   }, [user.id]);
 
   const columns = [

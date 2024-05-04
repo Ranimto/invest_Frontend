@@ -179,5 +179,54 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
 }
 
+.profileTable tr td{
+  color: black !important;
+  width: 100% !important;
+  border: 1px solid black !important;
+}
+
+.profileTableTitle{
+  color: rgb(201, 177, 22) !important;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+
+.profiledata{
+  margin-bottom: 1% !important;
+  color: rgb(96, 96, 223) !important;
+  font-weight: 400 !important;
+  font-size: 11px !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+.geminiMessage {
+  width: 30% ;
+  background-color: transparent !important;
+  border: 2px solid rgb(164, 145, 199);
+  height: 30rem;
+  color: white !important;
+  margin: 10% 0 0 38%;
+  padding: 2%;
+  box-shadow: 1px 2px 4px 2px rgba(232, 231, 238, 0.91)!important;  
+}
+.geminiMessage p {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white !important;
+  font-weight: 100 !important;
+  font-size: 14px;
+}
+
+.geminiMessage Button {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-color: rgb(156, 116, 195) !important;
+  font-weight: 100 !important;
+  color: white;
+  font-size: 14px;
+  margin: 5% !important;
+}
+
+.geminiMessage img{
+  width: 10% !important;
+  border-radius: 5%;
+}
 
 

@@ -6,7 +6,8 @@
     border: none;
     color: rgb(17, 15, 15) !important;
     border-radius: 5%;
-    width: 900px !important;
+    width: 800px !important;
+    box-shadow: 1px 2px 4px 1px rgb(112, 111, 111) !important;
 
 }
 
@@ -23,21 +24,27 @@
 .section p{
     color: black;
     margin-top:-5%;
-    font-size: 14px;
+    margin-bottom:1%;
+    font-size: 13px;
     font-weight: 100;
 
 }
 .marketsCardSection2{
-    height: 13rem;
-    padding: 5%;
+    padding: 3%;
     margin: 2%;
-    background-color: #9da9eb !important;
+     background-image: url('assets/images/bb.jpg') !important;
     border: none;
-    color: white !important;
+    color: rgb(255, 255, 255) !important;
     border-radius: 5%;
-    width: 160px !important;
-    box-shadow: 1px 2px 10px 1px rgb(33, 32, 32) !important;
+    width: 13% !important;
+    height: 11rem !important;
+    box-shadow: 1px 2px 4px 1px rgb(112, 111, 111) !important;
+    color: rgb(175, 176, 176);
+    color: rgb(207, 202, 111);
+
 }
+
+
 
 .tableHeader th{
 color: black;
@@ -45,22 +52,23 @@ width: 6%;
 font-size: 15px;
 border: 1px solid #464444;
 padding: 7px;
-text-align: left;
-color: #73da84;
+text-align: center;
 }
 
 .tableHeader td{
   color: black;
   justify-items:flex-start;
   border: 1px solid #464444;
-  padding: 7px;
-  text-align: left;
+  padding: 2px;
+  text-align: center;
   width: 5%;
 }
 .btnMarket{
-    color: rgb(0, 0, 0) !important;
-    background-color: rgb(255, 200, 0) !important;
-    margin-left: 30%;
+    color: black !important;
+    background-color: rgb(255, 149, 0) !important;
+    width: 20% ;
+    font-size: 9px !important;
+
 }
 
 .marketsCard h6{
@@ -79,8 +87,52 @@ color: #73da84;
     font-weight: 100;
 }
 .MarketImg{
-    height: 2.5rem;
-    width: 70% !important;
-    margin-top: 5%;
+    height: 2.8rem;
+    width: 85% !important;
+    margin-top: 2%;
+    margin-left: 55% !important;
 }
 
+.top{
+    margin-left: -90% ;
+}
+.marketsCardSection2 h6{
+  color: rgb(255, 255, 255) !important; 
+  font-size: 15px;
+  font-weight: 600;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  
+}
+
+
+.marketsCardSection2 p{
+    color: rgb(255, 255, 255) !important;
+    font-size: 12px;
+    font-weight: 100;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  .amount {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   font-size: 13px ; 
+   margin-top: 50%;
+}
+
+  .amount span{
+      font-size: 15px ; 
+      color: rgb(255, 255, 255) !important;
+  }
+  .marketsCard1{
+    background-image: url('assets/images/ooor.jpg') !important;
+    height: 9rem;
+    padding: 5%;
+    margin: 3%;
+    border: none;
+    color: rgb(17, 15, 15) !important;
+    border-radius: 5%;
+    width: 900px !important;
+   
+}

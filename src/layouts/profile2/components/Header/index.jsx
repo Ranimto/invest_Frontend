@@ -95,7 +95,7 @@ function Header() {
       handleCloseForm();
       dispatch({ type: "MESSAGE_SENT", payload: message });
       setEmailForm({
-        from:"",
+        from:email,
         to:"",
         subject:"",
         message:""

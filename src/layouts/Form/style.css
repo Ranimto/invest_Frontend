@@ -6,7 +6,7 @@
 }
   
   .label {
-  color: white;
+  color: white !important;
   font-size: 15px;
   margin-bottom: 10px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,7 +39,7 @@
     justify-content: center;
 }
  .message{
-  color: rgba(255, 255, 255, 0.91);
+  color: white;
   display: flex;
   justify-content: center;
   margin-top: 5%;
