@@ -48,8 +48,7 @@ function Tables() {
             </Card>
           </Grid>
           <Grid item xs={12}>
-
-
+      
             <Card>
               <MDBox
                 mx={2}
@@ -76,7 +75,6 @@ function Tables() {
                 />
               </MDBox>
             </Card>
-
           </Grid>
         </Grid>
       </MDBox>

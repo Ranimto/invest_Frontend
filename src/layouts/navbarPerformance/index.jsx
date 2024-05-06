@@ -13,8 +13,8 @@ export default function NavbarPerformance() {
 }
   return (
     <Box sx={{ width: '100%' }} display="flex">     
-     <Button  className="btnPerformancee" onclick="changeCompo()"><Link to='performance/108/21/GOOGL/0/12528280'>Performance</Link></Button>
-     <Button className="btnPerformancee" onclick="changeCompo()"><Link to='/activity'>Activities</Link></Button>    
+     <Button  className="btnPerformancee" onClick={changeCompo}><Link to='performance/108/21/GOOGL/0/12528280'>Performance</Link></Button>
+     <Button className="btnPerformancee" onClick={changeCompo}><Link to='/activity'>Activities</Link></Button>    
     </Box>
   );
 }

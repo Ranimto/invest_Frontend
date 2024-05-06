@@ -6,10 +6,10 @@ import MDProgressRoot from "components/MDProgress/MDProgressRoot";
 const MDProgress = forwardRef(({ variant, color, value, label, ...rest }, ref) => (
   <>
     {label && (
-      <MDTypography variant="button" fontWeight="medium" color="text">
-        {value}%
+      <MDTypography variant="button" fontWeight="medium" style={{color:"rgba(9, 9, 9, 0.805)" ,fontFamily:':Cambria, Cochin, Georgia, Times,Times New Roman, serif'}}>
+       <span >Investor Risk Rate</span> {value}% 
       </MDTypography>
-    )}
+    ) }
     <MDProgressRoot
       {...rest}
       ref={ref}
@@ -20,15 +20,13 @@ const MDProgress = forwardRef(({ variant, color, value, label, ...rest }, ref) =
   </>
 ));
 
-// Setting default values for the props of MDProgress
 MDProgress.defaultProps = {
   variant: "contained",
-  color: "info",
+  color: "warning",
   value: 0,
   label: false,
 };
 
-// Typechecking props for the MDProgress
 MDProgress.propTypes = {
   variant: PropTypes.oneOf(["contained", "gradient"]),
   color: PropTypes.oneOf([

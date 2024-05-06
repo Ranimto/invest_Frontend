@@ -11,9 +11,11 @@ import { Link, useParams } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import MAVChart from './MAVChart';
 import PayPal from 'layouts/payPal/payPal';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePrice } from '../../authRedux/Features/auth/stock'; // update action
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
+import ComponentNavbar from 'examples/Navbars/ComponentNavbar';
 
 
   const Stock = () => {
@@ -116,7 +118,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   
         if (stockResponse.data && stockResponse.data['Time Series (5min)']) {
           const timeSeriesData = stockResponse.data['Time Series (5min)'];
-          const stockEntries = Object.entries(timeSeriesData).slice(0, 6).map(([date, values]) => ({
+          const stockEntries = Object.entries(timeSeriesData).slice(0, 10).map(([date, values]) => ({
             date,
             low: values['3. low'],
             high: values['2. high'],
@@ -275,6 +277,8 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
 
 
+
+
   useEffect(() => {
 
     const fetchData = async () => {
@@ -325,13 +329,13 @@ useEffect(() => {
   return (
     <PageLayout>
     <Grid container spacing={2} className="containerGridd" >
-     
+    <ComponentNavbar/>
 {/* Left section */}
-<Grid item xs={12} sm={4}>
-      <h5 >Company Fluctuations:</h5>
-          <Card className="gridCardd">
-            <CardContent>
-              <table className='tableClass'>
+<Grid item xs={12} sm={4} className="leftContainerr" style={{paddingTop:"6%"}}  >
+      <h5 >Company Fluctuations</h5>  
+          <Card className="gridCardd" >
+            <CardContent className='tableClass'>
+              <table  >
                 <thead>
                   <tr>
                     <th>Company</th>
@@ -352,14 +356,14 @@ useEffect(() => {
           <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])}>
             {item["Global Quote"]["05. price"]}
           </td>
-          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["09. change"]>=0 ? "green" : "red"}}>
+          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["09. change"]>=0 ? "#69b609" : "#f50e0e" , fontWeight:"100"}}>
             {item["Global Quote"]["09. change"]}
           </td>
-          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["10. change percent"]>=0 ? "green" : "red"}}>
+          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["10. change percent"]>=0 ? "f50e0e" : "#f50e0e"  , fontWeight:"100"}}>
             {item["Global Quote"]["10. change percent"]}
           </td>
           <td>
-          <Button variant="contained" type="submit" className='btnStock' onClick={()=>{setShowSellForm(true); handlePriceClick(item["Global Quote"]["01. symbol"], item["Global Quote"]["05. price"])}}>Sell</Button>
+          <Button variant="contained" type="submit" className='btnSellStock' style={{ backgroundColor:"blueviolet"}} onClick={()=>{setShowSellForm(true); handlePriceClick(item["Global Quote"]["01. symbol"], item["Global Quote"]["05. price"])}}>Sell</Button>
           </td>
           <td>
           <Button variant="contained" type="submit" className='btnStock' onClick={()=>{setShowForm(true); handlePriceClick(item["Global Quote"]["01. symbol"], item["Global Quote"]["05. price"])}}>Buy</Button>
@@ -367,50 +371,14 @@ useEffect(() => {
         </tr>
       ))}
     </tbody>
-      </table>
+      </table>     
             </CardContent>
-          </Card>    
-           <Grid>
-          <h5 >Company Running Analytics :</h5>
-          <Card className="gridCardd">
-            <CardContent>
-              <table className='tableClass'>
-                <thead>
-                  <tr>
-                    <th>Company</th>
-                    <th>MEAN</th>
-                    <th>STDDEV</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {symbols.map((item, index) => (
-                    <tr key={index}>
-                  
-                      <td
-                        onClick={() => handleCompanyClick(item)}
-                        className={selectedSymbol === item ? 'selected' : ''}
-                      > {item}</td>
-                      <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.MEAN[item] >= 0 ? 'green' : 'red' }} >
-                        { analyticData.payload.RETURNS_CALCULATIONS.MEAN[item].toFixed(6)}</td>
-                      <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item] >= 0 ? 'green' : 'red' }}>
-                        { analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item].toFixed(6)}</td>
-                      <td>{ analyticData.meta_data.max_dt}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </CardContent>
-          </Card>
-          </Grid>
+          </Card> 
       </Grid>
 {/* right section */}
 
-      <Grid item xs={8}>
-       <Grid container spacing={1}>
-        <Grid item xs={12} style={{paddingTop:"3%"}}>
-        <Link to={'/dashboard'} className='backToDash'>Back to dashboard <NavigateNextIcon/></Link>
-        </Grid>      
+      <Grid item xs={8} className="rightContainerr"  style={{paddingTop:"6%"}}>
+       <Grid container spacing={1}>     
         <Grid item xs={12} className="chartClass">
           <div style={{display:"flex" , gap:"35%"}}>
         <div>
@@ -443,8 +411,8 @@ useEffect(() => {
 <Modal open={showSellForm} >
         <div className="modalContent"  >
         <div >
-          <form  className='stockForm' style={{ height: '100px'}}  >
-          <p>Make your first step and SELL a stock</p>
+          <form  className='stockSellForm' style={{ height: '100px'}}  >
+          <p style={{color:"rgba(0, 0, 0, 0.911)", fontSize:"14px" ,paddingBottom:"5%"}}>Make your first step and  <strong style={{color:'blueviolet'}}>SELL</strong> a stock</p>
             
           <TextField  name="fromAccountNo" 
             label="to Account Number" 
@@ -497,10 +465,10 @@ useEffect(() => {
            required />
       
            <div className="checkoutClass" display='grid'>            
-           <Button variant="contained" type="submit" className='btnRecommandation' style={{backgroundColor:'red'}} onClick={handleSellSubmit}>Sell</Button> 
+           <Button variant="contained" type="submit" className='btnRecommandation' style={{backgroundColor:'red'}} onClick={handleSellSubmit}>Sell a stock</Button> 
            {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your sell transaction has been completed <strong style={{color:"green"}}>Successfully !</strong></p>)}
              { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add sell transaction ! <strong>{errorMessage} !</strong> </p>)}        
-           <Link to="/stock/AAPL" onClick={()=>{setShowSellForm(false)}} className='back' style={{ marginLeft:"-75%"}}> <ArrowBackIcon/> Back to stock</Link>
+           <Link to="/stock/AAPL" onClick={()=>{setShowSellForm(false)}} className='back' > <ReplyIcon/> Back to stock</Link>
            </div>     
           </form>
           </div> 
@@ -511,12 +479,12 @@ useEffect(() => {
 { showForm &&
 <Modal open={showForm} >
         <div className="modalContent" >
-        <div style={{ maxHeight: '720px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: '660px', overflowY: 'auto' }}>
           <form  className='stockForm' style={{ height: checkout ? "43rem" : "35rem" }}>
-          <p>Make your first step and BUY a stock</p>
+          <p style={{color:"rgba(0, 0, 0, 0.911)", fontSize:"14px" ,paddingBottom:"3%"}}> Make your first step and <strong style={{color:'blueviolet'}}>BUY</strong> a stock</p>
            
             <TextField  name="companyName" 
-            label="CompanyName" 
+            label="Company Name" 
             variant="outlined" 
             fullWidth  value={selectedSymbol}  
             onChange={handleSellInputChange} 
@@ -525,7 +493,7 @@ useEffect(() => {
 
           <TextField 
            name="numberOfStock" 
-           label="numberOfStock" 
+           label="number Of Stocks" 
            variant="outlined" 
            fullWidth 
            type="number"
@@ -535,7 +503,7 @@ useEffect(() => {
            required />
 
            <TextField 
-           name="investmentAmount" 
+           name="investment Amount" 
            label="investmentAmount" 
            variant="outlined" 
            fullWidth 
@@ -545,7 +513,7 @@ useEffect(() => {
            margin="normal"
            required />  
 
-          <TextField name="stockActualPrice" 
+          <TextField name="stock Actual Price" 
            label="Stock Actual Price" 
            variant="outlined" 
             fullWidth 
@@ -555,7 +523,7 @@ useEffect(() => {
             required />
 
                 <TextField
-                  label="Duration"
+                  label="Duration ( In Months )"
                   variant="outlined"
                   name="duration"
                   value={formData.duration}
@@ -572,11 +540,11 @@ useEffect(() => {
             (<PayPal totalPrice={totalPrice} nameProgram="investAI"/>) :
             (<Button variant="contained" type="submit" className='btnRecommandation'  onClick={()=>{setCheckout(true);}}>Checkout with PayPal</Button>)
             }
-           <Button variant="contained" type="submit" className='btnRecommandation' style={{backgroundColor:'red'}} onClick={handleSubmit}>Checkout</Button>
+           <Button variant="contained" type="submit" className='btnCheckout'  onClick={handleSubmit}>Checkout</Button>
              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
              { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! <strong>{errorMessage} !</strong> </p>)}
            </div>
-           <Link to="/stock/AAPL" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to stock</Link>
+           <Link to="/stock/AAPL" onClick={handleCancelClick} className='back'> <ReplyIcon/> Back to stock</Link>
            </div>     
           </form>
           </div> 
@@ -584,24 +552,25 @@ useEffect(() => {
       </Modal>
 }
 
-      <Grid item xs={12} sm={3} >
-        <Card className="gridCardd" style={{paddingLeft:'14%',height:'97%',paddingTop:'25%'}}  >
+<Grid display="flex" >
+<Grid display="flex" style={{flexDirection:"column"}} className="downLeftContainer">
+        <Card className="downCardd" style={{}}  >
           <CardContent >
-          <Grid item xs={12} sm={12}  style={{paddingLeft:'21%' ,paddingBottom:'10%'}}>
-           <div className="stockText">Trade overview</div>
-           <div className="txt2" style={{paddingLeft:'7%'}}>78,2333.00</div>
+          <Grid item xs={12} sm={12} >
+           <div className="stockText"  style={{paddingLeft:'22%'}}>Trade overview</div>
+           <div className="txt2" style={{paddingLeft:'27%'}}>78,2333.00</div>
            </Grid>
            <Grid container spacing={3}>
            <Grid item xs={12} sm={6}>
            <div className="grp">
-             <img src={earnings} style={{width:'45%'}}/>
+             <img src={earnings} />
              <div className="txt1">earnings</div>
              <div className="txt2">700.008.99</div>
            </div>
            </Grid>
            <Grid item xs={12} sm={6}>
            <div className="grp">
-           <img src={losses} style={{width:'45%'}}/>
+           <img src={losses} style={{}}/>
              <div className="txt1">Losses</div>
              <div className="txt2">40.008.99</div>
            </div>
@@ -609,13 +578,43 @@ useEffect(() => {
            </Grid>
           </CardContent>
         </Card>
-      </Grid>
-
-      <Grid item xs={12} sm={showForm ? 6 : 9} >
-      <Card className="gridCardd">
-        <CardContent>
+   
+          <Card className="downCardd" style={{}}>
+            <CardContent>
+              <table className='tableClass'>
+                <thead>
+                  <tr>
+                    <th>Company</th>
+                    <th>MEAN</th>
+                    <th>STDDEV</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {symbols.map((item, index) => (
+                    <tr key={index}>
+                  
+                      <td
+                        onClick={() => handleCompanyClick(item)}
+                        className={selectedSymbol === item ? 'selected' : ''}
+                      > {item}</td>
+                      <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.MEAN[item] >= 0 ? "#69b609" : "#f50e0e" , fontWeight:"100" }} >
+                        { analyticData.payload.RETURNS_CALCULATIONS.MEAN[item].toFixed(6)}</td>
+                      <td onClick={() => handleCompanyClick(item)} style={{ color: analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item] >= 0 ? "#69b609" : "#f50e0e" , fontWeight:"100" }}>
+                        { analyticData.payload.RETURNS_CALCULATIONS.STDDEV[item].toFixed(6)}</td>
+                      <td>{ analyticData.meta_data.max_dt}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </CardContent>
+          </Card>
+         
+ </Grid>
+      <Grid  className="downRightContainer">
+      <Card className="gridCard">
           <h2 className='symbol'>{selectedSymbol}</h2>
-          <table className='tableClass'>
+          <table className='tableClass' >
             <thead>
               <tr>
                 <th>Date</th>
@@ -634,17 +633,16 @@ useEffect(() => {
                   <td>{stock.high} TND</td>
                   <td>{stock.open} TND</td>
                   <td>{stock.close} TND</td>
-                  <td>{stock.volume}</td>
-                  
+                  <td>{stock.volume}</td>  
                 </tr>
               ))}
             </tbody>
           </table>
-        </CardContent>
       </Card>
     </Grid>
-
     </Grid>
+    </Grid> 
+   
     </PageLayout>
   );
 };

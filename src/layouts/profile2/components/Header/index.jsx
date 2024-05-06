@@ -13,9 +13,15 @@ import breakpoints from "assets/theme/base/breakpoints";
 import backgroundImage from "assets/images/topcryptocex.jpg";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { AppBar, Box, Button, Icon, Modal, Switch, Tab, Tabs, TextField, Typography } from "@mui/material";
+import { AppBar, Box, Button, Icon, IconButton, Modal, Switch, Tab, Tabs, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MDButton from "components/MDButton";
+
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+
 
 function Header() {
 
@@ -27,6 +33,8 @@ function Header() {
   const [showForm, setShowForm] = useState(false); 
   const [showFileName, setShowFileName] = useState(false); 
   const [message, setMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [successForm,setSuccessForm]=useState(false);
   const email = useSelector((state) => state.auth.value.email);
   const [user,setUser]=useState({ 
     id:"",  
@@ -42,16 +50,21 @@ function Header() {
   });
   const [emailForm, setEmailForm] = useState({
     from:"",
-    to:"",
+    to:"ranim.toumi@eniso.u-sousse.tn",
     subject:"",
     message:""
   });
 
+  //Profile Image
   const fileInputRef=useRef(null);
   const profileImageUrl = user?.imageUrl || "src/main/resources/imagesstock/avatar.png";
   const filename=profileImageUrl?profileImageUrl.split('/').pop():'';
   const imageUrlPath=`http://localhost:8023/user/images/${encodeURI(filename)}`
   const [selectedFileName ,setSelectedFileName]= useState('') ;
+
+  // TextFormat
+const [formattedMessage, setFormattedMessage] = useState("");
+const [textAlignment, setTextAlignment] = useState("left");
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
@@ -60,22 +73,7 @@ function Header() {
     setUser(response.data);
 };
 
- useEffect(() => {
-  fetchUserByEmail(email);
-}, [email]);
-
-  useEffect(() => {
-
-    function handleTabsOrientation() {
-      return window.innerWidth < breakpoints.values.sm
-        ? setTabsOrientation("vertical")
-        : setTabsOrientation("horizontal");
-    }
-
-    window.addEventListener("resize", handleTabsOrientation);
-    handleTabsOrientation();
-    return () => window.removeEventListener("resize", handleTabsOrientation);
-  }, [tabsOrientation]);
+ 
 
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
@@ -90,17 +88,23 @@ function Header() {
 
   const handleSendMessage = async () => {
     try {
-      // Assuming you have an API endpoint to send messages
-      await axios.post("http://localhost:8023/email/send-email", emailForm);
-      handleCloseForm();
+      const newEmailForm={
+        ...emailForm,
+        from:email,
+        to:"ranim.toumi@eniso.u-sousse.tn",
+ 
+      }
+      console.log('newEmailForm',newEmailForm)
+     const response=  await axios.post("http://localhost:8023/email/send-email", newEmailForm);
+      setSuccessMessage(response.data);
+      setSuccessForm(true);
       dispatch({ type: "MESSAGE_SENT", payload: message });
       setEmailForm({
         from:email,
-        to:"",
+        to:"ranim.toumi@eniso.u-sousse.tn",
         subject:"",
         message:""
       });
-      navigate("/profile")
 
     } catch (error) {
       console.error("Error sending message:", error);
@@ -116,12 +120,31 @@ function Header() {
     setUser({ ...user, [name]: value });
   };
 
-  const navigateToDashboard = () => {
-    navigate('/dashboard');
+  //TextFormat Methods
+ 
+
+  const handleFormatChange = (format) => {
+    const MAX_REPEAT_LENGTH = 100000;
+    const lineLength = 1000;
+    let updatedMessage = emailForm.message;
+    if (format === "left") {
+      updatedMessage = updatedMessage.replaceAll("\n", "");
+    } else if (format === "center") {
+      updatedMessage = updatedMessage.split("\n").map(line => {
+        const spacesToAdd = Math.max(0, (lineLength - line.length) / 2);
+        return " ".repeat(Math.min(spacesToAdd, MAX_REPEAT_LENGTH)) + line; // Limitez la répétition
+      }).join("\n");
+    } else if (format === "right") {
+      updatedMessage = updatedMessage.split("\n").map(line => line.padStart(40)).join("\n");
+    } else if (format === "justify") {
+    }
+    setFormattedMessage(updatedMessage);
   };
 
 
-  
+  const navigateToDashboard = () => {
+    navigate('/dashboard');
+  };
 
 const handleImageClick=()=>{
   if (fileInputRef.current){fileInputRef.current.click() ;}
@@ -182,6 +205,26 @@ const handleUpdateUser= async () => {
 }
   );
 };
+
+
+useEffect(() => {
+  fetchUserByEmail(email);
+}, [email]);
+
+  useEffect(() => {
+
+    function handleTabsOrientation() {
+      return window.innerWidth < breakpoints.values.sm
+        ? setTabsOrientation("vertical")
+        : setTabsOrientation("horizontal");
+    }
+
+    window.addEventListener("resize", handleTabsOrientation);
+    handleTabsOrientation();
+    return () => window.removeEventListener("resize", handleTabsOrientation);
+  }, [tabsOrientation]);
+
+
   return (
     <MDBox position="relative" mb={5}>      
       <MDBox
@@ -237,32 +280,32 @@ const handleUpdateUser= async () => {
                   onClick={handleOpenForm}
                  />
                { showForm &&
-                <Modal open={open} onClose={handleCloseForm}>
+      <Modal open={open} onClose={handleCloseForm}>
       <Box
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
+          bgcolor: "rgba(255, 255, 255, 0.941)",
+          boxShadow: 23,
+          p: 3,
           minWidth: 400,
           maxWidth: 600,
-          borderRadius: 8,
-
+          borderRadius: 2,
+          color: "black" 
         }}
       >
         <Typography variant="h5" component="h2" mb={2}>
-          Contact Message
+          Contact our InvestAI Team
         </Typography>
-        <form onSubmit={handleSendMessage}>
+        <form>
           <Box mb={2}>
             <TextField
               label="From"
               variant="outlined"
               name="from"
-              value={emailForm.from}
+              value={email}
               onChange={handleChange}
               fullWidth
               margin="normal"
@@ -293,26 +336,50 @@ const handleUpdateUser= async () => {
               required
             />
           </Box>
-          <Box mb={2}>
+          <Box mb={2} display="flex"   flexDirection="column">
+        <Grid>
+          <IconButton onClick={() => handleFormatChange("left")}>
+            <FormatAlignLeftIcon />
+            </IconButton>
+           <IconButton onClick={() => handleFormatChange("center")}>
+          <FormatAlignCenterIcon />
+         </IconButton>
+         <IconButton onClick={() => handleFormatChange("right")}>
+         <FormatAlignRightIcon />
+         </IconButton>
+        <IconButton onClick={() => handleFormatChange("justify")}>
+        <FormatAlignJustifyIcon />
+        </IconButton>
+        </Grid>
             <TextField
-              label="Message"
-              variant="outlined"
-              name="message"
+               label="Message"
+               variant="outlined"
+               name="message"
               value={emailForm.message}
               onChange={handleChange}
               fullWidth
               multiline
-              rows={4}
+              rows={6}
               required
-            />
-          </Box>
+             />
+ 
+</Box>
           <Box display="flex" justifyContent="flex-end" gap="5%">
-          <Button type="submit" variant="contained" color="info" style={{color:"white",backgroundColor:"rgb(184, 6, 6)"}} onClick={handleCloseForm}>
+          <Button type="button" variant="contained" color="info" style={{color:"white",backgroundColor:"#ff8809ee"}} onClick={handleCloseForm}>
              Close
           </Button>
-            <Button type="submit" variant="contained" color="info" style={{color:"white",backgroundColor:"blueviolet"}}>
+            <Button type="button" variant="contained" color="info" style={{color:"white",backgroundColor:"#7F27FF"}} onClick={handleSendMessage}>
               Send
             </Button>
+
+            {successForm && (
+          <Modal open={successForm} >
+          <Grid className='errorForm'>
+         <p> {successMessage}</p>
+        <button onClick={()=>{setSuccessForm(false); handleCloseForm()}}>Back</button>
+        </Grid>
+       </Modal>
+)}
             
           </Box>
         </form>

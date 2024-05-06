@@ -34,9 +34,7 @@ function Bill({ name,profession,email,number,savings,deposits,earned, posted,sta
             <MDBox mr={1}>
               
             </MDBox>
-            {/* <MDButton variant="text" color={darkMode ? "white" : "dark"}>
-              <Icon>edit</Icon>&nbsp;edit
-            </MDButton> */}
+        
           </MDBox>
         </MDBox>
         <MDBox mb={1} lineHeight={0}>
@@ -80,7 +78,7 @@ Bill.propTypes = {
   name: PropTypes.string,
   profession: PropTypes.string,
   email: PropTypes.string,
-  number: PropTypes.number,
+  number: PropTypes.string,
   savings: PropTypes.string,
   deposits: PropTypes.number,
   earned: PropTypes.number,

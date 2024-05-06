@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import CompanyPDF from './CompanyPDF';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 
 
@@ -49,9 +52,9 @@ export default function Data() {
 
 
   useEffect(() => {
-    const fetchCompanies= async (id) => {
+    const fetchCompanies= async () => {
       try {
-        const url = `http://localhost:8023/company/getAllCompaniesExceptByInvestorId/${id}`;
+        const url = `http://localhost:8023/company/getAllCompaniesExceptByInvestorId/${user.id}`;
         console.log( 'userrrr', user.id)
         const response = await axios.get(url);
         console.log("Compa:", response.data, response);
@@ -65,7 +68,7 @@ export default function Data() {
         }
       }
     };
-    fetchCompanies(user.id);
+    fetchCompanies();
   }, [user.id]);
 
  
@@ -73,6 +76,7 @@ export default function Data() {
   const columns = [
   
     { Header: "Name", accessor: "name", align: "center" },
+  
     { Header: "Activity", accessor: "activity", align: "left" },
     { Header: "Reported_Currency", accessor: "reportedCurrency", align: "center" },
     { Header: "Operating_Cash_Flow", accessor: "operatingCashflow", align: "center" },
@@ -81,10 +85,11 @@ export default function Data() {
     { Header: "Dividend_Payout", accessor: "dividendPayout", align: "center" },
     { Header: "Change_in_Exchange_Rate", accessor: "changeInExchangeRate", align: "center" },
     { Header: "Net_Income", accessor: "netIncome", align: "center" },
-    { Header: "RIB", accessor: "RIB", align: "center" }
+    { Header: "RIB", accessor: "RIB", align: "center" },
+    { Header: "Download", accessor: "Download", align: "center" }
   ];
 
-  const rows = otherCompanies.map((item) => ({
+  const rows = otherCompanies.map((item,index) => ({
 
     name: (
       <h3 className="CompanyName">
@@ -92,9 +97,7 @@ export default function Data() {
       </h3>
     ),
     activity: (
-      <h3>
-        {item.activity}
-      </h3>
+      <h3>{item.activity}</h3>
     ),
     reportedCurrency: (
       <h3>
@@ -135,6 +138,15 @@ export default function Data() {
       <h3>
         {item.RIB}
       </h3>
+    ),
+    Download: (
+      <PDFDownloadLink
+          key={index}
+          document={<CompanyPDF data={item} />}
+          fileName={`${item.companyName}_data.pdf`}
+        >
+          {({ loading }) => (loading ? 'Donwload...' : <CloudDownloadIcon tyle={{color: "black", width:"150%"}}/>)}
+        </PDFDownloadLink>
     ),
   }));
 

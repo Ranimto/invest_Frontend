@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import CompanyPDF from './CompanyPDF';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 
 export default function Data() {
@@ -78,10 +81,11 @@ export default function Data() {
     { Header: "Dividend_Payout", accessor: "dividendPayout", align: "center" },
     { Header: "Change_in_Exchange_Rate", accessor: "changeInExchangeRate", align: "center" },
     { Header: "Net_Income", accessor: "netIncome", align: "center" },
-    { Header: "RIB", accessor: "RIB", align: "center" }
+    { Header: "RIB", accessor: "RIB", align: "center" },
+    { Header: "Download", accessor: "Download", align: "center" }
   ];
 
-  const rows = companies.map((item) => ({
+  const rows = companies.map((item,index) => ({
 
     name: (
       <h3 className="CompanyName">
@@ -132,6 +136,15 @@ export default function Data() {
       <h3>
         {item.RIB}
       </h3>
+    ),
+    Download: (
+      <PDFDownloadLink
+          key={index}
+          document={<CompanyPDF data={item} />}
+          fileName={`${item.companyName}_data.pdf`}
+        >
+          {({ loading }) => (loading ? 'Donwload...' : <CloudDownloadIcon style={{color: "black", width:"150%"}} />)}
+        </PDFDownloadLink>
     ),
   }));
 

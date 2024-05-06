@@ -42,14 +42,14 @@ const StockChart = ({ selectedSymbol }) => {
       {
         label: 'Low',
         data: stockData.map(entry => entry.low),
-        borderColor: 'rgb(255, 204, 0)',
+        borderColor: 'rgba(254, 212, 4, 0.662)',
         fill: false,
 
       },
       {
         label: 'High',
         data: stockData.map(entry => entry.high),
-        borderColor: 'blueviolet',
+        borderColor: 'rgb(217, 195, 241)',
         fill: false
       }
     ]
@@ -76,7 +76,7 @@ const StockChart = ({ selectedSymbol }) => {
   };
 
   return (
-    <div style={{ width: '90%', height: '420px',color:'white' , paddingTop:'1%'}}>
+    <div style={{ width: '90%', height: '480px',color:'white' , paddingTop:'1%' , fontWeight:"100"}}>
       <h2 style={{fontSize:"19px"}}>Stock Chart for {selectedSymbol}</h2>
       <Line data={chartData} options={options} />
     </div>

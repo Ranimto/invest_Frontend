@@ -149,7 +149,9 @@ useEffect(()=>{
    <Grid className='performanceGrid' >
       <Table>
          <thead>
+         <tr>
             <th>Company Table </th>
+            </tr>
          </thead>
       <tbody>
         <tr className='performanceTable'>
@@ -185,7 +187,9 @@ useEffect(()=>{
        <Table>
 
        <thead>
-            <th>Investment Table </th>
+          <tr>
+            <th>Investment Table </th> 
+         </tr>
          </thead>
       <tbody>
         <tr className='performanceTable'>

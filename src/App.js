@@ -28,55 +28,31 @@ function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
     layout,
-    openConfigurator,
     sidenavColor,
     transparentSidenav,
     whiteSidenav,
     darkMode,
   } = controller;
 
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
-
   const configsButton = (
-    <MDBox
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      width="3.25rem"
-      height="3.25rem"
-      bgColor="white"
-      shadow="sm"
-      borderRadius="50%"
-      position="fixed"
-      right="2rem"
-      bottom="2rem"
-      zIndex={99}
-      color="dark"
-      sx={{ cursor: "pointer" }}
-      onClick={handleConfiguratorOpen}
-    >
+ 
       <Icon fontSize="small" color="inherit">
         settings
       </Icon>
-    </MDBox>
   );
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
       {layout === "dashboard" && (
-        <>
           <Sidenav
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="InvestAI"
             routes={routes}          
-          />
-          <Configurator />
-          {configsButton}
-        </>
+          />        
       )}
-      <Configurator />
+    
       <Routes>
   <Route path="/signup" element={<Navigate to="/authentication/sign-up" />} />
   <Route path="/" element={<Navigate to="/home" />} />

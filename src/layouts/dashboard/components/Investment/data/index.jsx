@@ -16,6 +16,7 @@ export default function Data() {
     currentInvestmentAmount :0,
     startDate :"",
     duration :"",
+    numberOfStock:"",
     status: ""
   });
   const [error, setError] = useState(null);
@@ -67,15 +68,16 @@ export default function Data() {
  
 
   const columns = [
-    { Header: "companyName", accessor: "companyName", width: "20%", align: "left" },
+    { Header: "company_Name", accessor: "companyName", width: "20%", align: "left" },
     { Header: "type", accessor: "type", align: "left" },
-    { Header: "investmentAmount", accessor: "investmentAmount", align: "center" },
-    { Header: "currentInvestmentAmount", accessor: "currentInvestmentAmount", align: "center" },
-    { Header: "startDate", accessor: "startDate", align: "center" },
-    { Header: "duration", accessor: "duration", align: "center" },
+    { Header: "initial_Amount", accessor: "investmentAmount", align: "center" },
+    { Header: "current_Amount", accessor: "currentInvestmentAmount", align: "center" },
+    { Header: "start_Date", accessor: "startDate", align: "center" },
+    { Header: "number_Of_Stocks", accessor: "numberOfStock", align: "center" },
+    { Header: "duration (in_Months)", accessor: "duration", align: "center" },
     { Header: "status", accessor: "status", align: "center" },
     { Header: "Performance", accessor: "Performance", align: "center" },
-    { Header: "CompanyNews", accessor: "CompanyNews", align: "center" },
+    { Header: "Company_News", accessor: "CompanyNews", align: "center" },
   ];
 
   const rows = investments.map((item) => ({
@@ -86,7 +88,7 @@ export default function Data() {
       </MDBox>
     ),
     type: (
-      <MDBox width="8rem" textAlign="left">
+      <MDBox width="8rem" textAlign="left" style={{color:"rgb(25, 2, 140)" }}>
        {item.type}
        </MDBox>
     ),
@@ -97,7 +99,7 @@ export default function Data() {
        </MDBox>
     ),
     currentInvestmentAmount: (
-      <MDBox width="8rem" textAlign="center">
+      <MDBox width="8rem" textAlign="center" style={{color:"rgb(25, 2, 140)"}}>
       $ {item.currentInvestmentAmount}
        </MDBox>
     ),
@@ -106,7 +108,11 @@ export default function Data() {
         {item.startDate}
         </MDBox>
     ),
-   
+    numberOfStock: (
+      <MDBox width="10rem" textAlign="center" style={{color:"rgb(25, 2, 140)"}}>
+        {item.numberOfStock}
+        </MDBox>
+    ),
     duration: (
       <MDBox width="8rem" textAlign="center">
        {item.duration}

@@ -109,9 +109,10 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
  }
  .btnRecommandation{
   color: white !important;
-  background-color: blueviolet !important;
+  background-color: #7F27FF !important;
   padding: 10px !important;
   display: flex;
+  border: none  !important;
   margin:5% 0 0 30% !important;
   width: 40%;
   cursor: pointer;

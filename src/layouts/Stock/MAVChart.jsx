@@ -60,8 +60,8 @@ const MAVChart = ({ selectedSymbol }) => {
   };
 
   return (
-    <div style={{ width: '90%', height: '467px', color: 'white', paddingTop: '4%' }}>
-      <h2>SMA Moving Average for {selectedSymbol}</h2>
+    <div style={{ width: '90%', height: '480px', color: 'white', paddingTop: '1%' }}>
+      <h2 style={{fontSize:"19px"}}>SMA Moving Average for {selectedSymbol}</h2>
       <Line data={chartData} options={options} style ={{color:'white'}} />
     </div>
   );

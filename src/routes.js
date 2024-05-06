@@ -18,7 +18,6 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import Transaction from "layouts/billing/components/Transaction";
 import CompaniesRecommandations from "layouts/companiesRecommandations/companiesRecommandations";
 import CompanyNews from "layouts/companyNews/companyNews";
-import Chat from "layouts/chatGPT/chat";
 import Markets from "layouts/markets/markets";
 import RestoreIcon from '@mui/icons-material/Restore';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
@@ -139,15 +138,6 @@ key: "transaction",
 route: "/transaction",
 component: <Transaction/>,
 isPrivate: true,
-},
-{
-  type: "collapse",
-  name: "Chat",
-  key: "Chat",
-  icon: <PendingActionsIcon/>,
-  route: "/chat",
-  component: <Chat/>,
-  isPrivate: true,
 },
 {
   type: "collapse",

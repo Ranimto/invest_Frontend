@@ -11,6 +11,7 @@ import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import Box from '@mui/material/Box';
 import Loading from 'assets/images/giphy.gif'
 import logo from 'assets/images/logo.jpeg'
+import MDProgress from 'components/MDProgress';
 
 
 const CompaniesRecommandations = () => {
@@ -59,7 +60,6 @@ const CompaniesRecommandations = () => {
    const handleShowForm=(name)=>{
       setShowForm(true);
       setSelectedCompanyName(name);
-      console.log('ssss',selectedCompanyName)
     }
     
     const handleChange = (event) => {
@@ -73,7 +73,6 @@ const CompaniesRecommandations = () => {
     
       const updatedInvestment = { ...investment, companyName: selectedCompanyName,investmentAmount:investment.numberOfStock*investment.stockActualPrice};
       setInvestment(updatedInvestment);
-
 
       //save it in the historical activity 
       const investmentDescription = `Adding new investment in the ${updatedInvestment.companyName} company with amount : ${updatedInvestment.investmentAmount} $`;
@@ -139,7 +138,8 @@ const CompaniesRecommandations = () => {
      try{
        const response= await axios.post(url, body);
        console.log( "Recommended Companies", response.data );
-       setCompanies(response.data.recommended_companies) ;
+       const sortedCompanies = response.data.recommended_companies.sort((a, b) => b.profit - a.profit);
+       setCompanies(sortedCompanies) ;
        setIsLoading(false);
      }
      catch (error){
@@ -209,15 +209,20 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
 
 
     useEffect(() => {
-      fetchUserByEmail(email);
+      if (email) {
+        fetchUserByEmail(email);
+      }
     }, [email]);
-    
     useEffect(()=>{
       fetchRecommendedCompanies();
       fetchPredictedToleranceRisk()
       fetchProfileData();
    } ,[user.id])
 
+   const handleProgress=(value)=>{
+    const total = 5;
+    return (value / total) * 100;
+   }
 
   return (
  <DashboardLayout>
@@ -225,12 +230,12 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
   <div className="recommandationContainer">
   <h1> COMPANY SUGGESTIONS FOR YOU </h1>
   <h5>Personalized AI-driven recommendations tailored just for you</h5>
-  <h5>Your Predicted Tolerance Risk is :  <strong style={{marginLeft:'1%'}} > {predictedRisk}</strong>  /5</h5>
-
-  <h5 className="profiledata"  onClick={handleShowProfileData}> See the details of your Profile Form</h5>
-
+  <h5>Your Predicted Tolerance Risk based in the <strong style={{padding:"0 0.3% 0 0.3%"}}> AI </strong> process is :  <strong style={{marginLeft:'1%'}} > {predictedRisk}</strong> /5</h5>
+    <div>
+      <MDProgress value={handleProgress(predictedRisk)} label={true} color="success" />
+    </div>
+  <h5 className="profiledata"  onClick={handleShowProfileData}> See the details of your Profile Form</h5>   
 {showProfileData &&
-  
   <Grid display="flex" gap="1%">
     <Table>
       <tbody className="profileTable">
@@ -351,8 +356,8 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
 
   {isLoading ? (
     <>
-     <Box sx={{ display: 'flex', width:"250%" , marginTop:"13%" ,marginLeft:'91%'}}>
-      <div className="text-animation">HEY <strong>{user.firstname} !</strong> ... Please Wait For The <strong>AI </strong>  Process ... </div>   
+     <Box sx={{ display: 'flex', width:"400%" , marginTop:"13%" ,marginLeft:'31%'}}>
+      <div className="text-animation">HEY <strong>{user.firstname} !</strong> ... Please Wait For The <strong>AI </strong>  Process  To Find Suitable Companies For <strong>Your Profile</strong> ... </div>   
      </Box>
       <img  className="imageStyle" style={{paddingTop:"28%", marginLeft:"-8%"}}  src={Loading} />  
       </>

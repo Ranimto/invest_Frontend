@@ -10,3 +10,17 @@ h3{
   color: rgb(151, 108, 137) !important;
   text-decoration: underline !important;
 }
+
+td {
+  text-align: center;
+  padding: 8px;
+  color: rgba(255, 255, 255, 0.807);
+  font-size: 13px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serifs;
+color: rgb(25, 2, 140);
+}
+
+tr {
+  font-weight: 600;
+  color: white;
+}
