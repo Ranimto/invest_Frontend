@@ -134,11 +134,13 @@ useEffect(() => {
           <p>On the basis of recognition from top analysts.</p>
           <Table className='tableHeader'>
           <thead >
+            <tr>
             <th>Ticker</th>
             <th>Actual price</th>
             <th>Change Amount</th>
             <th>Change Percentage</th>
             <th>ACTIONS</th>
+            </tr>
           </thead>
          
             <tbody>

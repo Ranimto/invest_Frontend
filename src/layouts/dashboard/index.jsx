@@ -15,7 +15,7 @@ import { Button, InputLabel, MenuItem, Modal, Select, TextField } from "@mui/mat
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ReplyIcon from '@mui/icons-material/Reply';
 import { useSelector } from "react-redux";
 
 function Dashboard() {
@@ -34,7 +34,8 @@ function Dashboard() {
     investmentAmount:0,
     stockActualPrice:0,
     startDate:"",
-    duration:"",  
+    duration:"", 
+    type:"Stock" 
   });
   const [user,setUser]=useState({ 
     id:"",  
@@ -60,10 +61,11 @@ function Dashboard() {
     const newInvestment = {
       ...investment,  
       investmentAmount: investment.numberOfStock * investment.stockActualPrice,
+      startDate:new Date()
     };
   
     try {
-      
+        console.log('investmentAdded',newInvestment)
         const url = "http://localhost:8023/investment/add";
         const response = await axios.post(url, newInvestment);
         console.log('investmentAdded',newInvestment)
@@ -77,6 +79,7 @@ function Dashboard() {
           userId:user.id,
           type:"",
           amount :"",
+          companyName :"",
           numberOfStock:0,
           investmentAmount:0,
           stockActualPrice:0,
@@ -103,7 +106,7 @@ function Dashboard() {
 
       setInvestment({
         userId: user.id,
-        type: "",
+        type:"Stock" ,
         investmentAmount: "",
         numberOfStock:1,
         startDate: "",
@@ -263,7 +266,7 @@ function Dashboard() {
         
         <Modal open={showForm}>
         <div className="modalContent">
-          <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"33rem", marginLeft:"40%"}} >
+          <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"34rem", margin:"6% 0 0 35%"}} >
             <p>Add an investment</p>
             <Select labelId='type' fullWidth name="type" value={investment.type} onChange={handleSelectChange('type')} style={{padding: '11px'}}>
            <MenuItem value="Stock">Stock</MenuItem>
@@ -272,10 +275,10 @@ function Dashboard() {
               <Grid item xs={6}>
                 <TextField
                   label="StartDate"
-                  type="Date"
+                  
                   variant="outlined"
                   name="startDate"
-                  value={investment.startDate || '01/01/2024'}
+                  value={new Date()}
                   onChange={handleInputChange}
                   fullWidth
                   margin="normal"
@@ -307,7 +310,32 @@ function Dashboard() {
               margin="normal"
                required />
 
-                <TextField
+               <TextField 
+              name="stockActualPrice" 
+              label="stockActualPrice" 
+              variant="outlined" 
+              fullWidth 
+              type="number"
+               value={investment.stockActualPrice} 
+              onChange={handleInputChange}
+              margin="normal"
+               required />
+
+              </Grid>
+              <Grid item xs={6}>
+            <InputLabel id ='type' style={{padding: '6px'}}>Company Name </InputLabel>
+            <Select label='type' fullWidth name="type" value={investment.companyName || ''} onChange={handleSelectChange('companyName')} style={{ padding: '11px' }}>
+               <MenuItem value="IBM">IBM</MenuItem>
+              <MenuItem value="AAPL">AAPL</MenuItem>
+              <MenuItem value="MFST">MFST</MenuItem>
+              <MenuItem value="AMZN">AMZN</MenuItem>
+              <MenuItem value="TESLA">TESLA</MenuItem>
+              <MenuItem value="XOM">XOM</MenuItem>
+              <MenuItem value="GOOGL">GOOGL</MenuItem>
+            </Select>
+
+            
+               <TextField
                   label="Investment Amount"
                   variant="outlined"
                   name="investmentAmount"
@@ -318,29 +346,6 @@ function Dashboard() {
                   margin="normal"
                   required />
               </Grid>
-              <Grid item xs={6}>
-          <InputLabel id ='type' style={{padding: '6px'}}>Company Name </InputLabel>
-            <Select label='type' fullWidth name="type" value={investment.companyName}  onChange={handleSelectChange('companyName')}  style={{padding: '11px'}}>
-               <MenuItem value="IBM">IBM</MenuItem>
-              <MenuItem value="AAPL">AAPL</MenuItem>
-              <MenuItem value="MFST">MFST</MenuItem>
-              <MenuItem value="AMZN">AMZN</MenuItem>
-              <MenuItem value="TESLA">TESLA</MenuItem>
-              <MenuItem value="XOM">XOM</MenuItem>
-              <MenuItem value="GOOGL">GOOGL</MenuItem>
-            </Select>
-
-            <TextField 
-              name="stockActualPrice" 
-              label="stockActualPrice" 
-              variant="outlined" 
-              fullWidth 
-              type="number"
-               value={investment.stockActualPrice} 
-              onChange={handleInputChange}
-              margin="normal"
-               required />
-              </Grid>
             </Grid>
             <div className="formFooter">
               <Button type="submit" variant="contained" className='btnRecommandation'>
@@ -348,7 +353,7 @@ function Dashboard() {
               </Button>
               {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
              { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! <strong>{errorMessage} !</strong> </p>)}
-              <Link to="/dashboard" onClick={handleCancelClick} className='back'> <ArrowBackIcon/> Back to List</Link>
+              <Link to="/dashboard" onClick={()=>handleCancelClick()} className='back'> <ReplyIcon/> Back to List</Link>
             </div>
           </form>
         </div>

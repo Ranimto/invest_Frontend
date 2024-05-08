@@ -21,7 +21,7 @@ function Transactions({ fromAccountNo }) {
       }
     };
 
-    fetchTransactions();
+   if (fromAccountNo) fetchTransactions();
   }, [fromAccountNo]);
 
   useEffect(() => {

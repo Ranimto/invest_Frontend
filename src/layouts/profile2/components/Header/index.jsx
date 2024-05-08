@@ -64,7 +64,7 @@ function Header() {
 
   // TextFormat
 const [formattedMessage, setFormattedMessage] = useState("");
-const [textAlignment, setTextAlignment] = useState("left");
+
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
@@ -72,9 +72,6 @@ const [textAlignment, setTextAlignment] = useState("left");
     console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
-
- 
-
   const handleSetTabValue = (event, newValue) => setTabValue(newValue);
 
   const handleOpenForm = () => {
@@ -121,8 +118,6 @@ const [textAlignment, setTextAlignment] = useState("left");
   };
 
   //TextFormat Methods
- 
-
   const handleFormatChange = (format) => {
     const MAX_REPEAT_LENGTH = 100000;
     const lineLength = 1000;
@@ -208,7 +203,8 @@ const handleUpdateUser= async () => {
 
 
 useEffect(() => {
-  fetchUserByEmail(email);
+  if (email)
+  { fetchUserByEmail(email);}
 }, [email]);
 
   useEffect(() => {

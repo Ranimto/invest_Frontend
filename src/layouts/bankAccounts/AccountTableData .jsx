@@ -96,28 +96,34 @@ export default function Data() {
     setEditedAccount({...editedAccount, [name]: value});
   };
 
+
+
+  const fetchAccounts = async () => {
+    try {
+      setLoading(true);
+     const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${user.id}`;
+     // const url =`http://localhost:8023/bankAccount/getAll`;
+      const response = await axios.get(url);
+      setAccounts(response.data);
+      setLoading(false);
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else {
+        setError("An error occurred during bankAccounts recovery.");
+      }
+      setLoading(false);
+    }
+  };
+
+
   useEffect(() => {
+    if (email)
     fetchUserByEmail(email);
   }, [email]);
 
   useEffect(() => {
-    const fetchAccounts = async () => {
-      try {
-        setLoading(true);
-       const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${user.id}`;
-       // const url =`http://localhost:8023/bankAccount/getAll`;
-        const response = await axios.get(url);
-        setAccounts(response.data);
-        setLoading(false);
-      } catch (error) {
-        if (error.response) {
-          setError(error.response.data.message);
-        } else {
-          setError("An error occurred during bankAccounts recovery.");
-        }
-        setLoading(false);
-      }
-    };
+   if (user.id)
     fetchAccounts();
   }, [user.id]);
 

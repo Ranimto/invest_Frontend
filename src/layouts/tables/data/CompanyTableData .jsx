@@ -47,26 +47,30 @@ export default function Data() {
 };
 
  useEffect(() => {
-  fetchUserByEmail(email);
+ if (email) {fetchUserByEmail(email);}
 }, [email]);
 
+
+const fetchCompanies= async (id) => {
+  try {
+    const url = `http://localhost:8023/company/getCompaniesByInvestorId/${id}`;
+    const response = await axios.get(url);
+    console.log("Response from server:", response.data, response);
+    setCompanies(response.data);
+    setError(null);
+  } catch (error) {
+    if (error.response) {
+      setError(error.response.data.message);
+    } else {
+      setError("An error occurred during companies recovery.");
+    }
+  }
+};
+
   useEffect(() => {
-    const fetchCompanies= async (id) => {
-      try {
-        const url = `http://localhost:8023/company/getCompaniesByInvestorId/${id}`;
-        const response = await axios.get(url);
-        console.log("Response from server:", response.data, response);
-        setCompanies(response.data);
-        setError(null);
-      } catch (error) {
-        if (error.response) {
-          setError(error.response.data.message);
-        } else {
-          setError("An error occurred during companies recovery.");
-        }
-      }
-    };
-    fetchCompanies(user.id);
+ 
+    if (user.id)
+   { fetchCompanies(user.id);}
   }, [user.id]);
 
  

@@ -56,7 +56,7 @@ function Billing() {
   };
 
   useEffect(() => {
-    fetchUserByEmail(email);
+    if (email) fetchUserByEmail(email);
   }, [email]);
 
   useEffect(() => {

@@ -4,21 +4,17 @@ import axios, { AxiosHeaders } from 'axios'
 import MDBox from 'components/MDBox'
 import MDButton from 'components/MDButton'
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
-import PageLayout from 'examples/LayoutContainers/PageLayout'
-import { setIn } from 'formik'
+import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
 import NavbarPerformance from 'layouts/navbarPerformance'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CustomGauge from './gaugeChart'
-
-
-
 import './style.css'
 
 const Performance = () => {
 
    const { investorId, companyId, symbol, currentInvestmentAmount, initialInvestmentAmount } = useParams();
-   const [hoveredTitle, setHoveredTitle] = useState('');
+
    const [showResult, setShowResult] = useState(false);
    const  [company,setCompany]=useState([]);
    const  [investment,setInvestment]=useState([]);
@@ -38,11 +34,9 @@ const fetchPerformanceIndicators= async()=>{
    const body={
       base_url: "http://localhost:8023/investment",
       investor_id: investorId,
-      company_id:companyId,
+      company_Name:symbol,
       price_url:"http://localhost:8023/stockData/fetch",
-      symbol:symbol
   }
-  console.log("bodyyyy",body)
   try{
     const response= await axios.post(url, body);
     console.log( "dataaa", response.data );
@@ -66,10 +60,10 @@ const fetchCompanyData= async(companyId)=>{
    }
 }
 
-const fetchInvestmentData= async(investorId,companyId)=>{
+const fetchInvestmentData= async(investorId,symbol)=>{
   try
    {
-   const url=`http://localhost:8023/investment/${investorId}/${companyId}`;
+   const url=`http://localhost:8023/investment/${investorId}/${symbol}`;
    const response = await axios.get(url) ; 
    setInvestment(response.data);}
 catch (error) {
@@ -86,19 +80,21 @@ const handleShowResult=()=>{
 useEffect(()=>{
    fetchPerformanceIndicators()
 } ,[])
+
 useEffect(()=>{
-   fetchCompanyData(companyId)
+  if (companyId) {fetchCompanyData(companyId)}
 } ,[companyId])
 
 useEffect(()=>{
-   fetchInvestmentData(investorId,companyId)
-} ,[investorId,companyId])
+  if (investorId) 
+  {  if  (symbol) 
+  fetchInvestmentData(investorId,symbol)}
+} ,[investorId,symbol])
 
   return (
    <DashboardLayout>
-
-   <Grid container spacing={3} className="containerPerformance" >
-   <NavbarPerformance/>
+    <ComponentNavbar/>
+   <Grid container  className="containerPerformance" >
    <MDBox>
           <h6 className="userPerformanceTitle">
           Portfolio <strong>Tracking</strong> 
@@ -144,111 +140,133 @@ useEffect(()=>{
     </Grid>
 
   
-    <Grid display='flex' gap='2%' justifyContent="center" >
-    
-   <Grid className='performanceGrid' >
-      <Table>
-         <thead>
-         <tr>
-            <th>Company Table </th>
-            </tr>
-         </thead>
-      <tbody>
-        <tr className='performanceTable'>
-            <td> <strong>Company Name</strong></td>
-            <td>{company.name}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td ><strong>Activity</strong></td>
-            <td>{company.activity}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td ><strong>Number Of Investors</strong></td>
-            <td>{company.nbOfInvestors}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>Debt Ratio</strong></td>
-            <td>{company.debtRatio}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>Liquidity Ratio</strong></td>
-            <td>{company.liquidityRatio}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>Profitability Ratio</strong></td>
-            <td>{company.profitabilityRatio}</td>
-        </tr>
-        
-    </tbody>
-    </Table>
-   </Grid>
-
-       <Grid className='performanceGrid' >
-       <Table>
-
-       <thead>
-          <tr>
-            <th>Investment Table </th> 
-         </tr>
-         </thead>
-      <tbody>
-        <tr className='performanceTable'>
-            <td> <strong>TYPE</strong></td>
-            <td>{company.name}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>initial Investment Amount</strong></td>
-            <td>{investment.investmentAmount}</td>
-        </tr>
-
-        <tr className='performanceTable'>
-            <td><strong>current Investment Amount</strong></td>
-            <td>{investment.currentInvestmentAmount}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>start Date</strong></td>
-            <td>{investment.startDate}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>duration</strong></td>
-            <td>{investment.duration}</td>
-        </tr>
-        <tr className='performanceTable'>
-            <td><strong>status</strong></td>
-            <td>{investment.status}</td>
-        </tr>
-       
-       
-
-    </tbody>
-    </Table>
-       </Grid>
   <Grid className='performanceInfo'>
    <p> <strong> Sharpe Ratio </strong> is a measure used by investors to assess the return of an investment relative to its risk. 
    It helps investors make informed decisions by considering both the potential return and the associated risk of an investment.</p>
+
+     <div className="explication">
+     <span> <strong className="positive">Positive Sharpe Ratio</strong>  Indicates favorable returns relative to risk, suggesting a promising investment opportunity. </span>
+     <br/>
+    <span> <strong className="negative">Negative Sharpe Ratio</strong> Implies that returns may not justify the associated risk, urging caution before proceeding with the investment. </span>
+    </div>
 
    <p> <strong>Sortino Ratio</strong> provides investors with a more targeted view of risk by focusing on the 
    potential for losses rather than overall volatility. It&apos;s especially useful for investors who prioritize capital preservation 
    and want to assess an investment&apos;s performance relative to downside risk.</p>
 
+   <div className="explication">
+   <span > <strong className="positive">Positive Sortino Ratio </strong>Signals that potential returns outweigh downside risks, making the investment appealing, particularly for risk-averse investors </span>
+   <br/>
+    <span ><strong className='negative'>Negative Sortino Ratio</strong> Suggests that the investment&apos;s returns might not compensate for the possibility of losses, advising careful consideration before investing further. </span>
+   </div>
+
    <p> <strong>Annual Return </strong> , is a measure that tells you how much an investment has grown or declined on 
    average each year over a specific period. it gives a straightforward measure of how your investment has grown on average each year.</p>
 
+   <div className="explication">
+    <span><strong  className="positive">Positive Annual Return</strong>  Reflects growth in investment value, indicating a successful investment endeavor </span>
+    <br/>
+    <span><strong className="negative">Negative Annual Return</strong> Indicates a decline in investment value, prompting a review of the investments performance and potential future prospect </span>
+   </div>
    <MDButton variant="contained" type="submit" className='btnPerformance' onClick={handleShowResult}>Show my investment&apos;s gain percentage</MDButton>
 
    {showResult && (
         <div className='result'>
           {data.gain_percentage > 0 ? (
-            <p >Your investment has been  <strong  style={{color:"green"}}>amplified</strong> {data.gain_percentage} times.</p>
+            <p >Your investment has been  <strong  style={{color:"green"}}>Amplified</strong> {Math.round(data.gain_percentage)} times.</p>
           ) : (
-            <p> Your investment has <strong style={{color:"red"}}>decremented</strong> {Math.abs(data.gain_percentage.toFixed(3))} <span style={{fontWeight:"600"}}> times.</span> </p>
+            <p> Your investment has <strong style={{color:"rgba(194, 2, 2, 0.859)"}}>Decremented</strong> {Math.abs(data.gain_percentage.toFixed(3))} <span style={{fontWeight:"600"}}> times.</span> </p>
           )}
         </div>
       )}
    </Grid>  
    </Grid>
    
-   
+   <Grid display='flex' gap='2%' justifyContent="center" >
+    
+    <Grid className='performanceGrid' >
+       <Table>
+          <thead>
+          <tr>
+             <th>Company Table </th>
+             </tr>
+          </thead>
+       <tbody>
+         <tr className='performanceTable'>
+             <td> <strong> Name</strong></td>
+             <td>{company.companyName}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td ><strong>Activity</strong></td>
+             <td>{company.activity}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td ><strong>Currency</strong></td>
+             <td>{company.reportedCurrency}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>operating Cash flow</strong></td>
+             <td>{company.operatingCashflow}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>payments For Operating Activities</strong></td>
+             <td>{company.paymentsForOperatingActivities}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>capital Expenditures </strong></td>
+             <td>{company.capitalExpenditures}</td>
+         </tr>
+ 
+        
+      
+         <tr className='performanceTable'>
+             <td><strong>net Income </strong></td>
+             <td>{company.netIncome}</td>
+         </tr>
+     </tbody>
+     </Table>
+    </Grid>
+ 
+        <Grid className='performanceGrid' >
+        <Table>
+ 
+        <thead>
+           <tr>
+             <th>Investment Table </th> 
+          </tr>
+          </thead>
+       <tbody>
+         <tr className='performanceTable'>
+             <td> <strong>TYPE</strong></td>
+             <td>{company.type}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>initial Investment Amount</strong></td>
+             <td>{investment.investmentAmount}</td>
+         </tr>
+ 
+         <tr className='performanceTable'>
+             <td><strong>current Investment Amount</strong></td>
+             <td>{investment.currentInvestmentAmount}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>start Date</strong></td>
+             <td>{investment.startDate}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>duration</strong></td>
+             <td>{investment.duration}</td>
+         </tr>
+         <tr className='performanceTable'>
+             <td><strong>status</strong></td>
+             <td>{investment.status}</td>
+         </tr>
+        
+        
+ 
+     </tbody>
+     </Table>
+        </Grid>
    </Grid>
    
    </DashboardLayout>

@@ -8,13 +8,11 @@ import axios from 'axios';
 import ReverseExampleNoSnap from './chart';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import MAVChart from './MAVChart';
 import PayPal from 'layouts/payPal/payPal';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePrice } from '../../authRedux/Features/auth/stock'; // update action
-import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar';
 
 

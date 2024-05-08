@@ -42,8 +42,7 @@ export default function Data() {
 };
 
  useEffect(() => {
-  fetchUserByEmail(email);
-
+ if (email) {fetchUserByEmail(email)};
 }, [email]);
 
   
@@ -61,7 +60,7 @@ export default function Data() {
   };
 
   useEffect(() => { 
-    fetchInvestments(user.id)
+   if (user.id){ fetchInvestments(user.id)}
     }, [user.id]);
 
 

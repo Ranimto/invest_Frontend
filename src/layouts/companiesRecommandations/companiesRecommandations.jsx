@@ -2,7 +2,6 @@ import { Button, Card, Grid, InputLabel, MenuItem, Modal, Select, Table, TextFie
 import React, {useEffect, useState } from 'react'
 import './style.css'
 import { Link } from 'react-router-dom';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
@@ -12,6 +11,7 @@ import Box from '@mui/material/Box';
 import Loading from 'assets/images/giphy.gif'
 import logo from 'assets/images/logo.jpeg'
 import MDProgress from 'components/MDProgress';
+import ReplyIcon from '@mui/icons-material/Reply';
 
 
 const CompaniesRecommandations = () => {
@@ -29,6 +29,7 @@ const CompaniesRecommandations = () => {
     const[analyseResponse, setAnalyseResponse]=useState("")
     const[analyseCompany, setAnalyseCompany]=useState("")
     const[analyseMessage, setAnalyseMessage]=useState(false)
+    const[showStrategy, setShowStrategy]=useState(false)
     const [investment, setInvestment] = useState({
 
       companyName:"",
@@ -71,7 +72,9 @@ const CompaniesRecommandations = () => {
       event.preventDefault(); 
 
     
-      const updatedInvestment = { ...investment, companyName: selectedCompanyName,investmentAmount:investment.numberOfStock*investment.stockActualPrice};
+      const updatedInvestment = { ...investment, companyName: selectedCompanyName,
+        investmentAmount:investment.numberOfStock*investment.stockActualPrice,
+        startDate: new Date()};
       setInvestment(updatedInvestment);
 
       //save it in the historical activity 
@@ -148,7 +151,8 @@ const CompaniesRecommandations = () => {
    }
 
    const fetchPredictedToleranceRisk= async()=>{
-    const url='http://127.0.0.1:5001/predict_tolerance_risk'
+    const url='http://127.0.0.1:5004/predict_tolerance_risk'
+
     const body={    
      base_url: "http://localhost:8023/profileData/findProfile/",
      investor_id: user.id,   
@@ -213,28 +217,72 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
         fetchUserByEmail(email);
       }
     }, [email]);
+
+
     useEffect(()=>{
-      fetchRecommendedCompanies();
-      fetchPredictedToleranceRisk()
+      if (user.id)
+     { fetchRecommendedCompanies();
       fetchProfileData();
+      fetchPredictedToleranceRisk();
+ }
    } ,[user.id])
 
+
+
    const handleProgress=(value)=>{
-    const total = 5;
-    return (value / total) * 100;
+    return value;
    }
 
   return (
  <DashboardLayout>
    <ComponentNavbar/>
-  <div className="recommandationContainer">
+  <div className="recommandationContainer" >
   <h1> COMPANY SUGGESTIONS FOR YOU </h1>
   <h5>Personalized AI-driven recommendations tailored just for you</h5>
-  <h5>Your Predicted Tolerance Risk based in the <strong style={{padding:"0 0.3% 0 0.3%"}}> AI </strong> process is :  <strong style={{marginLeft:'1%'}} > {predictedRisk}</strong> /5</h5>
+  <h5>Your Predicted Tolerance Risk based in the <strong style={{padding:"0 0.3% 0 0.3%"}}> AI </strong> process is :  <strong style={{marginLeft:'1%'}} > {Math.round(predictedRisk)}</strong> %</h5>
     <div>
-      <MDProgress value={handleProgress(predictedRisk)} label={true} color="success" />
+      <MDProgress value={handleProgress(Math.round(predictedRisk))} label={true} color="success" />
     </div>
-  <h5 className="profiledata"  onClick={handleShowProfileData}> See the details of your Profile Form</h5>   
+  <h5 className="profiledata"  onClick={()=>handleShowProfileData()}> See the details of your Profile Form</h5> 
+  <h5 className="profiledata" onClick={()=>setShowStrategy(true)}> Why these companies ?</h5> 
+  {
+    showStrategy &&
+    <Modal open={showStrategy}>
+      <div className="modalContent">
+      <Grid className="strategyModal" style={{backgroundColor:'white', padding:'2% 3% 3% 3%' ,margin:'3% 0 0 40%' , width:'30rem' , listStyle: "none", overflowY: "auto", maxHeight: "42rem" }}>
+        <h5>Discover Our Strategy</h5>
+        <h6> This strategy categorizes investors based on their predicted risk tolerance into five ranges. Each range represents a different level of risk tolerance, from very low to very high.</h6>
+        <ul type='none'>
+         <li>Tolerance Range in [0% .. 20%]</li>
+          <p>If an investor&apos;s predicted risk tolerance falls between <span> 0 and 20 </span> , only companies projecting an expected profit of <span>80% to 100% </span> will be recommended.</p>
+        </ul>
+
+          <ul type='none' >
+         <li>Tolerance Range in [20% .. 40%]</li>
+         <p>For investors with a predicted risk tolerance between <span>20% and 40%</span> , recommended companies should anticipate profits ranging from<span>  60% to 100% </span>.</p>
+         </ul>
+
+         <ul type='none' >
+         <li>Tolerance Range in [40% .. 60%]</li>
+         <p>Investors expecting a risk tolerance within the range of<span> 40% to 60%</span> would be recommended companies forecasting profits between <span>40% and 100% </span>.</p>
+        </ul>
+
+         <ul type='none'>
+         <li>Tolerance Range in [60% .. 80%]</li>
+         <p>If an investor&apos;s predicted risk tolerance is between <span> 60% and 80%</span>, recommended companies should aim for profits  ranging from <span>20% to 100% </span>.</p>
+        </ul>
+
+        <ul type='none'>
+         <li>Tolerance Range in [80% .. 100%]</li>
+          <p>Investors with a high predicted risk tolerance of <span>80% to 100%</span> would be recommended companies with expected profits  between <span> 0% and 100% </span>. </p>
+        </ul>
+
+      
+         <Button style={{marginLeft:'75%'}} onClick={()=>setShowStrategy(false)}>Understand</Button>
+      </Grid>
+      </div>
+    </Modal>
+  } 
 {showProfileData &&
   <Grid display="flex" gap="1%">
     <Table>
@@ -369,11 +417,11 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
    <Link to={`/stock/${item.companyName}`} > <h6 className="CompanyName">{item.companyName}</h6></Link>
    <p className="text-initial"><strong>Company Name :</strong> {item.companyName}</p> 
    <p className="text-initial"><strong>Company Activity :</strong>{item.activity}</p>
-   <p className="text-initial"><strong>Profit Percentage : </strong>{item.profit.toFixed(6)} %</p>
+   <p className="text-initial"><strong>Profitability Percentage : </strong>{item.profit.toFixed(3)} %</p>
    <p className="text-hover">{item.description}</p>
    <Grid display="flex" gap="5%">
    <MDButton variant="gradient"  fullWidth type="submit" onClick={() => handleShowForm(item.companyName)} style={{width:"80%",marginTop:'5%', fontSize:"10px"}} className="Companybtnn"> Invest now</MDButton>
-   <MDButton variant="gradient"  fullWidth  onClick={handleShowGeminiAnalyseMessage(item.companyName)} style={{width:"90%",marginTop:'5%' ,fontSize:"10px" , backgroundColor:'blueviolet'}} className="Companybtnn">Analyse {item.companyName} </MDButton>
+   <MDButton variant="gradient"  fullWidth  onClick={()=>handleShowGeminiAnalyseMessage(item.companyName)} style={{width:"90%",marginTop:'5%' ,fontSize:"10px" , backgroundColor:'blueviolet'}} className="Companybtnn">Analyse {item.companyName} </MDButton>
    </Grid>
   
   {analyseMessage &&
@@ -385,7 +433,7 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
       <h6 className="chatHeader">InvestAI Result</h6>
       </Grid>
     <p> {analyseCompany}</p>
-    <Button onClick={()=>{setAnalyseMessage(false)} }>Back</Button>
+    <Button onClick={()=>setAnalyseMessage(false) }>Back</Button>
    </Card>
   </div>
 
@@ -398,7 +446,7 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
 </div>
 { showForm &&
 <Modal open={showForm} >
-        <div className="modalContent">
+        <div className="recommandContent">
          
           <form onSubmit={handleSubmit} className='formClasss'>
           <p>Make your first step and add an investment</p>
@@ -409,10 +457,10 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
             </Select>
             <TextField
               label="StartDate"
-              type="Date"
+          
               variant="outlined"
               name="startDate"
-              value={investment.startDate || '01/01/2024'}
+              value={new Date()}
               onChange={handleChange}
               fullWidth
               margin="normal"
@@ -468,7 +516,7 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
             </Button>
             {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! please try again {error} </p>)}
-            <Link to="/recommandations" onClick={handleClose} className='back'> <ArrowBackIcon/> Back to List</Link>
+            <Link to="/recommandations" onClick={handleClose} className='back'> <ReplyIcon/> Back to List</Link>
             </div>
             
           </form>

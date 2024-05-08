@@ -11,8 +11,13 @@
     display: flex;
     justify-content: center;
     color:rgba(0, 0, 0, 0.741) ;
+    font-size: 33px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     padding-top: 3%;
+  }
+  .recommandationContainer h1:hover  {
+   color: rgba(18, 5, 71, 0.748)  ; 
+   cursor: pointer;
   }
   .recommandationContainer h5 {
     display: flex;
@@ -22,6 +27,10 @@
     font-size: 14px;
     font-weight: 100;
   }
+  .recommandationContainer h5:hover  {
+    color: rgba(90, 3, 220, 0.749);
+    cursor: pointer;  
+   }
   .recommandationContainerCard {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -92,10 +101,10 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
   .formClasss{
-    background-color:white ;
-    width:40% ;
-    height:36rem;
-    margin:8% 10% 5% 30% ;
+    background-color:rgba(255, 255, 255, 0.963) ;
+    width:35% ;
+    height:43rem;
+    margin:2% 10% 5% 30% ;
     padding:5%;
     border-radius: 1%;
   }
@@ -229,5 +238,45 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   width: 10% !important;
   border-radius: 5%;
 }
+.strategyModal h5{
+  font-size: 27px;
+  color: rgba(0, 0, 0, 0.908);
+  font-family: Segoe UI,Arial,sans-serif;
+  font-weight: 700;
+  margin-bottom: 4%;
+  }
 
+.strategyModal h6{
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.838);
+  font-family: Segoe UI,Arial,sans-serif;
+  font-weight: 400;
+  margin: 2% 0 2% 0 ;
+  }
+
+.strategyModal li{
+font-size: 14px;
+color: rgb(0, 0, 0);
+font-family: Segoe UI,Arial,sans-serif;
+font-weight: 600;
+margin-bottom: -3%;
+}
+
+.strategyModal span:hover{
+  color:#2739ffbb;
+  cursor: pointer;
+}
+.strategyModal p{
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.812);
+  font-family: Segoe UI,Arial,sans-serif;
+  font-weight: 400;
+  margin-bottom: 4%;
+  }
+
+  .strategyModal span{
+    color:#135698e3;
+    font-weight: 500
+    }
+ 
 

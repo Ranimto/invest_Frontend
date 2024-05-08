@@ -26,7 +26,7 @@ export default function Data( ) {
 };
 
  useEffect(() => {
-  fetchUserByEmail(email);
+  if (email) fetchUserByEmail(email);
 
 }, [email]);
 
@@ -49,7 +49,7 @@ export default function Data( ) {
   };
 
   useEffect(() => { 
-    fetchUserActivities(user.id)
+   if (user.id) fetchUserActivities(user.id)
     }, [user.id]);
 
 

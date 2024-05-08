@@ -9,7 +9,7 @@ function DefaultNavbarMobile({ open, close }) {
 
   return (
     <Menu
-      getContentAnchorEl={null}
+    getcontentanchorel={null}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",

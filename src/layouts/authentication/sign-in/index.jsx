@@ -10,7 +10,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import bgImage from "assets/images/rrr.jpg";
+import bgImage from "assets/images/83079396_218x291.png";
 import './style.css';
 import { Icon } from "@mui/material";
 import axios from 'axios';
@@ -63,8 +63,8 @@ function Basic() {
   };
 
   return (
-    <BasicLayout image={bgImage}>
-      <Card className="SigninForm">
+    <BasicLayout >
+      <Card className="SigninForm" style={{ border:"1px solid grey" , boxShadow:"1px 1px 2px grey"}}>
         <MDBox
           variant="gradient"
           bgColor="info"

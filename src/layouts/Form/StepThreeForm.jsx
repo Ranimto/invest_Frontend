@@ -19,8 +19,8 @@ function StepThreeForm({ onNextStep,updateFormData }) {
       value: "investmentStyle"
     },
     {
-      question: "13. Do you have a target rate of return in mind for your investments?",
-      options: ["Yes", "No"],
+      question: "13. What is your target rate of return in mind for your investments?",
+      options: ["0%-20%","30%-50%","50%-70%","70%-100%"],
       value: "targetRateOfReturn"
     },
     {

@@ -52,7 +52,7 @@ const email = useSelector((state) => state.auth.value.email);
     };
 
      useEffect(() => {
-      fetchUserByEmail(email);
+     if (email){ fetchUserByEmail(email);}
     }, [email]);
 
     const navigate = useNavigate();

@@ -17,6 +17,7 @@ function PageLayout({ background, children }) {
     <MDBox
       width="100vw"
       height="100%"
+      marginTop="-5.6%"
       minHeight="100vh"
       bgColor={background}
       sx={{ overflowX: "hidden" }}

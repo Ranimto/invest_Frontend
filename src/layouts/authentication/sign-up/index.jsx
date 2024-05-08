@@ -74,7 +74,7 @@ const [data, setData] = useState({
     }
   };
 useEffect(()=>{
-  calculatePasswordStrength(data.password)
+  if (data.password) calculatePasswordStrength(data.password)
 },[data.password])
   
   return (
