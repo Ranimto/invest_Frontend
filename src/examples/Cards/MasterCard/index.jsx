@@ -9,13 +9,6 @@ import masterCardLogo from "assets/images/logos/mastercard.png";
 
 function MasterCard({ color, number, holder, expires }) {
   const numbers = [...`${number}`];
-
-  if (numbers.length < 16 || numbers.length > 16) {
-    throw new Error(
-      "Invalid value for the prop number, the value for the number prop shouldn't be greater than or less than 16 digits"
-    );
-  }
-
   const num1 = numbers.slice(0, 4).join("");
   const num2 = numbers.slice(4, 8).join("");
   const num3 = numbers.slice(8, 12).join("");
@@ -86,9 +79,9 @@ function MasterCard({ color, number, holder, expires }) {
 
 MasterCard.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-  number: PropTypes.number.isRequired,
-  holder: PropTypes.string.isRequired,
-  expires: PropTypes.string.isRequired,
+  number: PropTypes.number,
+  holder: PropTypes.string,
+  expires: PropTypes.string,
 };
 
 export default MasterCard;

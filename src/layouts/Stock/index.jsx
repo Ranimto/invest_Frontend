@@ -357,7 +357,7 @@ useEffect(() => {
           <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["09. change"]>=0 ? "#69b609" : "#f50e0e" , fontWeight:"100"}}>
             {item["Global Quote"]["09. change"]}
           </td>
-          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["10. change percent"]>=0 ? "f50e0e" : "#f50e0e"  , fontWeight:"100"}}>
+          <td onClick={() => handleCompanyClick(item["Global Quote"]["01. symbol"])} style={{ color : item["Global Quote"]["10. change percent"]>=0 ? "#69b609" : "#f50e0e"  , fontWeight:"100"}}>
             {item["Global Quote"]["10. change percent"]}
           </td>
           <td>

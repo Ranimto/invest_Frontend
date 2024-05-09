@@ -30,6 +30,7 @@ const CompaniesRecommandations = () => {
     const[analyseCompany, setAnalyseCompany]=useState("")
     const[analyseMessage, setAnalyseMessage]=useState(false)
     const[showStrategy, setShowStrategy]=useState(false)
+    const apiText= '## AAPL Investment Analysis and Recommendation:\n\n**Based on the provided data, heres a brief analysis of AAPL and its suitability for your investment goals:**\n\n**Positives:**\n\n* **Strong Financials:** AAPL exhibits a healthy operating cash flow and net income, indicating profitability and efficient management. \n* **Industry Alignment:**  Your interest in the technology sector aligns with AAPLs core business.\n* **Liquidity:** As a large-cap stock, AAPL offers high liquidity, aligning with your investment selection criteria.\n\n**Concerns:**\n\n* **High Valuation:**  AAPL stock price might be considered high by some investors, potentially limiting significant future growth.\n* **Market Volatility:**  Tech stocks like AAPL can be susceptible to market fluctuations, conflicting with your low risk tolerance.\n* **Short-Term Investment:**  Your short-term investment horizon may not be ideal for realizing significant gains from AAPL, which typically requires a longer-term perspective.\n* **Target Rate of Return:** Achieving a 40-60% return in the short term with AAPL is highly unlikely and carries substantial risk.\n\n**Conclusion:**\n\nWhile AAPL demonstrates strong fundamentals, your investment profile, particularly your risk aversion, short-term horizon, and high target return, suggests that it might not be the most suitable investment for you at this time. \n\n**Alternative Considerations:**\n\n* **Fractional Shares:**  Investing in fractional shares of AAPL could offer exposure to the company with a smaller capital commitment.\n* **ETFs:**  Consider technology-focused ETFs to diversify your investment and mitigate risk.\n* **Dividend Stocks:** Explore dividend-paying stocks for a more consistent and predictable return.\n\n**It is crucial to conduct further research, analyze market trends, and possibly consult with a financial advisor before making any investment decisions.**\n'
     const [investment, setInvestment] = useState({
 
       companyName:"",
@@ -57,6 +58,8 @@ const CompaniesRecommandations = () => {
       setUser( response.data);  
       setInvestment({ ...investment, userId: response.data.id });
     }
+
+  
 
    const handleShowForm=(name)=>{
       setShowForm(true);
@@ -180,36 +183,42 @@ const CompaniesRecommandations = () => {
   }
 }
 
-//   const analyseCompanyDataBasedOnProfileData = async ()=>{
-//   const url='http://localhost:5003/generate'
-//   const body={
-//     company_name: analyseCompany,
-//     investor_id: user.id
-//   }
-//   try{
-//   const response= await axios.post(url,body)
-//   setAnalyseResponse(response.data)
-// }
-//  catch(error){
-//      console.log(error.response.data)
-//   }
-// }  
+  const analyseCompanyDataBasedOnProfileData = async (analyseCompany)=>{
+  const url='http://localhost:5003/generate'
+
+
+  const body={
+    company_name: analyseCompany,
+    investor_id: user.id
+  }
+  console.log('bodyAnaluuu',body)
+  try{
+  const result= await axios.post(url,body)
+  setAnalyseResponse(result.data.response)
+  console.log('analyseResponse',result.data.response)
+  setAnalyseCompany("")
+}
+ catch(error){
+     console.log("error when Exctracting the analyst message")
+     setAnalyseCompany("")
+  }
+}  
 
   const handleShowProfileData=()=> {
      setShowProfileData(true);
      setTimeout(() => {
-    setShowProfileData(false);
+     setShowProfileData(false);
      }, 5000);
  } 
 
 const handleShowGeminiAnalyseMessage =(companyName)=>{
   setAnalyseMessage(true);
   setAnalyseCompany(companyName)
+  analyseCompanyDataBasedOnProfileData(companyName)
+  setAnalyseCompany("")
+
 }
 
-   /*  useEffect(() => {
-      // analyseCompanyDataBasedOnProfileData(selectedCompanyName)
-    }, [selectedCompanyName]); */
 
 
     useEffect(() => {
@@ -232,6 +241,21 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
    const handleProgress=(value)=>{
     return value;
    }
+
+   function parseTextFromAPI(text) {
+    
+    const withLineBreaks = text.replace(/##/g, '');
+    const withBold = withLineBreaks.replace(/\*\* /g, " ").split("**"); 
+    const filteredSentences = withBold.filter(sentence => !/^[\s*]*$/.test(sentence));
+    const withoutAsterisks = filteredSentences.map(sentence => sentence.trim().replace(/\*$/, ''));
+    const sentences = withoutAsterisks.map((sentence, index) => {
+        return <p key={index}>{sentence}</p>;
+    });
+
+    return sentences;
+}
+
+  
 
   return (
  <DashboardLayout>
@@ -418,22 +442,23 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
    <p className="text-initial"><strong>Company Name :</strong> {item.companyName}</p> 
    <p className="text-initial"><strong>Company Activity :</strong>{item.activity}</p>
    <p className="text-initial"><strong>Profitability Percentage : </strong>{item.profit.toFixed(3)} %</p>
-   <p className="text-hover">{item.description}</p>
+   <p className="text-hover" style={{ wordWrap: 'break-word'}}>{item.description}</p>
    <Grid display="flex" gap="5%">
    <MDButton variant="gradient"  fullWidth type="submit" onClick={() => handleShowForm(item.companyName)} style={{width:"80%",marginTop:'5%', fontSize:"10px"}} className="Companybtnn"> Invest now</MDButton>
-   <MDButton variant="gradient"  fullWidth  onClick={()=>handleShowGeminiAnalyseMessage(item.companyName)} style={{width:"90%",marginTop:'5%' ,fontSize:"10px" , backgroundColor:'blueviolet'}} className="Companybtnn">Analyse {item.companyName} </MDButton>
+   <MDButton variant="gradient"  fullWidth onClick={()=>handleShowGeminiAnalyseMessage(item.companyName)} style={{width:"90%",marginTop:'5%' ,fontSize:"10px" , backgroundColor:'rgb(96, 96, 223)' ,color:'white'}} className="Companybtnn">Analyse {item.companyName} </MDButton>
    </Grid>
   
   {analyseMessage &&
  <Modal open={analyseMessage} >
-  <div className="modalContent" style={{backgroundColor:"transparent"}} >
-    <Card className='geminiMessage'>
+  <div className="modalContent" style={{backgroundColor:"transparent"}}>
+    <Card className='geminiMessage' style={{padding:'2%'}} >
       <Grid display="flex" gap="2%">
       <img src={logo} width="2%" height="5px"/>
       <h6 className="chatHeader">InvestAI Result</h6>
       </Grid>
-    <p> {analyseCompany}</p>
-    <Button onClick={()=>setAnalyseMessage(false) }>Back</Button>
+
+    <p style={{color:'white'}}> <strong>Response:</strong> <br/>{parseTextFromAPI(analyseResponse)}</p>
+    <Button className ='btnGemini' style={{ color:'white'}} onClick={()=>setAnalyseMessage(false) }>Back</Button>
    </Card>
   </div>
 

@@ -11,20 +11,19 @@
 
 }
 
-.section{
+.sectionn{
  margin: 2%;
 
 }
-.section h3{
+.sectionn h3{
     color: black;
     font-size: 18px;
     font-weight: 600;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.section p{
+.sectionn p{
     color: black;
     margin-top:-5%;
-    margin-bottom:1%;
     font-size: 13px;
     font-weight: 100;
 
@@ -64,12 +63,16 @@ text-align: center;
   width: 5%;
 }
 .btnMarket{
-    color: black !important;
-    background-color: rgb(255, 149, 0) !important;
+    color:black!important;
+    background-color: transparent !important;
     width: 20% ;
-    font-size: 9px !important;
-
+    font-size: 12px !important;
 }
+.btnMarket:hover{
+    color: white !important;
+    background-color: rgba(12, 1, 36, 0.356) !important;
+}
+
 
 .marketsCard h6{
     color:black;
@@ -133,6 +136,11 @@ text-align: center;
     border: none;
     color: rgb(17, 15, 15) !important;
     border-radius: 5%;
-    width: 900px !important;
-   
+    width: 900px !important; 
+}
+.sectionn h6{
+    font-size: 13px;
+    font-weight: 200;
+    color: black;
+    margin-bottom: 2%;
 }

@@ -209,20 +209,21 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   cursor: pointer;
 }
 .geminiMessage {
-  width: 30% ;
+  width: 92% ;
   background-color: transparent !important;
   border: 2px solid rgb(164, 145, 199);
-  height: 30rem;
+  height: 43rem;
   color: white !important;
-  margin: 10% 0 0 38%;
+  margin: 0% 0 0 5%;
   padding: 2%;
   box-shadow: 1px 2px 4px 2px rgba(232, 231, 238, 0.91)!important;  
 }
 .geminiMessage p {
-  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white !important;
   font-weight: 100 !important;
-  font-size: 14px;
+  font-size: 13.5px;
+  margin-top: -5%;
 }
 
 .geminiMessage Button {
@@ -231,15 +232,15 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: 100 !important;
   color: white;
   font-size: 14px;
-  margin: 5% !important;
+  margin: 2% 5% 5% 5% !important;
 }
 
 .geminiMessage img{
-  width: 10% !important;
+  width: 5% !important;
   border-radius: 5%;
 }
 .strategyModal h5{
-  font-size: 27px;
+  font-size: 25px;
   color: rgba(0, 0, 0, 0.908);
   font-family: Segoe UI,Arial,sans-serif;
   font-weight: 700;
@@ -278,5 +279,8 @@ margin-bottom: -3%;
     color:#135698e3;
     font-weight: 500
     }
- 
+ .btnGemini:hover{
+   background-color: rgba(90, 3, 220, 0.749) !important;
+   color: white !important;
+ }
 
