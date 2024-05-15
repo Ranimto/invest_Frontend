@@ -3,7 +3,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
-function Transaction({ color, icon, toAccountNo, transferAmount ,transferDate, transferDescription}) {
+function BuyTransaction({ color, icon, toAccountNo, transferAmount ,transferDate, transferDescription}) {
 
 
   return (
@@ -38,7 +38,7 @@ function Transaction({ color, icon, toAccountNo, transferAmount ,transferDate, t
 }
 
 // Typechecking props of the Transaction
-Transaction.propTypes = {
+BuyTransaction.propTypes = {
   color: PropTypes.oneOf([
     "primary",
     "secondary",
@@ -56,4 +56,4 @@ Transaction.propTypes = {
   transferDate: PropTypes.string,
 };
 
-export default Transaction;
+export default BuyTransaction;

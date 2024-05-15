@@ -14,6 +14,9 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePrice } from '../../authRedux/Features/auth/stock'; // update action
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar';
+import { onFirebaseMessageListener } from "../../firebaseinit";
+import Notifications from 'layouts/Notifications/Notifications';
+import ReactNotificationComponent from 'layouts/Notifications/ReactNotifications';
 
 
   const Stock = () => {
@@ -30,7 +33,8 @@ const [priceData, setPriceData] =useState(
 
 const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [data, setData] = useState([])
-  const [investments, setInvestments] = useState([])
+  const [investments, setInvestments] = useState([]) 
+  const [investmentsById, setInvestmentsById] = useState([])
   const [stockData, setStockData] = useState([]);
   const [analyticData, setAnalyticData] = useState([]);
   const [selectedSymbol, setSelectedSymbol] = useState(company);
@@ -43,6 +47,12 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const totalPrice= 6500.0
   const [user,setUser]=useState({})
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const [notificationShown, setNotificationShown] = useState(true); 
+  const notification = {
+    title: 'New notification',
+    body: 'A positive change for the company ',
+  };
 
   const [formData,setFormData]=useState({
     userId: user.id,
@@ -156,8 +166,6 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     fetchData(selectedSymbol);
   }, [selectedSymbol]); //company
 
-
-
   //dispatch of the Stock Actual Price
 
   const handlePriceClick = (symbol, price) => {
@@ -216,9 +224,6 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     }
   };
   
-
-
-
   const handleSellSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -271,11 +276,6 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     }
   };
 
-  
-
-
-
-
 
   useEffect(() => {
 
@@ -323,6 +323,60 @@ useEffect(()=>{
 useEffect(() => {
   fetchUserByEmail(email);
 }, [email]);
+
+onFirebaseMessageListener()
+    .then((payload) => {
+
+     setShow(true);
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+      console.log(payload);
+    })
+.catch((err) => console.log("failed: ", err));
+
+
+useEffect(() => {
+  if (notificationShown)
+     { if (user.id)
+        handleShowNotification(user.idnotificationShown);}
+}, [user.id, notificationShown] );
+
+const handleShowNotification =async (id,notificationShown) => {
+
+  const investmentsById= await getAllInvetsments(id)
+ 
+    for (let data of priceData) {
+    console.log('data', data);
+    for (let investment of investmentsById) {
+      console.log('investment', investment);
+      console.log('testt ', data["Global Quote"]["01. symbol"] === investment.companyName && data["Global Quote"]["01. change"] > 0);
+
+      if (data["Global Quote"]["01. symbol"] === investment.companyName && data["Global Quote"]["01. change"] > 0) {
+        if (notificationShown) {
+          setNotificationShown(false);
+          setShow(true);
+        }
+        return;
+      }
+    }
+  }
+};
+
+const getAllInvetsments= async(id)=>{
+  try {
+    const url = `http://localhost:8023/investment/getInvest/108`;
+    const response = await axios.get(url);
+    setInvestmentsById(response.data);
+    return investments
+  } catch (error) {
+      setError(error.response.data.message); 
+      return 'not disponible' 
+  } 
+}
+
+
 
   return (
     <PageLayout>
@@ -477,7 +531,7 @@ useEffect(() => {
 { showForm &&
 <Modal open={showForm} >
         <div className="modalContent" >
-        <div style={{ maxHeight: '660px', overflowY: 'auto' }}>
+        <div style={{ maxHeight: '680px', overflowY: 'auto' }}>
           <form  className='stockForm' style={{ height: checkout ? "43rem" : "35rem" }}>
           <p style={{color:"rgba(0, 0, 0, 0.911)", fontSize:"14px" ,paddingBottom:"3%"}}> Make your first step and <strong style={{color:'blueviolet'}}>BUY</strong> a stock</p>
            
@@ -641,6 +695,16 @@ useEffect(() => {
     </Grid>
     </Grid> 
    
+    {show ? (
+        <ReactNotificationComponent
+          title={notification.title}
+          body={notification.body}
+        />
+      ) : (
+        <></>
+      )}
+   
+
     </PageLayout>
   );
 };

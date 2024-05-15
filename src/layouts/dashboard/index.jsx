@@ -27,6 +27,7 @@ function Dashboard() {
   const [errorMessage, setErrorMessage] = useState("");
   const email=useSelector((state)=> state.auth.value.email);
   const [showForm,setShowForm]=useState(false);
+ 
 
   const [investment, setInvestment] = useState({
     companyName:"",
@@ -115,7 +116,7 @@ function Dashboard() {
       });
         console.log(error);
 
-        setErrorMessage(error.response.data.message)
+        setErrorMessage(error.response.data)
     }
 };
 
@@ -358,15 +359,13 @@ function Dashboard() {
           </form>
         </div>
       </Modal>
-      
-
       )}
-
-              <Investment/>
+ <Investment/>
             </Grid>
           </Grid>
         </MDBox>
       </MDBox>
+
       <Footer />
     </DashboardLayout>
   );

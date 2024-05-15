@@ -6,14 +6,14 @@ import MDBox from "components/MDBox";
 import Transaction from "layouts/billing/components/Transaction";
 import PropTypes from "prop-types";
 
-function Transactions({ fromAccountNo }) {
+function SellTransaction({ toAccountNo }) {
   const [transactions, setTransactions] = useState([]);
   const [dateFormatee, setDateFormatee] = useState('');
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const url = `http://localhost:8023/transaction/findTransactionsByAccountNo/${fromAccountNo}`;
+        const url = `http://localhost:8023/transaction/findSellTransactionsByAccountNo/${toAccountNo}`;
         const response = await axios.get(url);
         setTransactions(response.data); // Utilisation de response.data
       } catch (error) {
@@ -21,8 +21,8 @@ function Transactions({ fromAccountNo }) {
       }
     };
 
-   if (fromAccountNo) fetchTransactions();
-  }, [fromAccountNo]);
+   if (toAccountNo) fetchTransactions();
+  }, [toAccountNo]);
 
   useEffect(() => {
     const dateActuelle = new Date();
@@ -53,7 +53,7 @@ function Transactions({ fromAccountNo }) {
        
         <MDBox mt={1} mb={2}>
           <h6 className="upercase">
-       <div  style={{ fontSize: "13px" ,alignContent:"center" , color:"rgb(5, 8, 59)" ,width:"100%"}}> CHECK YOUR TRANSACTIONS </div>
+       <div  style={{ fontSize: "13px" ,alignContent:"center" , color:"rgb(5, 8, 59)" ,width:"100%"}}> CHECK YOUR SELL TRANSACTIONS </div>
           </h6>
         </MDBox>
         <MDBox
@@ -62,7 +62,7 @@ function Transactions({ fromAccountNo }) {
           flexDirection="column"
           p={0}
           m={0}
-          sx={{ listStyle: "none", overflowY: "auto", maxHeight: "26.3rem" }}
+          sx={{ listStyle: "none", overflowY: "auto", maxHeight: "23rem" }}
         >
         {transactions.map((item, index) => (
     <Transaction 
@@ -74,7 +74,7 @@ function Transactions({ fromAccountNo }) {
     transferAmount={item.transferAmount}
     transferDate={item.transferDate}
   />
-))}
+   ))}
          
         </MDBox>
       </MDBox>
@@ -82,8 +82,8 @@ function Transactions({ fromAccountNo }) {
   );
 }
 
-Transactions.propTypes = {
-  fromAccountNo: PropTypes.string
+SellTransaction.propTypes = {
+  toAccountNo: PropTypes.string
 };
 
-export default Transactions;
+export default SellTransaction;

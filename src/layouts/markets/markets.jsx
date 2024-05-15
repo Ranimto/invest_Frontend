@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Grid, Table } from '@mui/material';
-import MDBox from 'components/MDBox';
 import './style.css';
 import MDButton from 'components/MDButton';
 import AAPL from 'assets/images/AAPL.png'
@@ -9,9 +8,8 @@ import MFST from 'assets/images/MFST.png'
 import IBM from 'assets/images/IBM.png'
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import axios from 'axios';
-import MasterCard from 'examples/Cards/MasterCard';
 import CompanyCard from 'examples/Cards/CompanyCard';
-import { Button } from '@mui/base';
+import { motion } from 'framer-motion';
 
 const Markets = () => {
 
@@ -73,14 +71,31 @@ useEffect(() => {
   return (
     <DashboardLayout>
       <div className="background">
-        <Grid item xs={12} md={5} lg={4} display="flex" gap="1px" >
-       <Grid display="flex" gap="2%">
-        <CompanyCard color="warning" image={AAPL} name="AAPL"/>
-        <CompanyCard color="dark" image={IBM} name="IBM"/>
-        <CompanyCard color="success" image={AMZN} name="AMZN"/>
-        <CompanyCard color="secondary" image={MFST} name="MFST"/>
-        </Grid>
-        </Grid> 
+      <>
+  <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{
+      duration: 1.5,
+      delay: 0.5,
+    
+    }}
+  >
+    <Grid item xs={12} md={5} lg={4} display="flex" gap="1px">
+      <Grid display="flex" gap="2%">
+        <CompanyCard color="warning" image={AAPL} name="AAPL" />
+        <CompanyCard color="dark" image={IBM} name="IBM" />
+        <CompanyCard color="success" image={AMZN} name="AMZN" />
+        <CompanyCard color="secondary" image={MFST} name="MFST" />
+      </Grid>
+    </Grid>
+  </motion.div>
+
+  <Grid className="sectionn">
+    <h3>Top gainers</h3>
+    {/* Other content here */}
+  </Grid>
+</>
         
         <Grid className="sectionn">
           <h3>Top gainers</h3>

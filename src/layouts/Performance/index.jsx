@@ -9,6 +9,7 @@ import NavbarPerformance from 'layouts/navbarPerformance'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CustomGauge from './gaugeChart'
+import { motion } from 'framer-motion';
 import './style.css'
 
 const Performance = () => {
@@ -100,7 +101,14 @@ useEffect(()=>{
           Portfolio <strong>Tracking</strong> 
           </h6>
    </MDBox>
-
+   <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{
+      duration: 1.5,
+      delay: 0
+    }}
+  >
     <Grid className='performance_items'>    
 
      <Grid className='performance_item'>
@@ -139,8 +147,16 @@ useEffect(()=>{
      </Grid>
     </Grid>
 
-  
-  <Grid className='performanceInfo'>
+    </motion.div>
+
+
+<motion.div
+        style={{ width: 0, overflow: 'hidden' }}
+        animate={{ width: '100%' }}
+        transition={{ duration: 2, delay: 0.3 }}
+ >
+
+  <Grid className='performanceInfo' >
    <p> <strong> Sharpe Ratio </strong> is a measure used by investors to assess the return of an investment relative to its risk. 
    It helps investors make informed decisions by considering both the potential return and the associated risk of an investment.</p>
 
@@ -180,6 +196,7 @@ useEffect(()=>{
         </div>
       )}
    </Grid>  
+   </motion.div>
    </Grid>
    
    <Grid display='flex' gap='2%' justifyContent="center" >

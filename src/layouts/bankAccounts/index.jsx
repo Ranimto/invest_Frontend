@@ -71,7 +71,6 @@ const BankAccounts = () => {
       const response = await axios.post(url, requestAccount);
       // console.log('Bank account added:', response.data);
       setAccounts([...accounts, response.data]);
-      console.log('list accounts:', accounts);
       showAlert("your bank account is added succesfully!")
 
       await axios.post('http://localhost:8023/user-activity/save', {
@@ -89,7 +88,7 @@ const BankAccounts = () => {
     } catch (error) {
       setError(error.response.data);
       setErrorForm(true);
-      console.error("Error submitting form:", error.response.data);
+    
     }
   };
 

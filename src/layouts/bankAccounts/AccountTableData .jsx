@@ -7,8 +7,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import './accountStyle.css';
 import { useSelector } from 'react-redux';
 
+
 export default function Data() {
   const [accounts, setAccounts] = useState([]);
+  const email = useSelector((state) => state.auth.value.email);
+  const [loading, setLoading] = useState(null);
+  const [error, setError] = useState(null);
   const [editedAccount, setEditedAccount] = useState({  
     accountNo:"",
    savingsProductName:"",
@@ -21,9 +25,6 @@ export default function Data() {
   },
   active:false,
 });
-
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
   const [user,setUser]=useState({ 
     id:"",  
     firstname:"",
@@ -35,7 +36,7 @@ export default function Data() {
     postcode:"",
     profession:"",
   })
-  const email = useSelector((state) => state.auth.value.email);
+ 
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;

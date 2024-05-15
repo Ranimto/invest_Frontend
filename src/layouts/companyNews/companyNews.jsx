@@ -7,6 +7,7 @@ import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import './style.css'
 import axios from 'axios';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
+import { motion } from 'framer-motion';
 
 const CompanyNews = () => {
     const [newsData,setNewsData]=useState([]);
@@ -39,10 +40,19 @@ const CompanyNews = () => {
          <span className='symboll'> || {!(company==':company')? company: 'AAPL'} </span></h2>
          <h2 className="title" style={{paddingLeft:'47%'}}><Link to='/news/AAPL'>Actualities</Link> <KeyboardDoubleArrowRightIcon/><Link to='/dashboard'> Dashboard</Link></h2>
        </div>
+       <motion.div
+    initial={{ opacity: 0, y: -20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{
+      duration: 1.5,
+      delay: 0
+    }}
+  >
         <Grid className='pageHeader'>
           <h1 className="pageTitle">&quot; Stay ahead of the curve and make informed decisions with our insightful analysis of company news  &quot;</h1>
           <p> Discover the latest financial narratives driving today&apos; market with our tailored news updates. From groundbreaking IPOs to strategic mergers, we bring you the stories behind the numbers. Dive into the dynamic world of corporate finance and explore the impact of key events on your investment portfolio. Our platform provides comprehensive coverage, keeping you informed about the latest developments shaping the future of your investments.</p>        
         </Grid>
+    </motion.div>
 
        <Grid className='gridNews'>
        {filteredData.map((item,index)=>

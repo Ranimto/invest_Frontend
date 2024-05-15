@@ -186,7 +186,6 @@ const CompaniesRecommandations = () => {
   const analyseCompanyDataBasedOnProfileData = async (analyseCompany)=>{
   const url='http://localhost:5003/generate'
 
-
   const body={
     company_name: analyseCompany,
     investor_id: user.id

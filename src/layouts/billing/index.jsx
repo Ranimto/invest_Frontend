@@ -6,14 +6,15 @@ import Footer from "examples/Footer";
 import MasterCard from "examples/Cards/MasterCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import PaymentMethod from "layouts/billing/components/PaymentMethod";
-import Transactions from "layouts/billing/components/Transactions";
 import './style.css'
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Bill from "./components/Bill";
-import { Card } from "@mui/material";
+import { Card, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import TransactionForm from "./components/TransactionForm";
+import SellTransaction from "./components/SellTransaction";
+import BuyTransaction from "./components/BuyTransaction";
 
 
 function Billing() {
@@ -33,6 +34,9 @@ function Billing() {
     userId: 0,
   });
   const [user,setUser]=useState({});
+  const [showSellTransaction,setShowSellTransaction]=useState(false);
+  const [showBuyTransaction,setShowBuyTransaction]=useState(true);
+  const [filtredValue,setFiltredValue]=useState('BUY transactions');
 
   const fetchUserByEmail = async (email) => {
     try {
@@ -135,12 +139,24 @@ function Billing() {
       </MDBox>
      </Card>
             </Grid>
-
-
-            <Grid item xs={12} md={5}  style={{height:"37rem"}}>
-              <Transactions  fromAccountNo={activeAccount.accountNo}  />
-            </Grid>
-
+            <Grid item xs={12} md={5}  style={{height:"33rem"}}>
+                <Grid style={{backgroundColor:"white", marginBottom:"1%"}} >
+                <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+               <Select labelId="demo-simple-select-label"id="demo-simple-select" value={filtredValue} label="Filter" onChange={()=>setFiltredValue(event.target.value)} fullWidth>
+               <MenuItem value={10} onClick={()=>{setShowBuyTransaction(true) , setShowSellTransaction(false)}}>BUY transactions</MenuItem>
+               <MenuItem value={20} onClick={()=>{setShowSellTransaction(true), setShowBuyTransaction(false)}}>Sell transactions</MenuItem>
+               </Select>
+               </FormControl>
+                </Grid>
+                
+             {showBuyTransaction && 
+              <BuyTransaction  fromAccountNo={activeAccount.accountNo}   />
+            }
+          {showSellTransaction &&        
+              <SellTransaction  toAccountNo={activeAccount.accountNo}  />
+             }
+             </Grid> 
           </Grid>
         </MDBox>
       </MDBox>

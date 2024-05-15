@@ -13,9 +13,7 @@ function Investment() {
   const [menu, setMenu] = useState(null);
   const openMenu = ({ currentTarget }) => setMenu(currentTarget);
   const closeMenu = () => setMenu(null);
-
-
-
+  
   const renderMenu = (
     
     <Menu
@@ -32,9 +30,8 @@ function Investment() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Action</MenuItem>
-      <MenuItem onClick={closeMenu}>Another action</MenuItem>
-      <MenuItem onClick={closeMenu}>Something else</MenuItem>
+      <MenuItem onClick={() => handleEdit(item)}>Duration Modification</MenuItem>
+      <MenuItem onClick={closeMenu}>Update Duration</MenuItem>
     </Menu>
   );
 
@@ -69,11 +66,12 @@ function Investment() {
         <DataTable
           table={{columns, rows }}
           showTotalEntries={false}
-          isSorted={false}    
-       
+          isSorted={false}          
           entriesPerPage={false}
         />
       </MDBox>
+
+
  
 
     </Card>

@@ -104,7 +104,7 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background-color:rgba(255, 255, 255, 0.963) ;
     width:35% ;
     height:43rem;
-    margin:2% 10% 5% 30% ;
+    margin:2% 10% 5% 36% ;
     padding:5%;
     border-radius: 1%;
   }
@@ -168,24 +168,29 @@ font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 @media screen and (max-width: 1008px) {
   .text-animation {
     font-size: 16px;
-    margin-left: -15% !important;
+    margin-left: -9% !important;
   }
   .imageStyle{
     margin-left: -47% !important;
   }
+  .recommandationContainer{
+    margin-top: 3% !important;
+  }
 }
 
-@media screen and (max-width: 716px) {
+@media screen and (max-width: 730px) {
   .text-animation {
-    
-    margin-left: -28% !important;
+    margin-left: -10% !important;
   }
   .imageStyle{
     margin-top: -27% !important;
     margin-left: 20% !important;
     width: 60%;
     height:400px;
-  
+  }
+
+  .recommandationContainer{
+    margin-top: 10% !important;
   }
 }
 

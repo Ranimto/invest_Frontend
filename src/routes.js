@@ -22,6 +22,8 @@ import Markets from "layouts/markets/markets";
 import RestoreIcon from '@mui/icons-material/Restore';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
 import VerificationPage from "layouts/VerificationPage/verificationPage";
+import Notifications from "layouts/Notifications/Notifications";
+
 
   
 
@@ -155,16 +157,24 @@ isPrivate: true,
   key: "logout",
   icon: <Icon fontSize="small">login</Icon>,
   route: "/authentication/sign-in",
-  route: "/authentication/sign-in",
   component: <SignIn />,
   isPrivate: false,
 },
 {
-  
   key: "verification",
   route: "/verification",
   icon: <Icon fontSize="small">login</Icon>,
   component: <VerificationPage/>,
+  isPrivate: true,
+},
+
+{
+  type: "collapse",
+  name: "notif",
+  key: "notif",
+  icon: <Icon fontSize="small">notification</Icon>,
+  route: "/notif",
+  component: <Notifications/>,
   isPrivate: true,
 },
   
