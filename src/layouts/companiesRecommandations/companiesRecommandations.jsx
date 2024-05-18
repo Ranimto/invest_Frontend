@@ -12,14 +12,17 @@ import Loading from 'assets/images/giphy.gif'
 import logo from 'assets/images/logo.jpeg'
 import MDProgress from 'components/MDProgress';
 import ReplyIcon from '@mui/icons-material/Reply';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const CompaniesRecommandations = () => {
 
     const [showForm,setShowForm]= useState(false)
     const [isLoading, setIsLoading] = useState(true);
+    const [chatLoading, setChatLoading] = useState(true);
     const [selectedCompanyName,setSelectedCompanyName]= useState("")
     const email=useSelector((state)=> state.auth.value.email);
+    const token=useSelector((state)=> state.auth.value.token);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const [predictedRisk, setPredictedRisk] = useState(0);
     const [showProfileData, setShowProfileData] = useState(false);
@@ -54,7 +57,13 @@ const CompaniesRecommandations = () => {
     })
 
     const fetchUserByEmail= async(email)=>{
-      const response= await axios.get(`http://localhost:8023/user/findByEmail/${email}`)
+      const response= await axios.get(`http://localhost:8023/user/findByEmail/${email}`, 
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
+    console.log(token)
       setUser( response.data);  
       setInvestment({ ...investment, userId: response.data.id });
     }
@@ -88,7 +97,13 @@ const CompaniesRecommandations = () => {
         timestamp: new Date(),
         description: investmentDescription,
       }
-      );
+      , 
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
+    
       console.log('updatedInvestment', updatedInvestment)
       const response = await axios.post("http://localhost:8023/investment/add", updatedInvestment).then(() => {
 
@@ -142,7 +157,11 @@ const CompaniesRecommandations = () => {
          investor_id: user.id,     
      }
      try{
-       const response= await axios.post(url, body);
+       const response= await axios.post(url, body, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
        console.log( "Recommended Companies", response.data );
        const sortedCompanies = response.data.recommended_companies.sort((a, b) => b.profit - a.profit);
        setCompanies(sortedCompanies) ;
@@ -157,7 +176,7 @@ const CompaniesRecommandations = () => {
     const url='http://127.0.0.1:5004/predict_tolerance_risk'
 
     const body={    
-     base_url: "http://localhost:8023/profileData/findProfile/",
+     base_url: "http://localhost:8023/auth/profileData/findProfile/",
      investor_id: user.id,   
    }
    try{
@@ -173,7 +192,11 @@ const CompaniesRecommandations = () => {
 
  const fetchProfileData= async()=>{
    try
-  { const response= await axios.get(`http://localhost:8023/profileData/findProfile/${user.id}`)
+  { const response= await axios.get(`http://localhost:8023/auth/profileData/findProfile/${user.id}`,{
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+});
   setProfileData(response.data)
   console.log("profile Data",response.data)
 }
@@ -191,9 +214,17 @@ const CompaniesRecommandations = () => {
     investor_id: user.id
   }
   console.log('bodyAnaluuu',body)
+  console.log('analyseCompany',analyseCompany)
   try{
-  const result= await axios.post(url,body)
+  const result= await axios.post(url,body,
+    {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+})
+   console.log('token',token)
   setAnalyseResponse(result.data.response)
+  setChatLoading(false)
   console.log('analyseResponse',result.data.response)
   setAnalyseCompany("")
 }
@@ -217,9 +248,6 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
   setAnalyseCompany("")
 
 }
-
-
-
     useEffect(() => {
       if (email) {
         fetchUserByEmail(email);
@@ -457,7 +485,13 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
       </Grid>
 
     <p style={{color:'white'}}> <strong>Response:</strong> <br/>{parseTextFromAPI(analyseResponse)}</p>
-    <Button className ='btnGemini' style={{ color:'white'}} onClick={()=>setAnalyseMessage(false) }>Back</Button>
+    {chatLoading &&
+              <div style={{paddingLeft:"48%"}}>
+             <CircularProgress  />
+             </div>
+            }
+
+    <Button className ='btnGemini' style={{ color:'white'}} onClick={()=>{setAnalyseMessage(false) , setAnalyseCompany(""),  setAnalyseResponse(""), setChatLoading(true)} }>Back</Button>
    </Card>
   </div>
 
@@ -542,6 +576,8 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
             { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! please try again {error} </p>)}
             <Link to="/recommandations" onClick={handleClose} className='back'> <ReplyIcon/> Back to List</Link>
             </div>
+
+           
             
           </form>
         </div>

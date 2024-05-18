@@ -20,6 +20,7 @@ import BuyTransaction from "./components/BuyTransaction";
 function Billing() {
 
   const email = useSelector((state) => state.auth.value.email);
+  const token = useSelector((state)=>state.auth.value.token)
   const [activeAccount,setActiveAccount]= useState({
     accountNo:"",
     savingsProductName:"",
@@ -41,7 +42,11 @@ function Billing() {
   const fetchUserByEmail = async (email) => {
     try {
       const url = `http://localhost:8023/user/findByEmail/${email}`;
-      const response = await axios.get(url);
+      const response = await axios.get(url,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       setUser(response.data);
     } catch (error) {
       console.error("Error fetching user by email:", error);
@@ -51,7 +56,11 @@ function Billing() {
   const fetchUserAccountActive = async () => {
     try {
       const url = `http://localhost:8023/bankAccount/getUserActiveAccount/${user.id}`;
-      const response = await axios.get(url);
+      const response = await axios.get(url,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       setActiveAccount(response.data);
       console.log("Active account:", response.data);
     } catch (error) {

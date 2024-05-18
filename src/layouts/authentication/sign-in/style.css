@@ -17,5 +17,17 @@ font-weight: 400;
 
 }
 .SigninForm{
-    margin-top:25%
+    margin-top:25% ;
+    background-color: rgba(255, 255, 255, 0.864) !important;
 }
+.passwordForget{
+    font-weight:  100;
+    color: blue;
+    margin-left: 61%; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+}
+.passwordForget:hover{
+    color: rgb(111, 0, 255); 
+}
+
+

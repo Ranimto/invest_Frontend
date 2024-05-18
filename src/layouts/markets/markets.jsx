@@ -10,6 +10,7 @@ import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import axios from 'axios';
 import CompanyCard from 'examples/Cards/CompanyCard';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 const Markets = () => {
 
@@ -19,13 +20,18 @@ const [response,setResponse]=useState({})
 const [mostActivelyTraded,setMostActivelyTraded]=useState([])
 const containerRef = useRef(null);
 const [isScrolling, setIsScrolling] = useState(true);
+const token= useSelector((state)=>state.auth.value.token)
 
 useEffect(() => {
   
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8023/stockData/topGainersAndLosers`)
+      const response = await axios.get(`http://localhost:8023/stockData/topGainersAndLosers`, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    })
       setTopGainers(response.data.top_gainers);
       setTopLosers(response.data.top_losers);
       setMostActivelyTraded(response.data.most_actively_traded);

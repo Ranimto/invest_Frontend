@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updatePrice } from '../../authRedux/Features/auth/stock'; // update action
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar';
 import { onFirebaseMessageListener } from "../../firebaseinit";
-import Notifications from 'layouts/Notifications/Notifications';
 import ReactNotificationComponent from 'layouts/Notifications/ReactNotifications';
 
 
@@ -49,6 +48,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [notificationShown, setNotificationShown] = useState(true); 
+  const token =useSelector((state)=>state.auth.value.token);
   const notification = {
     title: 'New notification',
     body: 'A positive change for the company ',
@@ -80,7 +80,11 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const formattedDate = `${year}-${month-1}-${day}`;
 
   const fetchUserByEmail= async(email)=>{
-    const response=axios.get(`http://localhost:8023/user/findByEmail/${email}`)
+    const response=axios.get(`http://localhost:8023/user/findByEmail/${email}`,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  })
     setUser((await response).data);  
     setFormData({ ...formData, userId:(await response).data.id });
   }
@@ -121,7 +125,11 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const fetchData = async (symbol) => {
       try {
         // Fetch stock data
-        const stockResponse = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`);
+        const stockResponse = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`,{
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         console.log("Stock data response:", stockResponse.data);
   
         if (stockResponse.data && stockResponse.data['Time Series (5min)']) {
@@ -141,8 +149,13 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         }
   
         // Fetch analytic data
-        const analyticResponse = await axios.get(`https://alphavantageapi.co/timeseries/running_analytics?SYMBOLS=AAPL,IBM,TLSA,AMZN&RANGE=2month&INTERVAL=DAILY&OHLC=close&WINDOW_SIZE=20&CALCULATIONS=STDDEV&apikey=7B2VWMKU9SVM59DQ`);
-        console.log("Analytics data response:", analyticResponse.data);
+        const analyticResponse = await axios.get(`http://localhost:8023/stockData/running_analytics?SYMBOLS=AAPL,IBM,TLSA,AMZN&RANGE=2month&INTERVAL=DAILY&OHLC=close&WINDOW_SIZE=20&CALCULATIONS=STDDEV&apikey=7B2VWMKU9SVM59DQ`,
+        
+        {
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
   
         const  list=["AAPL","IBM","TLSA","AMZN"]
         for (let  symbol in list){
@@ -201,7 +214,12 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         userId: newFormData.userId,
         timestamp: new Date(),
         description: investmentDescription,
-      });
+      },
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
   
       setFormData({
         userId:user.id,
@@ -245,7 +263,11 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
       console.log("SellFormRequest",SellFormRequest)
 
       const url = `http://localhost:8023/transaction/addSellTransaction/108/${newFormData.companyName}/${newFormData.numberOfStock}`;
-      const response = await axios.post(url, SellFormRequest);
+      const response = await axios.post(url, SellFormRequest,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       setShowSuccessMessage(true);
       setTimeout(() => {
         setShowSuccessMessage(false);
@@ -257,7 +279,12 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         userId: user.id,
         timestamp: new Date(),
         description: sellDescription,
-      });
+      },
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
 
       setSellFormData({
         companyName:"",
@@ -281,7 +308,13 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8023/stockData/changePriceData?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`);
+        const response = await axios.get(`http://localhost:8023/stockData/changePriceData?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`,
+        {
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      }
+      );
         setPriceData(response.data);
       } catch (error) {
         console.error('Error fetching price data:', error);
@@ -290,7 +323,12 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   
     const fetchAnalyticData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8023/stockData/runningAnalyticsData?symbols=AAPL,MSFT,IBM,AMZN,GOOGL`);
+        const response = await axios.get(`http://localhost:8023/stockData/runningAnalyticsData?symbols=AAPL,MSFT,IBM,AMZN,GOOGL`,{
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      }
+      );
         setAnalyticData(response.data);
         console.log("analyticData",response.data);
         console.log("analyticDataaa",analyticData);   
@@ -367,7 +405,11 @@ const handleShowNotification =async (id,notificationShown) => {
 const getAllInvetsments= async(id)=>{
   try {
     const url = `http://localhost:8023/investment/getInvest/108`;
-    const response = await axios.get(url);
+    const response = await axios.get(url,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     setInvestmentsById(response.data);
     return investments
   } catch (error) {

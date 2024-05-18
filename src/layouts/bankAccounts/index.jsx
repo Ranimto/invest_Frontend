@@ -18,6 +18,7 @@ const BankAccounts = () => {
   const [errorForm,setErrorForm]=useState(false);
   const [error,setError]=useState("");
  const email= useSelector((state)=>state.auth.value.email);
+ const token = useSelector((state)=>state.auth.value.token)
   const [requestAccount, setRequestAccount] = useState(
     {
     accountNo:"",
@@ -54,7 +55,11 @@ const BankAccounts = () => {
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
@@ -68,8 +73,12 @@ const BankAccounts = () => {
     try {
       const url = "http://localhost:8023/requestAccount/approveRequestAccount";
       setAccount({...account,userId:requestAccount.userId});
-      const response = await axios.post(url, requestAccount);
-      // console.log('Bank account added:', response.data);
+      const response = await axios.post(url, requestAccount,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
+    
       setAccounts([...accounts, response.data]);
       showAlert("your bank account is added succesfully!")
 
@@ -77,7 +86,14 @@ const BankAccounts = () => {
         userId: user.id,
         timestamp: new Date(),
         description: `Adding a new bank account with account number: ${response.data.accountNo}`,
-      });    
+      },
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    }
+      
+      );    
 
       // Reset the form fields after successful submission
       setRequestAccount({
@@ -170,7 +186,7 @@ const BankAccounts = () => {
           </Grid>
           <Grid item xs={12}></Grid>
         </Grid>
-        {errorForm && (
+{errorForm && (
   <Modal open={errorForm} >
     <Grid className='errorForm'>
     <p> <ErrorRoundedIcon/> {error.message}</p>

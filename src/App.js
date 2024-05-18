@@ -16,6 +16,8 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import PropTypes from 'prop-types';
 import Form from "layouts/Form";
+import Cover from "layouts/authentication/reset-password/cover";
+import ResetPassword from "layouts/authentication/reset-password/cover/resetPassword";
 
 function PrivateRoute({ element, isAuthenticated ,isPrivate}) {
   return (isAuthenticated && isPrivate) ? element : <Navigate to="/authentication/sign-in" />;
@@ -56,6 +58,8 @@ function App() {
   <Route path="/" element={<Navigate to="/home" />} />
   <Route path="/home" element={<Home />} />
   <Route path="/form" element={<Form/>} />
+  <Route path="/authenticate/passwordReset" element={<Cover/>} />
+  <Route path="/reset-password" element={<ResetPassword/>} />
   <Route path="/authentication/sign-up" element={<SignUp/>} />
   <Route path="/authentication/sign-in" element={<SignIn/>} />
   {routes.map((route) => (

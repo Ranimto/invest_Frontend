@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 export default function Data() {
   const [accounts, setAccounts] = useState([]);
   const email = useSelector((state) => state.auth.value.email);
+  const token=useSelector((state)=> state.auth.value.token)
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
   const [editedAccount, setEditedAccount] = useState({  
@@ -40,7 +41,11 @@ export default function Data() {
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
@@ -77,8 +82,13 @@ export default function Data() {
         userId: account.userId,
         timestamp: new Date(),
         description: 'Bank account updated',
+    }, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+        }
     }
       );
+
 
     } catch (error) {
       setError("An error occurred while updating the account.");
@@ -103,8 +113,11 @@ export default function Data() {
     try {
       setLoading(true);
      const url =` http://localhost:8023/bankAccount/getBankAccountByInvestor/${user.id}`;
-     // const url =`http://localhost:8023/bankAccount/getAll`;
-      const response = await axios.get(url);
+      const response = await axios.get(url,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       setAccounts(response.data);
       setLoading(false);
     } catch (error) {

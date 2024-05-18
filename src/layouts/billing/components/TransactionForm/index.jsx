@@ -5,12 +5,14 @@ import MDButton from "components/MDButton";
 import { useState } from "react";
 import { Card, Grid, Modal, TextField } from "@mui/material";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 function TransactionForm() {
 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(false);
   const [confirmForm,setConfirmForm]=useState(false);
+  const token =useSelector((state)=>state.auth.value.token);
   const [transactionForm, setTransactionForm] = useState({
     fromAccountNo:0,
     toAccountNo:0,
@@ -27,7 +29,11 @@ function TransactionForm() {
     event.preventDefault();
     const url = "http://localhost:8023/transaction/addTransaction";
     console.log(transactionForm);
-    const response = await axios.post(url, transactionForm).then(() => {
+    const response = await axios.post(url, transactionForm ,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  }).then(() => {
       setConfirmForm(false)
       setShowSuccessMessage(true);
       setTimeout(() => {
@@ -106,8 +112,7 @@ function TransactionForm() {
         <MDButton type="button" variant="contained" style={{backgroundColor: "rgba(255, 162, 0, 0.921)" , color:"white"}} onClick={handleConfirmation}>
           Submit
         </MDButton>
-       {showSuccessMessage &&  (<p style={{marginTop:"-10%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
-       { error && (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction ! please try again</p>)}
+       {showSuccessMessage ?  (<p style={{marginTop:"2%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>): (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction ! please try again</p>)}
       </form>
       </Card>
 

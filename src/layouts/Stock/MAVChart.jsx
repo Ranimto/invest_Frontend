@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import { useSelect } from '@mui/base';
+import { useSelector } from 'react-redux';
 
 const MAVChart = ({ selectedSymbol }) => {
   const [stockIndicatorsData, setStockIndicatorsData] = useState([]);
+  const token=useSelector((state)=>state.auth.value.token)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8023/indicators/simpleMovingAverage?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`);
+        const response = await axios.get(`http://localhost:8023/indicators/simpleMovingAverage?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`,{
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         setStockIndicatorsData(response.data);
         console.log("Updated IndicatorsData", response.data);
       } catch (error) {

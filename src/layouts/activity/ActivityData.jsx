@@ -18,10 +18,15 @@ export default function Data( ) {
     profession:"",
   })
   const email = useSelector((state) => state.auth.value.email);
+  const token=useSelector((state)=>state.auth.value.token)
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     setUser(response.data);
 };
 
@@ -34,7 +39,11 @@ export default function Data( ) {
   const fetchUserActivities = async (id) => {
     try {
       const url = `http://localhost:8023/user-activity/getUserActivity/${id}`;
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       console.log("Response from server:", response.data, response);
       setActivities(response.data);
       

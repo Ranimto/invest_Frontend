@@ -10,7 +10,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import bgImage from "assets/images/83079396_218x291.png";
+import bgImage from "assets/images/jj.jpg";
 import './style.css';
 import { Icon } from "@mui/material";
 import axios from 'axios';
@@ -63,16 +63,16 @@ function Basic() {
   };
 
   return (
-    <BasicLayout >
-      <Card className="SigninForm" style={{ border:"1px solid grey" , boxShadow:"1px 1px 2px grey"}}>
+    <BasicLayout image={bgImage} >
+      <Card className="SigninForm">
         <MDBox
           variant="gradient"
           bgColor="info"
           borderRadius="lg"
           coloredShadow="info"
-          mx={2}
+          mx={3}
           mt={-6}
-          p={1}
+          p={0.5}
           mb={1}
           textAlign="center"      
         >
@@ -123,6 +123,10 @@ function Basic() {
                 &nbsp;&nbsp;Remember me
               </h6>
             </MDBox>
+              <Link to='/authenticate/passwordReset'><h6 className="passwordForget">
+                &nbsp;&nbsp;Forget Password
+              </h6>
+            </Link>
             <MDBox mt={4} mb={1}>
             <MDButton variant="gradient" color="info" fullWidth type="submit">
                 sign in
@@ -143,6 +147,7 @@ function Basic() {
            {error}
          </MDAlert>
           }
+         
     </BasicLayout>
   );
 }

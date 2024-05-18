@@ -33,9 +33,12 @@ function Header() {
   const [showForm, setShowForm] = useState(false); 
   const [showFileName, setShowFileName] = useState(false); 
   const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [successForm,setSuccessForm]=useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const email = useSelector((state) => state.auth.value.email);
+  const  token=useSelector((state)=>state.auth.value.token);
   const [user,setUser]=useState({ 
     id:"",  
     firstname:"",
@@ -48,6 +51,11 @@ function Header() {
     profession:"",
     imageUrl:""
   });
+  const [feedback,setFeedback]=useState({ 
+    text:"",
+    userId:user.id  
+  });
+
   const [emailForm, setEmailForm] = useState({
     from:"",
     to:"ranim.toumi@eniso.u-sousse.tn",
@@ -68,7 +76,11 @@ const [formattedMessage, setFormattedMessage] = useState("");
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
@@ -92,7 +104,11 @@ const [formattedMessage, setFormattedMessage] = useState("");
  
       }
       console.log('newEmailForm',newEmailForm)
-     const response=  await axios.post("http://localhost:8023/email/send-email", newEmailForm);
+     const response=  await axios.post("http://localhost:8023/email/send-email", newEmailForm,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
       setSuccessMessage(response.data);
       setSuccessForm(true);
       dispatch({ type: "MESSAGE_SENT", payload: message });
@@ -116,6 +132,12 @@ const [formattedMessage, setFormattedMessage] = useState("");
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
+
+  const handleFeedbackChange = (event) => {
+    const { name, value } = event.target;
+    setFeedback({ ...feedback, [name]: value });
+  };
+  
 
   //TextFormat Methods
   const handleFormatChange = (format) => {
@@ -159,7 +181,6 @@ if (file) {
 
   const handleImageUpload = async () => {
     try {
-        const accessToken = localStorage.getItem('token');
         const formData = new FormData();
         formData.append('profileImage', fileInputRef.current.files[0]);
 
@@ -168,13 +189,15 @@ if (file) {
       userId: user.id,
       timestamp: new Date(),
       description: 'Changed profile image',
-  }
+  }, {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+}
     );
-
-
         const response = await axios.put(`http://localhost:8023/user/update-profile/${user.id}`, formData, {
             headers: {
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/formData',
             }
         });
@@ -188,7 +211,11 @@ if (file) {
 
 const handleUpdateUser= async () => {
   const url = `http://localhost:8023/user/update`;
-  const response = await axios.put(url,user);
+  const response = await axios.put(url,user, {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+});
   console.log("user updated:", response.data);
   setUser(response.data);
 
@@ -197,8 +224,57 @@ const handleUpdateUser= async () => {
     userId: user.id,
     timestamp: new Date(),
     description: 'Profile details updated',
+},{
+  headers: {
+      'Authorization': `Bearer ${token}` 
+  }
 }
   );
+};
+
+const addFeedback= async (e) => {
+  e.preventDefault();
+  try {
+  const newFeedback={
+    ...feedback,
+    userId:user.id
+  }
+
+  const url = `http://localhost:8023/feedback/add`;
+  const response = await axios.post(url,newFeedback,{
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+});
+
+  setShowSuccessMessage(true)
+  setTimeout(() => {
+    setShowSuccessMessage(false)
+  }, 5000);
+
+  const response1 = await axios.post('http://localhost:8023/user-activity/save',
+  {
+    userId: user.id,
+    timestamp: new Date(),
+    description: `Feedback:"  ${newFeedback.text} "has been added successfully`,
+  },{
+    headers: {
+        'Authorization': `Bearer ${token}` 
+    }
+}
+  
+  );
+
+  feedback={
+    text:""
+  }
+
+} catch (error) {
+  setError(true);
+  setTimeout(() => {
+    setError(false);
+  }, 5000);
+}
 };
 
 
@@ -221,6 +297,9 @@ useEffect(() => {
   }, [tabsOrientation]);
 
 
+
+
+
   return (
     <MDBox position="relative" mb={5}>      
       <MDBox
@@ -241,14 +320,7 @@ useEffect(() => {
         }}
       />
       <Card
-        sx={{
-          position: "relative",
-          mt: -25,
-          mx: 3,
-          py: -5,
-          px: 2,
-        }}
-      >
+        sx={{position: "relative", mt: -25,mx: 3, py: -5,px: 2,}}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h6  className="detailsTitle" >
          MY  <strong>PROFILE</strong> INFORMATIONS 
@@ -275,8 +347,10 @@ useEffect(() => {
                   }
                   onClick={handleOpenForm}
                  />
-               { showForm &&
-      <Modal open={open} onClose={handleCloseForm}>
+
+
+{ showForm &&
+<Modal open={open} onClose={handleCloseForm}>
       <Box
         sx={{
           position: "absolute",
@@ -287,8 +361,9 @@ useEffect(() => {
           boxShadow: 23,
           p: 3,
           minWidth: 400,
-          maxWidth: 600,
+          maxWidth: 400,
           borderRadius: 2,
+          height:"600px",
           color: "black" 
         }}
       >
@@ -347,6 +422,7 @@ useEffect(() => {
         <FormatAlignJustifyIcon />
         </IconButton>
         </Grid>
+         <MDBox className="messageBox">
             <TextField
                label="Message"
                variant="outlined"
@@ -355,11 +431,10 @@ useEffect(() => {
               onChange={handleChange}
               fullWidth
               multiline
-              rows={6}
-              required
-             />
- 
-</Box>
+              rows={4}
+              required />
+         </MDBox>
+          </Box>
           <Box display="flex" justifyContent="flex-end" gap="5%">
           <Button type="button" variant="contained" color="info" style={{color:"white",backgroundColor:"#ff8809ee"}} onClick={handleCloseForm}>
              Close
@@ -375,16 +450,16 @@ useEffect(() => {
         <button onClick={()=>{setSuccessForm(false); handleCloseForm()}}>Back</button>
         </Grid>
        </Modal>
-)}
-            
+        )}           
           </Box>
         </form>
       </Box>
-    </Modal>
+</Modal>
 }
-              </Tabs>
-            </AppBar>
+          </Tabs>
+          </AppBar>
   </Grid>
+
   </div>
   <Grid container spacing={3} alignItems="center">
          
@@ -436,31 +511,9 @@ useEffect(() => {
         </MDBox>
       </MDBox>
     </Card>
-  </Grid>
-  
 
-  <Grid item xs={12} sm={6} style={{ height: '35rem' }} >
-    {/* Right Section */}
-    <Grid container direction="column" spacing={3} >
-    
-      {/* Top Section */}
-      <Grid item>
-        <Card className="update-form-card">
-         <h5 className="detailsForm">EDIT PROFILE</h5>
-          <form className="update-form">
-            <TextField label="First Name" name="firstname" value={user.firstname} variant="outlined" fullWidth onChange={handleProfileChange}/>
-            <TextField label="Last Name" name="lastname" value={user.lastname} variant="outlined" fullWidth onChange={handleProfileChange}/>
-            <TextField label="Email"  name="email" value={user.email} variant="outlined" fullWidth onChange={handleProfileChange}/>
-            <TextField label="Phone" name="phone" value={user.phone} variant="outlined" fullWidth onChange={handleProfileChange} />
-            <TextField label="Profession" name="profession" value={user.profession} variant="outlined" fullWidth onChange={handleProfileChange}/>
-           
-            <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={handleUpdateUser} style={{width:"50%" ,marginLeft:"26%"}}>Update</MDButton>
-
-
-          </form>
-        </Card>
-      </Grid>
-      <Grid item  >   
+{/* settings part */}
+    <Grid item>   
       <Card className="empty-card">
       <MDBox>
         <h6 className="details" style={{color:"white"}}>
@@ -489,8 +542,48 @@ useEffect(() => {
           </MDBox>
         </MDBox>          
         </Card>
-         
       </Grid>  
+
+  </Grid>
+  
+  <Grid item xs={12} sm={6} style={{ height: '35rem' }} >
+
+    {/* Right Section */}
+    <Grid container direction="column" spacing={3} >
+    
+      {/* Top Section */}
+      <Grid item>
+        <Card className="update-form-card">
+         <h5 className="detailsForm">EDIT PROFILE</h5>
+          <form className="update-form">
+            <TextField label="First Name" name="firstname" value={user.firstname} variant="outlined" fullWidth onChange={handleProfileChange}/>
+            <TextField label="Last Name" name="lastname" value={user.lastname} variant="outlined" fullWidth onChange={handleProfileChange}/>
+            <TextField label="Email"  name="email" value={user.email} variant="outlined" fullWidth onChange={handleProfileChange}/>
+            <TextField label="Phone" name="phone" value={user.phone} variant="outlined" fullWidth onChange={handleProfileChange} />
+            <TextField label="Profession" name="profession" value={user.profession} variant="outlined" fullWidth onChange={handleProfileChange}/>
+           
+            <MDButton variant="gradient" color="info" fullWidth type="submit" onClick={handleUpdateUser} style={{width:"50%" ,marginLeft:"26%"}}>Update</MDButton>
+
+
+          </form>
+        </Card>
+      </Grid>
+        {/* Down Section */}
+        <Grid>
+        <h5 className="detailsForm" style={{margin:"-5% 0 0 30%"}}> Your Feedback is important for us</h5>
+        <div  style={{padding:"1% 10% 0 10%"}}>
+        <h5>Whether it’s a suggestion, a concern, or a positive experience. </h5>
+        <h5> We encourage you to share it with us. Together,</h5>
+        <h5>we can continue to improve and provide you with the best possible service.</h5>
+        </div>
+          <form className="update-form">
+            <TextField label="Feedback" name="text" value={feedback.text} variant="standard" fullWidth onChange={handleFeedbackChange}/>
+            <MDButton variant="gradient" color="warning" fullWidth type="submit" onClick={addFeedback} style={{width:"20%" ,marginLeft:"80%"}}>SEND</MDButton>
+
+            {showSuccessMessage &&  (<p style={{marginTop:"-10%", fontWeight:"100" ,color:"black"}}>Your Feedback has been saved <strong style={{color:"green"}}>Successfully !</strong></p>)}
+          </form>
+        </Grid>
+    
     </Grid> 
   </Grid>
 </Grid>        

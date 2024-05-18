@@ -26,6 +26,7 @@ function Dashboard() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const email=useSelector((state)=> state.auth.value.email);
+  const token=useSelector((state)=>state.auth.value.token);
   const [showForm,setShowForm]=useState(false);
  
 
@@ -51,7 +52,11 @@ function Dashboard() {
   })
 
   const fetchUserByEmail= async(email)=>{
-    const response=axios.get(`http://localhost:8023/user/findByEmail/${email}`)
+    const response=axios.get(`http://localhost:8023/user/findByEmail/${email}`,{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  })
     setUser((await response).data);  
     setInvestment({ ...investment, userId:(await response).data.id });
   }
@@ -68,7 +73,11 @@ function Dashboard() {
     try {
         console.log('investmentAdded',newInvestment)
         const url = "http://localhost:8023/investment/add";
-        const response = await axios.post(url, newInvestment);
+        const response = await axios.post(url, newInvestment, {
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         console.log('investmentAdded',newInvestment)
 
         setShowSuccessMessage(true);
@@ -91,11 +100,18 @@ function Dashboard() {
         });
         setInvestments([...investments, response.data]);
         const investmentDescription = `Adding new investment in the ${investment.companyName} company`;
-        const userActivityResponse = await axios.post('http://localhost:8023/user-activity/save', {
+        const userActivityResponse = await axios.post('http://localhost:8023/user-activity/save', 
+        {
           userId: investment.userId,
           timestamp: new Date(),
           description: investmentDescription,
-        });
+        },
+        {
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+        }
+        );
 
    console.log ( "addUserActivity",)       
     } 

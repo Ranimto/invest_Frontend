@@ -1,5 +1,4 @@
 import { Card, Grid } from '@mui/material'
-import PageLayout from 'examples/LayoutContainers/PageLayout'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
@@ -8,15 +7,20 @@ import './style.css'
 import axios from 'axios';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 
 const CompanyNews = () => {
     const [newsData,setNewsData]=useState([]);
     const {company}=useParams();
     const [filteredData, setFilteredData] = useState([]);
+    const token=useSelector((state)=>state.auth.value.token)
 
     const fetchData =async()=>{
-        const response = await axios.get(`http://localhost:8023/stockData/newsData/${company}`);
-        console.log( response.data.feed);
+        const response = await axios.get(`http://localhost:8023/stockData/newsData/${company}`,{
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         setNewsData(response.data.feed);
         setFilteredData(response.data.feed);
     }  

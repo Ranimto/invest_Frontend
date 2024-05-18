@@ -25,11 +25,15 @@ const VerificationPage = () => {
 		verificationCode : null
     })
     const email = useSelector((state) => state.auth.value.email);
-    const navigate=useNavigate();
+    const token=useSelector((state)=>state.auth.value.token);
 
     const fetchUserByEmail= async (email) => {
         const url = `http://localhost:8023/user/findByEmail/${email}`;
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            } 
+        });
         setUser(response.data)
     };
        

@@ -29,7 +29,7 @@ function TimelineItem({ color, icon, title, dateTime, description, lastItem }) {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        bgColor={color}
+        bgcolor={color}
         color="white"
         width="2rem"
         height="2rem"

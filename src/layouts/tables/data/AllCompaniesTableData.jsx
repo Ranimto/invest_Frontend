@@ -38,10 +38,15 @@ export default function Data() {
     profession:"",
   })
   const email = useSelector((state) => state.auth.value.email);
+  const token =useSelector((state)=>state.auth.value.token)
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
@@ -56,7 +61,11 @@ const fetchCompanies= async () => {
   try {
     const url = `http://localhost:8023/company/getAllCompaniesExceptByInvestorId/${user.id}`;
     console.log( 'userrrr', user.id)
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      } 
+    });
     setOtherCompanies(response.data);
     setError(null);
   } catch (error) {

@@ -5,16 +5,22 @@ import axios from "axios";
 import MDBox from "components/MDBox";
 import Transaction from "layouts/billing/components/Transaction";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 function BuyTransaction({ fromAccountNo }) {
   const [transactions, setTransactions] = useState([]);
   const [dateFormatee, setDateFormatee] = useState('');
+  const token=useSelector((state)=>state.auth.value.token);
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const url = `http://localhost:8023/transaction/findTransactionsByAccountNo/${fromAccountNo}`;
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         setTransactions(response.data); // Utilisation de response.data
       } catch (error) {
         console.error("Error fetching transactions by Account number:", error);

@@ -42,10 +42,15 @@ function Form() {
     sourceOfFunds: "",
 });
 const email = useSelector((state) => state.auth.value.email);
+const token = useSelector((state)=>state.auth.value.token);
 
     const fetchUserByEmail= async (email) => {
         const url = `http://localhost:8023/user/findByEmail/${email}`;
-        const response = await axios.get(url);
+        const response = await axios.get(url,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         setUser(response.data)
         setFormData({ ...formData, userId: response.data.id }); 
         console.log('formData',formData); 
@@ -79,7 +84,11 @@ const email = useSelector((state) => state.auth.value.email);
     const handleSubmit = async () => {
         try {
             const url = "http://localhost:8023/profileData/addProfileData";
-            const response = await axios.post(url, formData);
+            const response = await axios.post(url, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+                }
+            });
             console.log('Profile data added:', response.data);
         } catch (error) {
             console.log(error);

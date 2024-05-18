@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { onFirebaseMessageListener } from 'firebaseinit';
 import { Button, Grid, TextField } from '@mui/material';
 import UpdateIcon from '@mui/icons-material/Update';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Investment from '..';
 import MDButton from 'components/MDButton';
@@ -53,17 +52,23 @@ export default function Data() {
     profession:"",
   })
   const email = useSelector((state) => state.auth.value.email);
+  const token = useSelector((state) => state.auth.value.token);
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
-    const response = await axios.get(url);
+    const response = await axios.get(url, 
+      {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
     console.log("Response from server:", response.data, response);
     setUser(response.data);
-    console.log('hello');
 };
 
  useEffect(() => {
- if (email) {fetchUserByEmail(email)};
+    { if (email) 
+     fetchUserByEmail(email)};
 }, [email]);
 
   
@@ -71,7 +76,11 @@ export default function Data() {
     try {
       const url = `http://localhost:8023/investment/getInvest/${id}`;
       console.log('heyy' ,user.id)
-      const response = await axios.get(url);
+      const response = await axios.get(url,  {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       console.log("Response from server:", response.data, response);
       setInvestments(response.data);
       setLoading(false);
@@ -95,7 +104,11 @@ export default function Data() {
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const response = await axios.put(`http://localhost:8023/investment/update`, editedInvestment);
+      const response = await axios.put(`http://localhost:8023/investment/update`, editedInvestment, {
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
         const updatedInvestments = investments.map(inv => {
           return inv.companyName === editedInvestment.companyName ?  editedInvestment :  inv;});
         setInvestments(updatedInvestments);

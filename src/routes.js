@@ -23,6 +23,8 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
 import VerificationPage from "layouts/VerificationPage/verificationPage";
 import Notifications from "layouts/Notifications/Notifications";
+import Cover from "layouts/authentication/reset-password/cover";
+import ResetPassword from "layouts/authentication/reset-password/cover/resetPassword";
 
 
   
@@ -177,8 +179,22 @@ isPrivate: true,
   component: <Notifications/>,
   isPrivate: true,
 },
-  
+{
+  name: "passwordReset",
+  key: "passwordReset",
+  route: "/autenticate/passwordReset",
+  component: <Cover/>,
+  isPrivate: false,
+  },
+ 
    
+  {
+    name: "passwordReset",
+    key: "passwordReset",
+    route: "/reset-password",
+    component: < ResetPassword/>,
+    isPrivate: false,
+    },
 ];
 
 export default routes;

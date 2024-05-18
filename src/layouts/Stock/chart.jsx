@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 const StockChart = ({ selectedSymbol }) => {
 
   const [stockData, setStockData] = useState([]);
+  const token=useSelector((state)=>state.auth.value.token)
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {
-        const response = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`);
+        const response = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`,{
+          headers: {
+              'Authorization': `Bearer ${token}` 
+          }
+      });
         console.log("SYMBOL", symbol);
         if (response.data && response.data['Time Series (5min)']) {
           const timeSeriesData = response.data['Time Series (5min)'];

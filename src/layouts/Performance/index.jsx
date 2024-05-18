@@ -1,16 +1,16 @@
-import { Button } from '@mui/base'
+
 import { Grid, Table } from '@mui/material'
-import axios, { AxiosHeaders } from 'axios'
+import axios from 'axios'
 import MDBox from 'components/MDBox'
 import MDButton from 'components/MDButton'
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout'
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar'
-import NavbarPerformance from 'layouts/navbarPerformance'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CustomGauge from './gaugeChart'
 import { motion } from 'framer-motion';
 import './style.css'
+import { useSelector } from 'react-redux'
 
 const Performance = () => {
 
@@ -19,6 +19,7 @@ const Performance = () => {
    const [showResult, setShowResult] = useState(false);
    const  [company,setCompany]=useState([]);
    const  [investment,setInvestment]=useState([]);
+   const token=useSelector((state)=>state.auth.value.token)
    const[data,setData]=useState(
       {
          annual_return: 0,
@@ -39,7 +40,11 @@ const fetchPerformanceIndicators= async()=>{
       price_url:"http://localhost:8023/stockData/fetch",
   }
   try{
-    const response= await axios.post(url, body);
+    const response= await axios.post(url, body, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  });
     console.log( "dataaa", response.data );
     setData(response.data) ;
   }
@@ -53,7 +58,11 @@ const fetchPerformanceIndicators= async()=>{
 const fetchCompanyData= async(companyId)=>{
    try 
    {const url =`http://localhost:8023/company/${companyId}`
-   const response = await axios.get(url) ;
+   const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  }) ;
 
    setCompany(response.data) ;}
    catch (error){
@@ -65,7 +74,11 @@ const fetchInvestmentData= async(investorId,symbol)=>{
   try
    {
    const url=`http://localhost:8023/investment/${investorId}/${symbol}`;
-   const response = await axios.get(url) ; 
+   const response = await axios.get(url, {
+      headers: {
+          'Authorization': `Bearer ${token}` 
+      }
+  }) ; 
    setInvestment(response.data);}
 catch (error) {
 console.error("Failed to fetch Investment Data" ,error)
