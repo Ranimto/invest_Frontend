@@ -146,7 +146,13 @@
     color: white !important;
     background-color: blueviolet !important;
   }
-  .messageBox TextField{
-    height: 2rem !important;
+  .messageBox {
+    height: 10rem !important;
+  }
+
+  @media (max-width: 860px) {
+    .details , .profileTextt{
+      margin-left: 20% !important;
+    }
   }
   

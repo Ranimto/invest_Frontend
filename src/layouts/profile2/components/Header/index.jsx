@@ -197,7 +197,7 @@ if (file) {
     );
         const response = await axios.put(`http://localhost:8023/user/update-profile/${user.id}`, formData, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'multipart/formData',
             }
         });
@@ -205,7 +205,7 @@ if (file) {
         setShowFileName(true);
         setUser(prevUser => ({ ...prevUser, imageUrl: response.data.imageUrl }));
     } catch (error) {
-        console.error("Error uploading image:", error);
+        console.error("Error uploading image:", error.response.data);
     }
 };
 

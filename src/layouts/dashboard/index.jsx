@@ -283,7 +283,7 @@ function Dashboard() {
         
         <Modal open={showForm}>
         <div className="modalContent">
-          <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"34rem", margin:"6% 0 0 35%"}} >
+          <form onSubmit={handleSubmit} className='formClasss'style={{width: '33%' ,height:"35rem", margin:"6% 0 0 35%"}} >
             <p>Add an investment</p>
             <Select labelId='type' fullWidth name="type" value={investment.type} onChange={handleSelectChange('type')} style={{padding: '11px'}}>
            <MenuItem value="Stock">Stock</MenuItem>

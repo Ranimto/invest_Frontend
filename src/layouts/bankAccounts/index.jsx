@@ -16,7 +16,7 @@ const BankAccounts = () => {
   const { columns, rows } = AccountTableData();
   const [accounts, setAccounts] = useState([]);
   const [errorForm,setErrorForm]=useState(false);
-  const [error,setError]=useState("");
+  const [messageError,setMessageError]=useState("");
  const email= useSelector((state)=>state.auth.value.email);
  const token = useSelector((state)=>state.auth.value.token)
   const [requestAccount, setRequestAccount] = useState(
@@ -78,8 +78,7 @@ const BankAccounts = () => {
             'Authorization': `Bearer ${token}` 
         }
     });
-    
-      setAccounts([...accounts, response.data]);
+      setAccounts([...accounts,newAccount]);
       showAlert("your bank account is added succesfully!")
 
       await axios.post('http://localhost:8023/user-activity/save', {
@@ -95,15 +94,14 @@ const BankAccounts = () => {
       
       );    
 
-      // Reset the form fields after successful submission
       setRequestAccount({
         accountNo: "",
         userId: user.id,
         status: "",
       });
     } catch (error) {
-      setError(error.response.data);
       setErrorForm(true);
+      setMessageError("Error")
     
     }
   };
@@ -189,7 +187,7 @@ const BankAccounts = () => {
 {errorForm && (
   <Modal open={errorForm} >
     <Grid className='errorForm'>
-    <p> <ErrorRoundedIcon/> {error.message}</p>
+    <p> <ErrorRoundedIcon/> {messageError}</p>
     <button onClick={()=>setErrorForm(false)}>Cancel</button>
     </Grid>
   </Modal>

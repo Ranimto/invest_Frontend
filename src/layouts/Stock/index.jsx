@@ -130,7 +130,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
               'Authorization': `Bearer ${token}` 
           }
       });
-        console.log("Stock data response:", stockResponse.data);
+        console.log("Stock data responseee:", stockResponse.data);
   
         if (stockResponse.data && stockResponse.data['Time Series (5min)']) {
           const timeSeriesData = stockResponse.data['Time Series (5min)'];
@@ -308,7 +308,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8023/stockData/changePriceData?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`,
+        const response = await axios.get(`https://alphavantageapi.co/timeseries/analytics?SYMBOLS=AAPL,MSFT,IBM,AMZN,GOOGL&RANGE=2024-03-30&RANGE=2024-04-03&INTERVAL=DAILY&OHLC=close&CALCULATIONS=MEAN,STDDEV,CORRELATION&apikey=BM9262Y3FRRP3S6T`,
         {
           headers: {
               'Authorization': `Bearer ${token}` 
@@ -723,10 +723,10 @@ const getAllInvetsments= async(id)=>{
               {stockData.map((stock, index) => (
                 <tr key={index}>
                   <td>{stock.date}</td>
-                  <td>{stock.low} TND</td>
-                  <td>{stock.high} TND</td>
-                  <td>{stock.open} TND</td>
-                  <td>{stock.close} TND</td>
+                  <td>{stock.low} $</td>
+                  <td>{stock.high} $</td>
+                  <td>{stock.open} $</td>
+                  <td>{stock.close} $</td>
                   <td>{stock.volume}</td>  
                 </tr>
               ))}

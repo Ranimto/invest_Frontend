@@ -38,7 +38,7 @@ useEffect(() => {
       setResponse(response.data)
        
       console.log(response.data);
-      consolwe.log("topGainers",topGainers);
+      console.log("topGainers",topGainers);
       console.log("topLosers",topLosers);
        console.log("topLosers",topLosers);
       console.log("mostActivelyTraded", mostActivelyTraded);
@@ -118,7 +118,7 @@ useEffect(() => {
           onTouchEnd={handleScrollEnd}
           >
           {topGainers.slice(0, 7).map((item,index) => (
-          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} changeAmount={item.change_amount} />
+          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} AmountChange={item.change_amount} />
 ))}
         </Grid>
         </Grid>
@@ -169,7 +169,7 @@ useEffect(() => {
           onTouchEnd={handleScrollEnd}
           >
           {topLosers.slice(0, 7).map((item,index) => (
-          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} changeAmount={item.change_amount}/>
+          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} AmountChange={item.change_amount}/>
 
 ))}
         </Grid>

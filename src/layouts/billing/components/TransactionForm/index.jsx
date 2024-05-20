@@ -10,7 +10,8 @@ import { useSelector } from "react-redux";
 function TransactionForm() {
 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [error, setError] = useState(false);
+  const [showError, setShowErrorMessage] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState("");
   const [confirmForm,setConfirmForm]=useState(false);
   const token =useSelector((state)=>state.auth.value.token);
   const [transactionForm, setTransactionForm] = useState({
@@ -48,9 +49,10 @@ function TransactionForm() {
     })
     .catch(error => {
       setConfirmForm(false)
-      setError(true)
+      setShowErrorMessage(true)
+      setErrorMessage(error.response.data)
       setTimeout(() => {
-        setError(false);
+        setShowErrorMessage(false);
       }, 5000);
       console.error("Error adding transaction:", error);   
     });
@@ -112,7 +114,8 @@ function TransactionForm() {
         <MDButton type="button" variant="contained" style={{backgroundColor: "rgba(255, 162, 0, 0.921)" , color:"white"}} onClick={handleConfirmation}>
           Submit
         </MDButton>
-       {showSuccessMessage ?  (<p style={{marginTop:"2%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>): (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction ! please try again</p>)}
+       {showSuccessMessage && (<p style={{marginTop:"-4%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+        {showError && (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction {ErrorMessage}! please try again</p>)}
       </form>
       </Card>
 

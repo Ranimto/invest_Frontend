@@ -50,22 +50,42 @@ export default function Data() {
     setUser(response.data);
 };
 
+
+
   const handleDelete = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8023/bankAccount/delete/${id}`);
+      await axios.delete(`http://localhost:8023/bankAccount/delete/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        }
+      });
       setAccounts(accounts.filter(account => account.id !== id));
     } catch (error) {
-      setError("An error occurred while deleting the account.");
-    } finally {
-      setLoading(false);
+      if (error.response) {
+        if (error.response.status === 403) {
+            setError("You do not have permission to delete this account.");
+        } else if (error.response.status === 404) {
+            setError("The account you are trying to delete does not exist.");
+        } else {
+            setError("An error occurred while deleting the account.");
+        }
+    } else {
+        setError("A network error occurred. Please try again.");
     }
+  } finally {
+    setLoading(false);
+  }
   };
 
    const handleUpdate = async () => {
     setLoading(true);
     try {
-      await axios.put(`http://localhost:8023/bankAccount/update`, editedAccount);
+      await axios.put(`http://localhost:8023/bankAccount/update`, editedAccount,{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+        }
+    });
       const updatedAccounts = accounts.map(account => {
         if (account.id === editedAccount.id) {
           return editedAccount;

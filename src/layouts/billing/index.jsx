@@ -153,8 +153,8 @@ function Billing() {
                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-label">Filter</InputLabel>
                <Select labelId="demo-simple-select-label"id="demo-simple-select" value={filtredValue} label="Filter" onChange={()=>setFiltredValue(event.target.value)} fullWidth>
-               <MenuItem value={10} onClick={()=>{setShowBuyTransaction(true) , setShowSellTransaction(false)}}>BUY transactions</MenuItem>
-               <MenuItem value={20} onClick={()=>{setShowSellTransaction(true), setShowBuyTransaction(false)}}>Sell transactions</MenuItem>
+               <MenuItem value="BUY transactions" onClick={()=>{setShowBuyTransaction(true) , setShowSellTransaction(false)}}>BUY transactions</MenuItem>
+               <MenuItem value="Sell transactions" onClick={()=>{setShowSellTransaction(true), setShowBuyTransaction(false)}}>Sell transactions</MenuItem>
                </Select>
                </FormControl>
                 </Grid>
