@@ -16,26 +16,22 @@ import { updatePrice } from '../../authRedux/Features/auth/stock'; // update act
 import ComponentNavbar from 'examples/Navbars/ComponentNavbar';
 import { onFirebaseMessageListener } from "../../firebaseinit";
 import ReactNotificationComponent from 'layouts/Notifications/ReactNotifications';
+import StockPredictionChart from './PredictionAction';
 
 
   const Stock = () => {
   const {company}=useParams();
   const [checkout, setCheckout] = useState(false); 
-  const [SMAChart, setSMAChart] = useState(false); 
-
-
-// https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo     
-const [priceData, setPriceData] =useState(
-  []
-)
-/***  */
-
-const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [SMAChart, setSMAChart] = useState(false);     
+  const [priceData, setPriceData] =useState([])
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [data, setData] = useState([])
   const [investments, setInvestments] = useState([]) 
   const [investmentsById, setInvestmentsById] = useState([])
   const [stockData, setStockData] = useState([]);
   const [analyticData, setAnalyticData] = useState([]);
+  const [showStockPredictionChart, setShowStockPredictionChart] = useState(false); 
+  const [showStockData, setShowStockData] = useState(true);
   const [selectedSymbol, setSelectedSymbol] = useState(company);
   const [symbols, setSymbols] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -49,6 +45,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [show, setShow] = useState(false);
   const [notificationShown, setNotificationShown] = useState(true); 
   const token =useSelector((state)=>state.auth.value.token);
+
   const notification = {
     title: 'New notification',
     body: 'A positive change for the company ',
@@ -73,10 +70,10 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     stockActualPrice:stockActualPrice   
   })
   const email=useSelector((state)=> state.auth.value.email);
-  const currentDate = new Date(); // Create a new Date object
-  const year = currentDate.getFullYear(); // Extract the year
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Extract the month (adding 1 because month is zero-based)
-  const day = String(currentDate.getDate()).padStart(2, '0'); // Extract the day
+  const currentDate = new Date(); 
+  const year = currentDate.getFullYear(); 
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+  const day = String(currentDate.getDate()).padStart(2, '0'); 
   const formattedDate = `${year}-${month-1}-${day}`;
 
   const fetchUserByEmail= async(email)=>{
@@ -95,9 +92,21 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleSwitchSMA = () => {
     setSMAChart(true);
+    setShowStockData(false);
+    setShowStockPredictionChart(false)
   };
+
   const handleSwitchStock = () => {
+    setShowStockData(true);
     setSMAChart(false);
+    setShowStockPredictionChart(false)
+  };
+  
+  const handleShowStockPredictionChart = () => { 
+    setShowStockPredictionChart(true)
+    setSMAChart(false);
+    setShowStockData(false);
+ 
   };
  
   const handleInputChange = (e) => {
@@ -124,14 +133,12 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   useEffect(() => {
     const fetchData = async (symbol) => {
       try {
-        // Fetch stock data
         const stockResponse = await axios.get(`http://localhost:8023/stockData/fetch/${symbol}`,{
           headers: {
               'Authorization': `Bearer ${token}` 
           }
       });
-        console.log("Stock data responseee:", stockResponse.data);
-  
+    
         if (stockResponse.data && stockResponse.data['Time Series (5min)']) {
           const timeSeriesData = stockResponse.data['Time Series (5min)'];
           const stockEntries = Object.entries(timeSeriesData).slice(0, 10).map(([date, values]) => ({
@@ -147,8 +154,6 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         } else {
           console.error('Time Series (5min) data not found in stock response:', stockResponse.data);
         }
-  
-        // Fetch analytic data
         const analyticResponse = await axios.get(`http://localhost:8023/stockData/running_analytics?SYMBOLS=AAPL,IBM,TLSA,AMZN&RANGE=2month&INTERVAL=DAILY&OHLC=close&WINDOW_SIZE=20&CALCULATIONS=STDDEV&apikey=7B2VWMKU9SVM59DQ`,
         
         {
@@ -162,24 +167,20 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
         const payload = analyticResponse.data.payload.RETURNS_CALCULATIONS.MEAN.RUNNING_MEAN[symbol];
         const analyticEntries = [];
-        console.log("payload:",payload);
-
         for (const [date, value] of Object.entries(payload)) {
           analyticEntries.push({ date, value });
         }
-        console.log("analyticEntries i:",analyticEntries);
-       // setAnalyticData(analyticEntries);
-        console.log("Analytic i data:", analyticData);
+  
       }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
+        console.error('Error to get data:', error);
       }
     };
   
     fetchData(selectedSymbol);
-  }, [selectedSymbol]); //company
+  }, [selectedSymbol]); 
 
-  //dispatch of the Stock Actual Price
+
 
   const handlePriceClick = (symbol, price) => {
     setSelectedSymbol(symbol);
@@ -198,15 +199,17 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
       };
   
       const url = "http://localhost:8023/investment/add";
-  
-      const response = await axios.post(url, newFormData);
+      const response = await axios.post(url, newFormData, {
+        headers: {
+            'Authorization': `Bearer ${token}` ,
+            
+        }
+    });
       setShowSuccessMessage(true);
       setTimeout(() => {
         setShowSuccessMessage(false);
       }, 5000);
 
-      console.log("newFormData",newFormData)
-  
       setInvestments([...investments, response.data]);
   
       const investmentDescription = `Adding new investment in the ${newFormData.companyName} company`;
@@ -217,7 +220,8 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
       },
       {
         headers: {
-            'Authorization': `Bearer ${token}` 
+            'Authorization': `Bearer ${token}` ,
+            
         }
     });
   
@@ -251,16 +255,10 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         stockActualPrice: stockActualPrice,
         amount: sellFormData.numberOfStock * stockActualPrice,
       };
-      console.log("sellFormData",sellFormData)
-      console.log("newFormData",newFormData)
-
       const SellFormRequest = {
         fromAccountNo:newFormData.fromAccountNo,
         amount: newFormData.amount,
       };
-
-      console.log("newFormData",newFormData)
-      console.log("SellFormRequest",SellFormRequest)
 
       const url = `http://localhost:8023/transaction/addSellTransaction/108/${newFormData.companyName}/${newFormData.numberOfStock}`;
       const response = await axios.post(url, SellFormRequest,{
@@ -273,7 +271,6 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         setShowSuccessMessage(false);
       }, 5000);
 
-  
       const sellDescription = `Sell ${newFormData.numberOfStock} stocks in the ${newFormData.companyName} company to ${newFormData.fromAccountNo}`;
       await axios.post('http://localhost:8023/user-activity/save', {
         userId: user.id,
@@ -300,6 +297,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
         setError(false);
       }, 5000);
       setErrorMessage(error.response.data.message);
+      console.log(errorMessage)
     }
   };
 
@@ -308,7 +306,7 @@ const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://alphavantageapi.co/timeseries/analytics?SYMBOLS=AAPL,MSFT,IBM,AMZN,GOOGL&RANGE=2024-03-30&RANGE=2024-04-03&INTERVAL=DAILY&OHLC=close&CALCULATIONS=MEAN,STDDEV,CORRELATION&apikey=BM9262Y3FRRP3S6T`,
+        const response = await axios.get(`http://localhost:8023/stockData/changePriceData?symbols=IBM,AAPL,MFST,GOOGL,AMZN,TSLA,XOM,JPM,JNJ`,
         {
           headers: {
               'Authorization': `Bearer ${token}` 
@@ -382,7 +380,6 @@ useEffect(() => {
 }, [user.id, notificationShown] );
 
 const handleShowNotification =async (id,notificationShown) => {
-
   const investmentsById= await getAllInvetsments(id)
  
     for (let data of priceData) {
@@ -486,15 +483,19 @@ const getAllInvetsments= async(id)=>{
         </div>
         </div>
          <div className="indicators">
-          <Button className='option'><h5 onClick={handleSwitchSMA}>Simple Moving Average (SMA)</h5> </Button> 
-          <Button className='option'><h5 onClick={handleSwitchStock}>Stock Chart (HIGH/LOW)</h5> </Button> 
+          <Button className='option'><h5 onClick={()=>handleSwitchSMA()}>Simple Moving Average (SMA)</h5> </Button> 
+          <Button className='option'><h5 onClick={()=>handleSwitchStock()}>Stock Chart (HIGH/LOW)</h5> </Button> 
+          <Button className='option'><h5 onClick={handleShowStockPredictionChart}>Stock Prediction (After 10 days)</h5> </Button> 
          </div>
             <Card className="Cardd" >
               <CardContent className='navbar'>
-                {!SMAChart ?
-              (<ReverseExampleNoSnap selectedSymbol={selectedSymbol} /> ):
-             (<MAVChart selectedSymbol={selectedSymbol}/> )
-            }             
+                {showStockData &&
+              (<ReverseExampleNoSnap selectedSymbol={selectedSymbol} /> )}
+             { SMAChart && (<MAVChart selectedSymbol={selectedSymbol}/> )
+            }      
+              {showStockPredictionChart && !SMAChart &&
+              (<StockPredictionChart  selectedSymbol={selectedSymbol} /> )
+              }        
               </CardContent>             
             </Card>           
         </Grid>

@@ -108,17 +108,10 @@ useEffect(() => {
           <p>Discover the Top gainers impacting the stock market.</p>
           <h6>Unlock the pulse of the market by exploring the top gainers impacting the stock market at the <strong>{response.last_updated}</strong>. explore the forces shaping market trends, and empower yourself to make informed investment decisions in an ever-changing financial landscape.</h6>
           <p></p>
-          <Grid item xs={12} md={6} lg={4} display="flex" gap="1%"   
-          className="scrollable-container"
-          ref={containerRef}
-          style={{ overflowX: "hidden", whiteSpace: "nowrap" }} 
-          onMouseEnter={handleScrollStart}
-          onMouseLeave={handleScrollEnd}
-          onTouchStart={handleScrollStart}
-          onTouchEnd={handleScrollEnd}
-          >
+          <Grid item xs={12} md={6} lg={4} display="flex" gap="1%">
           {topGainers.slice(0, 7).map((item,index) => (
-          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} AmountChange={item.change_amount} />
+            
+          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} AmountChangee={item.change_amount} /> 
 ))}
         </Grid>
         </Grid>
@@ -154,26 +147,6 @@ useEffect(() => {
           </Table>
           
         </Grid>
-
-        {/* <Grid className="sectionn">
-          <h3>Top Losers</h3>
-          <p>Discover the Top Losers in the stock market.</p>
-          <h6>Delve into the market&apos;s fluctuations by uncovering the top losers in the stock market. Stay informed about the shifting dynamics as of the <strong>{response.last_updated}</strong>, 16:15:59 US/Eastern, and gain valuable insights to navigate market downturns with confidence</h6>
-          <Grid item xs={12} md={6} lg={4} display="flex" gap="1%" 
-          className="scrollable-container"
-          ref={containerRef}
-          style={{ overflowX: "hidden", whiteSpace: "nowrap" }} 
-          onMouseEnter={handleScrollStart}
-          onMouseLeave={handleScrollEnd}
-          onTouchStart={handleScrollStart}
-          onTouchEnd={handleScrollEnd}
-          >
-          {topLosers.slice(0, 7).map((item,index) => (
-          <CompanyCard  key={index}  color="info"  name={item.ticker} amount={item.price} AmountChange={item.change_amount}/>
-
-))}
-        </Grid>
-        </Grid> */}
 
         </div>
         </DashboardLayout>

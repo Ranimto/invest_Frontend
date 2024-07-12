@@ -5,7 +5,7 @@ import './style.css';
 
 function Bill({ name,profession,email,number,savings,deposits,earned, posted,status}) {
   const [controller] = useMaterialUIController();
-  const { darkMode } = controller;
+  // const { darkMode } = controller;
 
   return (
     <MDBox
@@ -13,7 +13,7 @@ function Bill({ name,profession,email,number,savings,deposits,earned, posted,sta
       display="flex"
       justifyContent="space-between"
       alignItems="flex-start"
-      bgColor={darkMode ? "transparent" : "grey-100"}
+      bgColor="grey-100"
       borderRadius="lg"
       p={3}
       mt={2}
@@ -72,8 +72,6 @@ function Bill({ name,profession,email,number,savings,deposits,earned, posted,sta
   );
 }
 
-
-// Typechecking props for the Bill
 Bill.propTypes = {
   name: PropTypes.string,
   profession: PropTypes.string,

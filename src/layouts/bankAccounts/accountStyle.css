@@ -61,3 +61,11 @@
       font-size: 13px;
       align-items: center;
   }
+  .successMessage{
+    color: black;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    align-items: center;
+    margin-left: 5%;
+  }

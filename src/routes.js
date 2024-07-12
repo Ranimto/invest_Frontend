@@ -25,6 +25,8 @@ import VerificationPage from "layouts/VerificationPage/verificationPage";
 import Notifications from "layouts/Notifications/Notifications";
 import Cover from "layouts/authentication/reset-password/cover";
 import ResetPassword from "layouts/authentication/reset-password/cover/resetPassword";
+import Chat from "layouts/chatGPT/chat";
+import ChatIcon from '@mui/icons-material/Chat';
 
 
   
@@ -121,7 +123,8 @@ const routes = [
     component: <SignUp />,
     isPrivate: false,
   },
-  { key: "form",
+  {
+    key: "form",
     route: "/form",
     component: <Form/>,
     isPrivate: false,
@@ -153,6 +156,15 @@ isPrivate: true,
   isPrivate: true,
 },
 
+     {type: "collapse",
+      icon: <ChatIcon/>,
+      name: "chat",
+      key: "chat",
+      route: "/chat",
+      component: <Chat/>,
+      isPrivate: true,
+      },
+
 {
   type: "collapse",
   name: "logout",
@@ -171,15 +183,6 @@ isPrivate: true,
 },
 
 {
-  type: "collapse",
-  name: "notif",
-  key: "notif",
-  icon: <Icon fontSize="small">notification</Icon>,
-  route: "/notif",
-  component: <Notifications/>,
-  isPrivate: true,
-},
-{
   name: "passwordReset",
   key: "passwordReset",
   route: "/autenticate/passwordReset",
@@ -195,6 +198,8 @@ isPrivate: true,
     component: < ResetPassword/>,
     isPrivate: false,
     },
+
+    
 ];
 
 export default routes;

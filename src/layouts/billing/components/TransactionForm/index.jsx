@@ -29,7 +29,6 @@ function TransactionForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const url = "http://localhost:8023/transaction/addTransaction";
-    console.log(transactionForm);
     const response = await axios.post(url, transactionForm ,{
       headers: {
           'Authorization': `Bearer ${token}` 
@@ -37,9 +36,11 @@ function TransactionForm() {
   }).then(() => {
       setConfirmForm(false)
       setShowSuccessMessage(true);
+      
       setTimeout(() => {
         setShowSuccessMessage(false);
       }, 5000);
+
       setTransactionForm({
         fromAccountNo:"",
         toAccountNo:"",
@@ -114,7 +115,7 @@ function TransactionForm() {
         <MDButton type="button" variant="contained" style={{backgroundColor: "rgba(255, 162, 0, 0.921)" , color:"white"}} onClick={handleConfirmation}>
           Submit
         </MDButton>
-       {showSuccessMessage && (<p style={{marginTop:"-4%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+       {showSuccessMessage && (<p style={{marginTop:"-5%", fontWeight:"100" ,color:"black"}}>Your transaction has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
         {showError && (<p style={{marginTop:"-10%", fontWeight:"100", color:"black"}}> <strong style={{color:"red"}}>Failed</strong> to add Transaction {ErrorMessage}! please try again</p>)}
       </form>
       </Card>

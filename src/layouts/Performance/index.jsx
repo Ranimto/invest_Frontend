@@ -45,7 +45,6 @@ const fetchPerformanceIndicators= async()=>{
           'Authorization': `Bearer ${token}` 
       }
   });
-    console.log( "dataaa", response.data );
     setData(response.data) ;
   }
   catch (error){

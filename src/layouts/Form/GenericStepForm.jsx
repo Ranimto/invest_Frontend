@@ -54,7 +54,7 @@ const GenericStepForm = ({ questions, onNextStep, updateFormData }) => {
               </div>
             ))}
             <div className="btn">
-              <Button type='submit' color='primary' variant='contained' style={{ backgroundColor: '#8b1076eb', color: 'white' }}>Next</Button>
+              <Button type='submit' color='primary' variant='contained'bgColor="info" style={{ backgroundColor: 'blueviolet', color: 'white' }}>Next</Button>
             </div>
           </form>
         )}

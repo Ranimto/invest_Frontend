@@ -21,7 +21,7 @@ function BuyTransaction({ fromAccountNo }) {
               'Authorization': `Bearer ${token}` 
           }
       });
-        setTransactions(response.data); // Utilisation de response.data
+        setTransactions(response.data);
       } catch (error) {
         console.error("Error fetching transactions by Account number:", error);
       }
@@ -36,7 +36,6 @@ function BuyTransaction({ fromAccountNo }) {
     setDateFormatee(formattedDate);
   }, []);
 
-  console.log("transactions", transactions);
 
   return (
     <Card sx={{ height: "100%" }}>

@@ -88,7 +88,7 @@ function Billing() {
             <Grid item xs={12} lg={8}>
               <Grid container spacing={2}>
                 <Grid item xs={12} xl={6}>
-                <MasterCard number=  {4562112+(activeAccount.accountNo)} holder= {user.firstname + ' '+user.lastname} expires="11/27" />    
+                <MasterCard number={4562112+(activeAccount.accountNo)} holder= {user.firstname + ' '+user.lastname} expires="11/27" />    
                 </Grid>
                 <Grid item xs={12} md={6} xl={3}>
                   <DefaultInfoCard

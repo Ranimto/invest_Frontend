@@ -76,12 +76,7 @@ function ComponentNavbar({ transparent, light, action }) {
         <MDBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
           <ComponentNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
           <ComponentNavbarLink icon="person" name="profile" route="/profile" light={light} />
-          <ComponentNavbarLink
-            icon="key"
-            name="logout"
-            route="/authentication/sign-in"
-            light={light}
-          />
+         
         </MDBox>
         {action &&
           (action.type === "internal" ? (

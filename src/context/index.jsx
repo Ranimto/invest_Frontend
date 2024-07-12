@@ -26,25 +26,20 @@ function reducer(state, action) {
     case "FIXED_NAVBAR": {
       return { ...state, fixedNavbar: action.value };
     }
-    case "OPEN_CONFIGURATOR": {
-      return { ...state, openConfigurator: action.value };
-    }
+    
     case "DIRECTION": {
       return { ...state, direction: action.value };
     }
     case "LAYOUT": {
       return { ...state, layout: action.value };
     }
-    case "DARKMODE": {
-      return { ...state, darkMode: action.value };
-    }
+   
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 }
 
-// Material Dashboard 2 React context provider
 function MaterialUIControllerProvider({ children }) {
   const initialState = {
 
@@ -53,7 +48,6 @@ function MaterialUIControllerProvider({ children }) {
     sidenavColor: "info",
     transparentNavbar: true,
     fixedNavbar: true,
-    openConfigurator: false,
     direction: "ltr",
     layout: "dashboard",
     darkMode: false,
@@ -66,7 +60,6 @@ function MaterialUIControllerProvider({ children }) {
   return <MaterialUI.Provider value={value}>{children}</MaterialUI.Provider>;
 }
 
-// Material UI custom hook for using context
 function useMaterialUIController() {
   const context = useContext(MaterialUI);
 

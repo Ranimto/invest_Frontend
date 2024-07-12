@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
@@ -15,7 +15,7 @@ import './style.css';
 import { Icon } from "@mui/material";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { login } from '../../../authRedux/Features/auth/auth';//Login action
+import { login } from '../../../authRedux/Features/auth/auth';
 import MDAlert from "components/MDAlert";
 
 function Basic() {
@@ -38,11 +38,13 @@ function Basic() {
 		try {
 			const url = "http://localhost:8023/auth/authenticate";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.token);
-      dispatch(login({isAuthenticated:true, token: res.token, email: data.email })); //redux
+			localStorage.setItem("token", res.token);  
+      localStorage.setItem("email", data.email);        
+
+      dispatch(login({isAuthenticated:true, token: res.token, email: data.email })); 
       setAuthenticated(true);
       showAlertAndNavigate("you've been successfully authenticated", "/recommandations");
-      
+
 		} catch (error) {
 			if (
 				error.response &&
@@ -59,8 +61,10 @@ function Basic() {
     setError(message); 
     setTimeout(() => {
       navigate(destination); 
-    }, 1800); 
+    }, 1500); 
   };
+
+
 
   return (
     <BasicLayout image={bgImage} >
@@ -119,7 +123,7 @@ function Basic() {
             
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <h6>
+              <h6 style={{color:"grey"}}>
                 &nbsp;&nbsp;Remember me
               </h6>
             </MDBox>

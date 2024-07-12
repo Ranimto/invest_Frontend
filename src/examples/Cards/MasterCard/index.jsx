@@ -79,7 +79,7 @@ function MasterCard({ color, number, holder, expires }) {
 
 MasterCard.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
-  number: PropTypes.number,
+  number: PropTypes.string,
   holder: PropTypes.string,
   expires: PropTypes.string,
 };

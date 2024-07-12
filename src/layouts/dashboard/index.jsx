@@ -60,79 +60,74 @@ function Dashboard() {
     setUser((await response).data);  
     setInvestment({ ...investment, userId:(await response).data.id });
   }
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     const newInvestment = {
-      ...investment,  
-      investmentAmount: investment.numberOfStock * investment.stockActualPrice,
-      startDate:new Date()
+        ...investment,
+        investmentAmount: investment.numberOfStock * investment.stockActualPrice,
+        startDate: new Date()
     };
-  
-    try {
-        console.log('investmentAdded',newInvestment)
-        const url = "http://localhost:8023/investment/add";
-        const response = await axios.post(url, newInvestment, {
-          headers: {
-              'Authorization': `Bearer ${token}` 
-          }
-      });
-        console.log('investmentAdded',newInvestment)
 
+    try {
+      const url = "http://localhost:8023/investment/add";
+      const response = await axios.post(url, newInvestment, {
+        headers: {
+            'Authorization': `Bearer ${token}` ,
+            
+        }
+    });
         setShowSuccessMessage(true);
         setTimeout(() => {
-          setShowSuccessMessage(false);
+            setShowSuccessMessage(false);
         }, 5000);
 
         setInvestment({
-          userId:user.id,
-          type:"",
-          amount :"",
-          companyName :"",
-          numberOfStock:0,
-          investmentAmount:0,
-          stockActualPrice:0,
-          startDate:"",
-          duration:"",
-          status: "IN_PROGRESS", 
-            
+            userId: user.id,
+            type: "",
+            amount: "",
+            companyName: "",
+            numberOfStock: 0,
+            investmentAmount: 0,
+            stockActualPrice: 0,
+            startDate: "",
+            duration: "",
+            status: "IN_PROGRESS",
         });
         setInvestments([...investments, response.data]);
-        const investmentDescription = `Adding new investment in the ${investment.companyName} company`;
-        const userActivityResponse = await axios.post('http://localhost:8023/user-activity/save', 
-        {
-          userId: investment.userId,
-          timestamp: new Date(),
-          description: investmentDescription,
-        },
-        {
-          headers: {
-              'Authorization': `Bearer ${token}` 
-          }
-        }
+
+        const investmentDescription = `Adding new investment in the ${newInvestment.companyName} company`;
+        await axios.post('http://localhost:8023/user-activity/save', 
+            {
+                userId: investment.userId,
+                timestamp: new Date(),
+                description: investmentDescription,
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
         );
 
-   console.log ( "addUserActivity",)       
-    } 
-    catch (error) {
-      setError(true)
-      setTimeout(() => {
-      setError(false);
-      }, 5000);
+    } catch (error) {
+        setError(true);
+        setTimeout(() => {
+            setError(false);
+        }, 5000);
 
-      setInvestment({
-        userId: user.id,
-        type:"Stock" ,
-        investmentAmount: "",
-        numberOfStock:1,
-        startDate: "",
-        duration: "",
-        status: "IN_PROGRESS",   
-      });
+        setInvestment({
+            userId: user.id,
+            type: "Stock",
+            investmentAmount: "",
+            numberOfStock: 1,
+            startDate: "",
+            duration: "",
+            status: "IN_PROGRESS",
+        });
         console.log(error);
 
-        setErrorMessage(error.response.data)
+        setErrorMessage(error.response?.data || "An error occurred");
     }
 };
 
@@ -156,13 +151,12 @@ function Dashboard() {
 
   useEffect(() => {
     setAllData(investments);
-    console.log("investments updated:", investments);
-    console.log("allData updated:", allData);
   }, [investments]);
   
   useEffect(() => {
-    fetchUserByEmail(email);
+    if (email)  fetchUserByEmail(email);
   }, [email]);
+  
 
   return (
     <DashboardLayout>
@@ -368,7 +362,7 @@ function Dashboard() {
               <Button type="submit" variant="contained" className='btnRecommandation'>
                 Submit
               </Button>
-              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"100%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
+              {showSuccessMessage &&  (<p style={{marginTop:"-2%", fontWeight:"100" ,color:"black" ,width:"110%"}}>Your Investment has been added <strong style={{color:"green"}}>Successfully !</strong></p>)}
              { error && (<p style={{marginTop:"-2%", fontWeight:"100", color:"black",width:"100%"}}> <strong style={{color:"red"}}>Failed</strong> to add Investment ! <strong>{errorMessage} !</strong> </p>)}
               <Link to="/dashboard" onClick={()=>handleCancelClick()} className='back'> <ReplyIcon/> Back to List</Link>
             </div>

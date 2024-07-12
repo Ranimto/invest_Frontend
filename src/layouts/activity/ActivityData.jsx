@@ -20,6 +20,7 @@ export default function Data( ) {
   const email = useSelector((state) => state.auth.value.email);
   const token=useSelector((state)=>state.auth.value.token)
 
+
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
     const response = await axios.get(url, {
@@ -44,10 +45,9 @@ export default function Data( ) {
             'Authorization': `Bearer ${token}` 
         }
     });
-      console.log("Response from server:", response.data, response);
       setActivities(response.data);
-      
       setError(null);
+
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);

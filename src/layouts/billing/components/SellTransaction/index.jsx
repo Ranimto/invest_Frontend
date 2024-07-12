@@ -22,7 +22,7 @@ function SellTransaction({ toAccountNo }) {
               'Authorization': `Bearer ${token}` 
           } 
         });
-        setTransactions(response.data); // Utilisation de response.data
+        setTransactions(response.data); 
       } catch (error) {
         console.error("Error fetching transactions by Account number:", error);
       }

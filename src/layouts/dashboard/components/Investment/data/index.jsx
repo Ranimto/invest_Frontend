@@ -110,7 +110,7 @@ export default function Data() {
         }
     });
         const updatedInvestments = investments.map(inv => {
-          return inv.companyName === editedInvestment.companyName ?  editedInvestment :  inv;});
+        return inv.companyName === editedInvestment.companyName ?  editedInvestment :  inv;});
         setInvestments(updatedInvestments);
         setEditedInvestment(null);
     } catch (error) {
@@ -135,26 +135,6 @@ useEffect(() => {
       });
       setInvestments(updatedInvestmentStatus)
     }, [investments]);
-
-    
-    
-//     onFirebaseMessageListener()
-//     .then((payload) => {
-
-//      setShow(true);
-//       setNotification({
-//         title: payload.notification.title,
-//         body: payload.notification.body,
-//       });
-//       console.log(payload);
-//     })
-// .catch((err) => console.log("failed: ", err));
-
-
-const handleShowInvestmentNotification =(investment)=>{
-  if (investment.currentInvestmentAmount-investement.investmentAmount<=0)
-  setShow(true)
-}
 
  
 
@@ -221,7 +201,7 @@ const handleShowInvestmentNotification =(investment)=>{
       <MDBox ml={-1}>
         { !(item.duration===0) ?
         <MDBadge badgeContent={item.status} color="success" variant="gradient" size="sm" />:
-        <MDBadge badgeContent={item.status} color="error" variant="gradient" size="sm"  widh/>
+        <MDBadge badgeContent={item.status} color="error" variant="gradient" size="sm" />
       }
       </MDBox>
     ),
@@ -239,7 +219,7 @@ const handleShowInvestmentNotification =(investment)=>{
 
     actions: (
       <Grid className="gridButton" variant="contained">
-        <MDButton variant="contained" className='actionButtonn'  title='edit' onClick={() => handleEdit(item)} bgColor="info"><EditIcon  style={{color:'black'}} /></MDButton>
+        <MDButton variant="contained" className='actionButtonn'  title='edit' onClick={() => handleEdit(item)}><EditIcon  style={{color:'black'}} /></MDButton>
         <MDButton variant="contained" className='actionButtonn' title='update'  onClick={handleUpdate}><UpdateIcon  style={{color:'black'}}/></MDButton>
       </Grid>
     )

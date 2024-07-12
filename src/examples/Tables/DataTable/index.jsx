@@ -246,7 +246,6 @@ function DataTable({
   );
 }
 
-// Setting default values for the props of DataTable
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
@@ -256,7 +255,7 @@ DataTable.defaultProps = {
   noEndBorder: false,
 };
 
-// Typechecking props for the DataTable
+
 DataTable.propTypes = {
   entriesPerPage: PropTypes.oneOfType([
     PropTypes.shape({

@@ -51,10 +51,10 @@ function CompanyCard({ color,name,image,amount,changeAmount}) {
           </MDBox>  
         </MDBox>
         <MDBox display="flex"  flexDirection="column" style={{margin:"30% 0 0 0" }}> 
-        { (amount && changeAmount) &&
+        { (amount ) &&
         <>         
             <p style={{color:"white" ,fontWeight:"400"}}> $ {amount}</p>
-            <p style={{color:"white"}}>{changeAmount} %</p>
+          
         </> 
 }
         </MDBox>
@@ -68,8 +68,8 @@ CompanyCard.propTypes = {
   color: PropTypes.oneOf(["primary", "secondary", "info", "success", "warning", "error", "dark"]),
   name:PropTypes.string,
   image:PropTypes.string,
-  amount:PropTypes.double,
-  changeAmount:PropTypes.double
+  amount:PropTypes.number,
+  changeAmount:PropTypes.number
 };
 
 export default CompanyCard;

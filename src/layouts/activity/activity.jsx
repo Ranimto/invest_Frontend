@@ -6,21 +6,16 @@ import DataTable from "examples/Tables/DataTable";
 import data from "layouts/activity/ActivityData";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import NavbarPerformance from "layouts/navbarPerformance";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+
 
 function Activity() {
   const { columns, rows } = data(1);
   const [filteredData, setFilteredData] = useState([]);
 
   
-  const handleDataFiltered = (data) => {
-    setFilteredData(data);
-  }
 
   return (
-    <DashboardLayout>
-    
-     
+    <DashboardLayout> 
     <NavbarPerformance />
     <Card>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>

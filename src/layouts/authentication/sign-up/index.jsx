@@ -48,7 +48,7 @@ const [data, setData] = useState({
       showAlertAndNavigate("you've been successfully registered", "/verification");
 		} catch (error) {
       console.log(error.response.data.message); 
-        showAlertAndNavigate(error.response.data.message, "/authentication/sign-up");
+        showAlertAndNavigate(error.response.data.message);
 		
 		}
 	};
@@ -57,7 +57,7 @@ const [data, setData] = useState({
     setError(message); 
     setTimeout(() => {
       navigate(destination); 
-    }, 1800); 
+    }, 1500); 
   };
 
 
@@ -76,6 +76,14 @@ const [data, setData] = useState({
 useEffect(()=>{
   if (data.password) calculatePasswordStrength(data.password)
 },[data.password])
+
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    dispatch(login({ isAuthenticated: true, token }));
+  }
+}, [dispatch]);
   
   return (
     

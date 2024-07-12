@@ -37,7 +37,6 @@ function BuyTransaction({ color, icon, toAccountNo, transferAmount ,transferDate
   );
 }
 
-// Typechecking props of the Transaction
 BuyTransaction.propTypes = {
   color: PropTypes.oneOf([
     "primary",

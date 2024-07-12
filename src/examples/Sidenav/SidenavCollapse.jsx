@@ -59,12 +59,10 @@ function SidenavCollapse({ icon, name, active, ...rest }) {
   );
 }
 
-// Setting default values for the props of SidenavCollapse
 SidenavCollapse.defaultProps = {
   active: false,
 };
 
-// Typechecking props for the SidenavCollapse
 SidenavCollapse.propTypes = {
   icon: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,

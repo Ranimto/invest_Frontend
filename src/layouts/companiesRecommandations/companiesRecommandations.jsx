@@ -63,7 +63,6 @@ const CompaniesRecommandations = () => {
             'Authorization': `Bearer ${token}` 
         }
     });
-    console.log(token)
       setUser( response.data);  
       setInvestment({ ...investment, userId: response.data.id });
     }
@@ -82,14 +81,11 @@ const CompaniesRecommandations = () => {
   
     const handleSubmit = async (event) => {
       event.preventDefault(); 
-
-    
       const updatedInvestment = { ...investment, companyName: selectedCompanyName,
         investmentAmount:investment.numberOfStock*investment.stockActualPrice,
         startDate: new Date()};
       setInvestment(updatedInvestment);
 
-      //save it in the historical activity 
       const investmentDescription = `Adding new investment in the ${updatedInvestment.companyName} company with amount : ${updatedInvestment.investmentAmount} $`;
       const response1 = await axios.post('http://localhost:8023/user-activity/save',
       {
@@ -104,13 +100,13 @@ const CompaniesRecommandations = () => {
         }
     });
     
-      console.log('updatedInvestment', updatedInvestment)
       const response = await axios.post("http://localhost:8023/investment/add", updatedInvestment).then(() => {
 
         setShowSuccessMessage(true);
         setTimeout(() => {
           setShowSuccessMessage(false);
         }, 5000);
+
 
           setInvestment({
             userId: user.id,
@@ -121,6 +117,7 @@ const CompaniesRecommandations = () => {
             status: "IN_PROGRESS",   
           });
         })
+
         .catch(error => {
           setError(true)
           setTimeout(() => {
@@ -180,7 +177,6 @@ const CompaniesRecommandations = () => {
      investor_id: user.id,   
    }
    try{
-     console.log('rrr',user.id)
      const response= await axios.post(url, body);
      console.log( "PredictedToleranceRisk", response.data.predicted_tolerance_risk );
      setPredictedRisk(response.data.predicted_tolerance_risk) ;
@@ -198,7 +194,6 @@ const CompaniesRecommandations = () => {
     }
 });
   setProfileData(response.data)
-  console.log("profile Data",response.data)
 }
 
   catch(error){
@@ -213,8 +208,7 @@ const CompaniesRecommandations = () => {
     company_name: analyseCompany,
     investor_id: user.id
   }
-  console.log('bodyAnaluuu',body)
-  console.log('analyseCompany',analyseCompany)
+
   try{
   const result= await axios.post(url,body,
     {
@@ -222,10 +216,8 @@ const CompaniesRecommandations = () => {
         'Authorization': `Bearer ${token}` 
     }
 })
-   console.log('token',token)
   setAnalyseResponse(result.data.response)
   setChatLoading(false)
-  console.log('analyseResponse',result.data.response)
   setAnalyseCompany("")
 }
  catch(error){
@@ -260,7 +252,7 @@ const handleShowGeminiAnalyseMessage =(companyName)=>{
      { fetchRecommendedCompanies();
       fetchProfileData();
       fetchPredictedToleranceRisk();
- }
+     }
    } ,[user.id])
 
 

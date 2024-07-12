@@ -37,9 +37,10 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   
 
   const handleLogout = () => {
-     localStorage.clear();
-    
+    localStorage.clear();
+    dispatchRedux(logout());
     navigate('/authentication/sign-in')
+      
    };
 
   useEffect(() => {
@@ -51,13 +52,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
     handleMiniSidenav();
   }, [dispatch, location]);
-
-  //To check again
-/*   useEffect(() => {
-    if (token==null) {
-      navigate('/authentication/sign-in');
-    }
-  }, [token, location.pathname, navigate]); */
 
 
   const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
@@ -120,9 +114,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         />
       );
     }
-// If the current route is Sign Up and the name is not "home",
-  // disable the link to other routes except the home route
-  if (!isAuthenticated && location.pathname == "authetication/sign-in") {
+
+  if (!isAuthenticated && location.pathname == "authentication/sign-in") {
     returnValue = (
       <div key={key} onClick={(e) => e.preventDefault()}>
         {returnValue}

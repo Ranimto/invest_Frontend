@@ -11,26 +11,22 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 
+
 const BankAccounts = () => {
   const [showForm,setShowForm]=useState(false);
   const { columns, rows } = AccountTableData();
   const [accounts, setAccounts] = useState([]);
   const [errorForm,setErrorForm]=useState(false);
+  const [loading,setLoading]=useState(true);
   const [messageError,setMessageError]=useState("");
- const email= useSelector((state)=>state.auth.value.email);
- const token = useSelector((state)=>state.auth.value.token)
-  const [requestAccount, setRequestAccount] = useState(
-    {
-    accountNo:"",
-    userId:"",
-    status:"",
-    }
-  );
-  const [account, setAccount] = useState({
-     
-    accountNo:"",
-    savingsProductName:"",
-    summary:{
+  const [successMessage,setSuccessMessage]=useState("");
+  const email= useSelector((state)=>state.auth.value.email);
+  const token = useSelector((state)=>state.auth.value.token)
+  const [requestAccount, setRequestAccount] = useState({});
+  const [account, setAccount] = useState({    
+     accountNo:"",
+     savingsProductName:"",
+     summary:{
       totalDeposits:"",
       totalInterestEarned:"",
       totalInterestPosted:"",
@@ -40,18 +36,7 @@ const BankAccounts = () => {
     active:false,
     userId:"",
   });
-  const [user,setUser]=useState({ 
-    id:"",  
-    firstname:"",
-    lastname:"",
-    email :"",
-    phone :"",
-    city:"",
-    nationality:"",
-    postcode:"",
-    profession:"",
-    imageUrl:""
-  });
+  const [user,setUser]=useState({ });
 
   const fetchUserByEmail= async (email) => {
     const url = `http://localhost:8023/user/findByEmail/${email}`;
@@ -60,7 +45,6 @@ const BankAccounts = () => {
           'Authorization': `Bearer ${token}` 
       }
   });
-    console.log("Response from server:", response.data, response);
     setUser(response.data);
 };
 
@@ -68,43 +52,57 @@ const BankAccounts = () => {
   fetchUserByEmail(email);
 }, [email]);  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const url = "http://localhost:8023/requestAccount/approveRequestAccount";
-      setAccount({...account,userId:requestAccount.userId});
-      const response = await axios.post(url, requestAccount,{
-        headers: {
-            'Authorization': `Bearer ${token}` 
-        }
-    });
-      setAccounts([...accounts,newAccount]);
-      showAlert("your bank account is added succesfully!")
 
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const url = "http://localhost:8023/requestAccount/approveRequestAccount";
+    setLoading(true)
+    setAccount({...account, userId: requestAccount.userId});
+    const response = await axios.post(url, requestAccount, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    setAccounts([...accounts, response.data]);
+    setSuccessMessage("Your bank account is added successfully!");
+    
+
+    try {
       await axios.post('http://localhost:8023/user-activity/save', {
         userId: user.id,
         timestamp: new Date(),
         description: `Adding a new bank account with account number: ${response.data.accountNo}`,
-      },
-      {
+      }, {
         headers: {
-            'Authorization': `Bearer ${token}` 
+          'Authorization': `Bearer ${token}`
         }
-    }
-      
-      );    
-
-      setRequestAccount({
-        accountNo: "",
-        userId: user.id,
-        status: "",
       });
-    } catch (error) {
-      setErrorForm(true);
-      setMessageError("Error")
-    
+      
+    } catch (activityError) {
+      setMessageError("An error occurred while saving user activity.");
     }
-  };
+    setRequestAccount({
+      accountNo: "",
+      userId: user.id,
+      status: "",
+    });
+
+  } catch (error) {
+    setLoading(false)
+    setErrorForm(true);
+    setTimeout(() => {
+      setErrorForm(false);
+    }, 5000);
+
+    if (error.response && error.response.data && error.response.data.message) {
+      setMessageError(error.response.data.message);
+    } else {
+      setMessageError("An unexpected error occurred.");
+    }
+  }
+};
 
   useEffect(()=>{
     setRequestAccount({...requestAccount,userId:user.id});
@@ -149,6 +147,7 @@ const BankAccounts = () => {
               <Button variant="contained" onClick={handleCancelClick} className='cancel'>Cancel</Button>
               <Button variant="contained" type="submit" className='add'>Add </Button>
             </Grid>
+            {successMessage && <div className='successMessage'> {successMessage}</div>}
           </Grid>
         </form>
       )}
@@ -184,7 +183,9 @@ const BankAccounts = () => {
           </Grid>
           <Grid item xs={12}></Grid>
         </Grid>
-{errorForm && (
+
+
+  {errorForm && (
   <Modal open={errorForm} >
     <Grid className='errorForm'>
     <p> <ErrorRoundedIcon/> {messageError}</p>
